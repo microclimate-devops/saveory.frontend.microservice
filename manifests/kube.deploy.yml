@@ -12,7 +12,7 @@ spec:
   #- name: http
   - port: 9080
     protocol: TCP
-    targetPort: 3000
+    targetPort: http
   #- name: https
   #  port: 9443
 
@@ -37,6 +37,7 @@ spec:
         image: saveoryfrontend:latest
         ports:
         - containerPort: 3000
+          name: http
         #readinessProbe:
         #  httpGet:
         #    path: /health

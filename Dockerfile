@@ -12,4 +12,4 @@ ENV PATH /usr/src/nodeApps/reactApp/node_modules/.bin:$PATH
 #Install base react-app using create-react-app
 RUN npm install -g create-react-app
 #RUN create-react-app app
-CMD ["npm", "start"]
+CMD ["npm", "run", "build"]

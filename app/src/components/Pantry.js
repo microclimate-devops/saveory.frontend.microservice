@@ -10,7 +10,7 @@ class Pantry extends Component{
 	}
 
 	componentDidMount(){ //retrieve the user's pantry from the backend
-		axios.get("https://microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="/*"http://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="*/+this.props.user).then(res => {
+		axios.get("http://microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="/*"http://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="*/+this.props.user).then(res => {
 			this.setState({pantry: res.data, error: {error: "none"}});
 		}).catch((err)=> {this.setState({error: err})});
 	}

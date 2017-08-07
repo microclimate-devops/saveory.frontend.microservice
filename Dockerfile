@@ -18,5 +18,5 @@ RUN npm install
 COPY app .
 
 # Build for production.
-#RUN npm run build --production
-CMD ["npm", "start"]
+RUN npm run build --production
+#CMD ["npm", "start"]

@@ -9,6 +9,13 @@ ENV NPM_CONFIG_LOGLEVEL warn
 RUN npm install -g serve
 CMD serve -s build
 
+#Install json server for testing
+RUN npm install -g json-server
+RUN cd /opt
+COPY jsonServer/db.json .
+CMD ["json-server", "--watch", "db.json"]
+RUN cd /
+
 # Install all dependencies of the current project.
 COPY app/package.json package.json
 COPY app/npm-shrinkwrap.json npm-shrinkwrap.json

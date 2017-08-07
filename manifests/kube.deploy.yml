@@ -36,7 +36,7 @@ spec:
       - name: saveoryfrontend
         image: saveoryfrontend:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
           name: http
         #readinessProbe:
         #  httpGet:

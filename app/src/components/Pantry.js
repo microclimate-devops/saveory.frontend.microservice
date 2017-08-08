@@ -7,20 +7,26 @@ import PantryIngredients from "./PantryIngredients.js";
 class Pantry extends Component{
 	constructor(props){
 		super(props);
-		this.state = {pantry: {}, error: {}};
+		this.state = {pantry: {}, error: {}, pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/" };
 	}
 
-	componentDidMount(){ //retrieve the user's pantry from the backend
-		/*axios.get("microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="+this.props.user).then(res => {
-			this.setState({pantry: res.data, error: {error: "none"}});
-		}).catch((err)=> {this.setState({error: err})});*/
-		
-		Https.get("https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="+this.props.user, (res) => {
+	componentDidMount(){ 
+		//retrieve the user's pantry from the backend
+		Https.get(this.state.pantryServiceURL+"/pantries?user="+this.props.user, (res) => {
 			res.on('data', (d) => {
-				console.log("data parsed: "+JSON.stringify(JSON.parse(d).data));
-				console.log("data parsed more: "+JSON.stringify(JSON.parse(d)));
-				console.log("data: "+JSON.stringify(d));
-				this.setState({pantry: d.pantry});	
+				//Parse the data into a JSON object
+				const resultObj = JSON.parse(d).data;
+				const userPantry;
+
+				//console.log("data parsed: "+JSON.stringify(JSON.parse(d).data));
+				//If the result is an array then use the first element as the user's pantry
+				if(Array.isArray(resultObj)){
+					userPantry = resultPantry[0].pantry;
+				}else{
+					userPantry = resultPantry.pantry;
+				}
+
+				this.setState({pantry: userPantry});	
 			});
 		}).on('error', (e) => {
 			console.log(this.setState({error: e}));

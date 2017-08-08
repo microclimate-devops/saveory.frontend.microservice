@@ -12,6 +12,10 @@ class PantryIngredients extends Component{
 		}};
 	}
 
+	static propTypes = {
+		pantry: PropTypes.array.isRequired
+	};
+
 	createIngredientsList(pantry){
 		return pantry.map(this.createIngredient());
 	}

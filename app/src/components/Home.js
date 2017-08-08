@@ -22,12 +22,12 @@ class Home extends Component{
 		}).on('error', (e) => {
 			console.log(JSON.stringify(e));
 		});*/
-		const userDataURL = "localhost:3000/users/"+this.props.userToken;
+		/*const userDataURL = "http://localhost:3000/users/"+this.props.userToken;
 		console.log("URL: "+userDataURL)
 		axios.get(userDataURL).then(res => {
 			console.log("res: "+JSON.stringify(res));
 			this.setState({username: res.data.user});
-		}).catch((err)=> {console.log(JSON.stringify(err))});
+		}).catch((err)=> {console.log(JSON.stringify(err))});*/
 	
 		//Get the user's pantry 
 		/*Https.get("https://localhost:3000/pantries/"+this.props.userToken, (res) => {

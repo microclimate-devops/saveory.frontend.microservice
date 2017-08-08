@@ -13,7 +13,7 @@ class Pantry extends Component{
 
 	componentDidMount(){ 
 		//retrieve the user's pantry from the backend
-		Https.get(this.state.pantryServiceURL+"/pantries?user="+this.props.user, (res) => {
+		Https.get(this.state.pantryServiceURL+"pantries?user="+this.props.user, (res) => {
 			res.on('data', (d) => {
 				//Parse the data into a JSON object
 				const resultObj = JSON.parse(d).data;

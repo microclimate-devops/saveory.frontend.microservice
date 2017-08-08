@@ -5,16 +5,16 @@ FROM node:7.8.0
 # Override the base log level (info).
 ENV NPM_CONFIG_LOGLEVEL warn
 
-# Install and configure `serve`.
-RUN npm install -g serve
-CMD serve -s build
-
 #Install json server for testing
 RUN npm install -g json-server
 RUN cd /opt
 COPY jsonServer/db.json .
 CMD ["json-server", "--watch", "db.json"]
 RUN cd /
+
+# Install and configure `serve`.
+RUN npm install -g serve
+CMD serve -s build
 
 # Install all dependencies of the current project.
 COPY app/package.json package.json

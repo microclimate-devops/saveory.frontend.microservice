@@ -36,7 +36,7 @@ class Pantry extends Component{
 				this.setState({pantry: userPantry});	
 			});
 		}).on('error', (e) => {
-			console.log(this.setState({error: e}));
+			this.setState({error: e});
 		});
 	}
 

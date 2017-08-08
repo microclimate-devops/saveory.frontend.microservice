@@ -31,7 +31,7 @@ class PantryIngredients extends Component{
 				<table className="ingredient-table">
 					<tbody>
 						<Ingredient data={this.state.tableDescriptors}/>
-						<tr><td>this.createIngredientsList(this.props.pantry)</td></tr>
+						{this.createIngredientsList(this.props.pantry)}
 						<tr><td>{JSON.stringify(this.props.pantry)}</td></tr>
 					</tbody>
 				</table>

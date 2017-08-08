@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Https from 'https';
+import PropTypes from 'prop-types';
 import PantrySort from "./PantrySort.js";
 import PantryIngredients from "./PantryIngredients.js";
 
@@ -16,14 +17,14 @@ class Pantry extends Component{
 			res.on('data', (d) => {
 				//Parse the data into a JSON object
 				const resultObj = JSON.parse(d).data;
-				const userPantry;
+				var userPantry;
 
 				//console.log("data parsed: "+JSON.stringify(JSON.parse(d).data));
 				//If the result is an array then use the first element as the user's pantry
 				if(Array.isArray(resultObj)){
-					userPantry = resultPantry[0].pantry;
+					userPantry = resultObj[0].pantry;
 				}else{
-					userPantry = resultPantry.pantry;
+					userPantry = resultObj.pantry;
 				}
 
 				this.setState({pantry: userPantry});	

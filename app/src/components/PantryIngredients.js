@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Ingredient from "./Ingredient.js";
+import PropTypes from 'prop-types';
 
 class PantryIngredients extends Component{
 	constructor(props){

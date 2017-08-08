@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 //import components
 import Home from './components/Home.js';
+import Pantry from './components/Pantry.js';
 
 class App extends Component {
   render() {

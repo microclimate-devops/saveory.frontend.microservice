@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import Https from 'https';
 import PropTypes from 'prop-types';
 import PantrySort from "./PantrySort.js";
@@ -11,9 +11,15 @@ class Pantry extends Component{
 		this.state = {pantry: {}, error: {}, pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/" };
 	}
 
+	static propTypes = {
+		user: PropTypes.string.isRequired
+	};
+
 	componentDidMount(){ 
+		const pantryRequestURL = this.state.pantryServiceURL+"pantries?user="+this.props.user;
+		console.log(pantryRequestURL);
 		//retrieve the user's pantry from the backend
-		Https.get(this.state.pantryServiceURL+"pantries?user="+this.props.user, (res) => {
+		Https.get(pantryRequestURL, (res) => {
 			res.on('data', (d) => {
 				//Parse the data into a JSON object
 				const resultObj = JSON.parse(d).data;

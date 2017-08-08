@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
-import Https from 'https';
 
 class Home extends Component{
 	constructor(props){

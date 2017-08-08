@@ -28,10 +28,13 @@ class Pantry extends Component{
 				console.log("data parsed: "+JSON.stringify(JSON.parse(d)));
 				//If the result is an array then use the first element as the user's pantry
 				if(Array.isArray(resultObj)){
+					console.log("It's an array");
 					userPantry = resultObj[0].pantry;
 				}else{
 					userPantry = resultObj.pantry;
 				}
+	
+				console.log("user's pantry: "+JSON.stringify(userPantry));
 
 				this.setState({pantry: userPantry});	
 			});

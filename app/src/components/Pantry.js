@@ -22,10 +22,10 @@ class Pantry extends Component{
 		Https.get(pantryRequestURL, (res) => {
 			res.on('data', (d) => {
 				//Parse the data into a JSON object
-				const resultObj = JSON.parse(d).data;
+				const resultObj = JSON.parse(d);
 				var userPantry;
 
-				console.log("data parsed: "+JSON.stringify(JSON.parse(d).data));
+				console.log("data parsed: "+JSON.stringify(JSON.parse(d)));
 				//If the result is an array then use the first element as the user's pantry
 				if(Array.isArray(resultObj)){
 					userPantry = resultObj[0].pantry;

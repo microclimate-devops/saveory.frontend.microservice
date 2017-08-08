@@ -18,7 +18,7 @@ class Pantry extends Component{
 		Https.get("https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="+this.props.user, (res) => {
 			res.on('data', (d) => {
 				console.log("data parsed: "+JSON.stringify(JSON.parse(d).data));
-				//console.log("data: "+JSON.stringify(d));
+				console.log("data parsed more: "+JSON.stringify(JSON.parse(d)));
 				console.log("data: "+JSON.stringify(d));
 				this.setState({pantry: d.pantry});	
 			});

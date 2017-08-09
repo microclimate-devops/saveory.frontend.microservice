@@ -43,10 +43,11 @@ class Pantry extends Component{
 	}
 
 	render(){
-		//<PantryIngredients pantry={this.state.pantry} deleteIngredientHandler="just a test"/>
+
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
+				<PantryIngredients pantry={this.state.pantry} deleteIngredientHandler="just a test"/>
 			</div>
 		);
 	}

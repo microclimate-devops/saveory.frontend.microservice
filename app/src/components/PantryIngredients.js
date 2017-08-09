@@ -60,7 +60,7 @@ class PantryIngredients extends Component{
 								/*return (
 									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler}/>
 								)*/
-								<p>{this.props.pantryEmptyDescriptor}</p>
+								return (<p>{this.props.pantryEmptyDescriptor}</p>);
 							}}
 							data={pantry}
 							columns={pantryColumns}

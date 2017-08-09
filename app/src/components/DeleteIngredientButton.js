@@ -7,7 +7,8 @@ class DeleteIngredientButton extends Component{
 	};
 
   onPress(e){
-    this.props.deleteIngredientHandler(e);
+    console.log("e from child: " JSON.stringify(e));
+    console.log(JSON.stringify(this.props.deleteIngredientHandler);
   }
 
   render(){

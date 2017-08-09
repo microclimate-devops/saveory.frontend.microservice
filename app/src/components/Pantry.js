@@ -46,7 +46,7 @@ class Pantry extends Component{
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
-				<PantryIngredients pantry={this.state.pantry} deleteIngredientHandler={this.deleteIngredient}/>
+				<PantryIngredients pantry={this.state.pantry} deleteIngredientHandler="just a test"/>
 			</div>
 		);
 	}

@@ -18,7 +18,9 @@ class PantryIngredients extends Component{
 	};
 
 	createIngredientsList(pantry){
-		return pantry.map((ingredient) => {return this.createIngredient(ingredient)});
+		console.log(pantry);
+		console.log(JSON.stringify(pantry));
+		//return pantry.map((ingredient) => {return this.createIngredient(ingredient)});
 	}
 
 	createIngredient(ingredient){

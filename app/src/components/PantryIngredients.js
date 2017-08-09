@@ -18,7 +18,11 @@ class PantryIngredients extends Component{
 	};
 
 	createIngredientsList(pantry){
-		return pantry.map((ingredient) => {return this.createIngredient(ingredient)});
+		if(Array.isArray(pantry)){
+			return pantry.map((ingredient) => {return this.createIngredient(ingredient)});
+		}else{
+			return <tr><td>not an array</td></tr>;
+		}
 	}
 
 	createIngredient(ingredient){

@@ -44,18 +44,6 @@ class PantryIngredients extends Component{
 		deleteIngredientHandler: PropTypes.func.isRequired
 	};
 
-	createIngredientsList(pantry){
-		if(Array.isArray(pantry)){
-			return pantry.map((ingredient) => {return this.createIngredient(ingredient)});
-		}else{
-			return this.createIngredient(this.state.pantryEmptyDescriptor)
-		}
-	}
-
-	createIngredient(ingredient){
-		return <Ingredient data={ingredient}/>;
-	}
-
 	render(){
 		//Get the data for the table ready
 		var pantry = this.props.pantry;

@@ -13,8 +13,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to Saveory</h2>
         </div>
-	<Home userToken={1}/>
-	<Pantry user="test"/>
+      	<Home userToken={1}, user="test"/>
       </div>
     );
   }

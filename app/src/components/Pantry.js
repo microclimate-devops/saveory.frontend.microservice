@@ -15,9 +15,8 @@ class Pantry extends Component{
 		user: PropTypes.string.isRequired
 	};
 
-	componentDidMount(){ 
+	componentDidMount(){
 		const pantryRequestURL = this.state.pantryServiceURL+"pantries?user="+this.props.user;
-		console.log(pantryRequestURL);
 		//retrieve the user's pantry from the backend
 		Https.get(pantryRequestURL, (res) => {
 			res.on('data', (d) => {
@@ -25,18 +24,14 @@ class Pantry extends Component{
 				const resultObj = JSON.parse(d);
 				var userPantry;
 
-				console.log("data parsed: "+JSON.stringify(JSON.parse(d)));
 				//If the result is an array then use the first element as the user's pantry
 				if(Array.isArray(resultObj)){
-					console.log("It's an array");
 					userPantry = resultObj[0].pantry;
 				}else{
 					userPantry = resultObj.pantry;
 				}
-	
-				console.log("user's pantry: "+JSON.stringify(userPantry));
 
-				this.setState({pantry: userPantry});	
+				this.setState({pantry: userPantry});
 			});
 		}).on('error', (e) => {
 			this.setState({error: e});
@@ -49,7 +44,6 @@ class Pantry extends Component{
 				<h1>user {this.props.user}'s pantry</h1>
 				<PantrySort />
 				<PantryIngredients pantry={this.state.pantry}/>	
-				<h1>Axios error: {JSON.stringify(this.state.error)}</h1>
 			</div>
 		);
 	}

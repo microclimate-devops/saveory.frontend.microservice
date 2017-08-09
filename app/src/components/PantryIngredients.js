@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import Ingredient from "./Ingredient.js";
-import IngredientHeader from "./IngredientHeader.js";
+import DeleteIngredientButton from "./DeleteIngredientButton.js";
 import PropTypes from 'prop-types';
 
 class PantryIngredients extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			tableDescriptors: {
-				item: "Item",
-				qty: "Quantity",
-				qtyUnit: "Quantity Unit",
-				expDate: "Expiration"
-			},
 			pantryEmptyDescriptor: {
 				item: "Empty",
 				qty: "Empty",
@@ -47,7 +40,8 @@ class PantryIngredients extends Component{
 	}
 
 	static propTypes = {
-		pantry: PropTypes.array.isRequired
+		pantry: PropTypes.array.isRequired,
+		deleteIngredientHandler: PropTypes.func.isRequired
 	};
 
 	createIngredientsList(pantry){
@@ -63,47 +57,20 @@ class PantryIngredients extends Component{
 	}
 
 	render(){
+		//Get the data for the table ready
 		var pantry = this.props.pantry;
 		var pantryColumns = this.state.pantryColumns;
-		if(!Array.isArray(pantry)){
-			pantry = [{
-				item: "Empty",
-				qty: "Empty",
-				qtyUnit: "Empty",
-				expDate: "Empty"
-			}];
+
+		//Check that the pantry is a non-empty array
+		if(!Array.isArray(pantry) || pantry.length == 0 ){
+			pantry = this.state.pantryEmptyDescriptor;
 		}
 
-		if(!Array.isArray(pantryColumns)){
-			pantryColumns = [
-				{
-					Header: "No Ingredients",
-					columns: [
-						{
-							Header: "Item",
-							accessor: "item"
-						},
-						{
-							Header: "Quantity",
-							accessor: "qty"
-						},
-						{
-							Header: "Quantity Unit",
-							accessor: "qtyUnit"
-						},
-						{
-							Header: "Expiration",
-							accessor: "expDate"
-						}
-					]
-				}
-			];
-		}
 		return (
 						<ReactTable
 							SubComponent={(row) => {
 								return (
-									<button>Remove</button>
+									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler}/>
 								)
 							}}
 							data={pantry}
@@ -111,19 +78,6 @@ class PantryIngredients extends Component{
 							filterable
 						/>
 					);
-		//return <h1>check</h1>
-		/*return (
-			<div className="pantry-ingredients">
-				<table className="ingredient-table">
-					<thead>
-						<IngredientHeader data={this.state.tableDescriptors}/>
-					</thead>
-					<tbody>
-						{this.createIngredientsList(this.props.pantry)}
-					</tbody>
-				</table>
-			</div>
-		);*/
 	}
 }
 

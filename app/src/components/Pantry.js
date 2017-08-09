@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 //import axios from 'axios';
 import Https from 'https';
 import PropTypes from 'prop-types';
-import PantrySort from "./PantrySort.js";
 import PantryIngredients from "./PantryIngredients.js";
 
 class Pantry extends Component{
 	constructor(props){
 		super(props);
 		this.state = {pantry: {}, error: {}, pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/" };
+		this.deleteIngredient = this.deleteIngredient.bind(this);
 	}
 
 	static propTypes = {
@@ -38,12 +38,15 @@ class Pantry extends Component{
 		});
 	}
 
+	deleteIngredient(e){
+		console.log(JSON.stringify(e));
+	}
+
 	render(){
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
-				<PantrySort />
-				<PantryIngredients pantry={this.state.pantry}/>	
+				<PantryIngredients pantry={this.state.pantry} deleteIngredientHandler={this.deleteIngredient}/>
 			</div>
 		);
 	}

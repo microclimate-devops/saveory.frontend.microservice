@@ -63,7 +63,7 @@ class PantryIngredients extends Component{
 	}
 
 	render(){
-		return <ReactTable
+		/*return <ReactTable
 							SubComponent={(row) => {
 								return (
 									<button>Remove</button>
@@ -72,7 +72,8 @@ class PantryIngredients extends Component{
 							data={this.props.pantry}
 							columns={this.state.pantryColumns}
 							filterable
-						/>
+						/>*/
+		return <h1>check</h1>
 		/*return (
 			<div className="pantry-ingredients">
 				<table className="ingredient-table">

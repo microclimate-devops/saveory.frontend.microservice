@@ -11,7 +11,7 @@ class DeleteIngredientButton extends Component{
   }
 
   render(){
-    return <button onClick={onPress} className="delete-ingredient-button">Remove Ingredient</button>
+    return <button onClick={this.onPress} className="delete-ingredient-button">Remove Ingredient</button>
   }
 }
 

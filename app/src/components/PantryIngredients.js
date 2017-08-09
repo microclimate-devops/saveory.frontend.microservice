@@ -57,9 +57,10 @@ class PantryIngredients extends Component{
 		return (
 						<ReactTable
 							SubComponent={(row) => {
-								return (
+								/*return (
 									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler}/>
-								)
+								)*/
+								<p>test</p>
 							}}
 							data={pantry}
 							columns={pantryColumns}

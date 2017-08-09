@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTable from 'react-table';
 import Ingredient from "./Ingredient.js";
 import IngredientHeader from "./IngredientHeader.js";
 import PropTypes from 'prop-types';
@@ -18,7 +19,30 @@ class PantryIngredients extends Component{
 				qty: "Empty",
 				qtyUnit: "Empty",
 				expDate: "Empty"
-			}
+			},
+			pantryColumns: [
+				{
+					Header: "Ingredients",
+					columns: [
+						{
+							Header: "Item",
+							accessor: "item"
+						},
+						{
+							Header: "Quantity",
+							accessor: "qty"
+						},
+						{
+							Header: "Quantity Unit",
+							accessor: "qtyUnit"
+						},
+						{
+							Header: "Expiration",
+							accessor: "expDate"
+						}
+					]
+				}
+			]
 		};
 	}
 
@@ -39,7 +63,17 @@ class PantryIngredients extends Component{
 	}
 
 	render(){
-		return (
+		return <ReactTable
+							SubComponent={(row) => {
+								return (
+									<button>Remove</button>
+								)
+							}}
+							data={this.props.pantry}
+							columns={this.state.pantryColumns}
+							filterable
+						/>
+		/*return (
 			<div className="pantry-ingredients">
 				<table className="ingredient-table">
 					<thead>
@@ -50,7 +84,7 @@ class PantryIngredients extends Component{
 					</tbody>
 				</table>
 			</div>
-		);
+		);*/
 	}
 }
 

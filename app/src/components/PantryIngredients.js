@@ -63,6 +63,42 @@ class PantryIngredients extends Component{
 	}
 
 	render(){
+		var pantry = this.props.pantry;
+		var pantryColumns = this.state.pantryColumns;
+		if(!Array.isArray(pantry)){
+			pantry = [{
+				item: "Empty",
+				qty: "Empty",
+				qtyUnit: "Empty",
+				expDate: "Empty"
+			}];
+		}
+
+		if(!Array.isArray(pantryColumns)){
+			pantryColumns = [
+				{
+					Header: "No Ingredients",
+					columns: [
+						{
+							Header: "Item",
+							accessor: "item"
+						},
+						{
+							Header: "Quantity",
+							accessor: "qty"
+						},
+						{
+							Header: "Quantity Unit",
+							accessor: "qtyUnit"
+						},
+						{
+							Header: "Expiration",
+							accessor: "expDate"
+						}
+					]
+				}
+			];
+		}
 		return (
 						<ReactTable
 							SubComponent={(row) => {
@@ -70,8 +106,8 @@ class PantryIngredients extends Component{
 									<button>Remove</button>
 								)
 							}}
-							data={this.props.pantry}
-							columns={this.state.pantryColumns}
+							data={pantry}
+							columns={pantryColumns}
 							filterable
 						/>
 					);

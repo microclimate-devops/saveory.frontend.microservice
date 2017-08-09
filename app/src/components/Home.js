@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Pantry from './components/Pantry.js';
+import Pantry from './Pantry.js';
 
 class Home extends Component{
 	constructor(props){

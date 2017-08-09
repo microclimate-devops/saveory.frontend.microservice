@@ -16,7 +16,7 @@ class Home extends Component{
 	render(){
 		return (
 			<div className="content-wrap">
-				<Pantry user="test"/>
+				<Pantry user={this.props.user}}/>
 			</div>
 		);
 	}

@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 //import components
 import Home from './components/Home.js';
-import Pantry from './components/Pantry.js';
 
 class App extends Component {
   render() {
@@ -13,7 +12,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to Saveory</h2>
         </div>
-      	<Home userToken={1}, user="test"/>
+      	<Home userToken={1} user="test"/>
       </div>
     );
   }

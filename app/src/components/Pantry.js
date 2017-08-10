@@ -44,12 +44,11 @@ class Pantry extends Component{
 	}
 
 	render(){
-
-				//<PantryIngredients pantry={this.state.pantry} />
+		const userPantry = this.state.pantry;
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
-
+				<PantryIngredients pantry={userPantry} />
 			</div>
 		);
 	}

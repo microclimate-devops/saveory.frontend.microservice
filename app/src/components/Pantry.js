@@ -30,6 +30,7 @@ class Pantry extends Component{
 				}else{
 					userPantry = resultObj.pantry;
 				}
+				console.log("user's pantry: "+JSON.stringify(userPantry));
 
 				this.setState({pantry: userPantry});
 			});

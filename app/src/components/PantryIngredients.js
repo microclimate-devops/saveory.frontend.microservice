@@ -40,8 +40,8 @@ class PantryIngredients extends Component{
 	}
 
 	static propTypes = {
-		pantry: PropTypes.array.isRequired
-		//deleteIngredientHandler: PropTypes.string.isRequired
+		pantry: PropTypes.array.isRequired,
+		deleteIngredientHandler: PropTypes.func.isRequired
 	};
 
 	render(){
@@ -63,7 +63,7 @@ class PantryIngredients extends Component{
 								console.log("seeing info from row");
 								console.log(row);
 								return (
-									<DeleteIngredientButton deleteIngredientHandler={1}/>
+									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler} targetItem={row.original}/>
 								)
 							}}
 							data={pantry}

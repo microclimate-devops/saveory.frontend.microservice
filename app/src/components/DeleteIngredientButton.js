@@ -8,12 +8,13 @@ class DeleteIngredientButton extends Component{
 	}  
 
   	static propTypes = {
-		deleteIngredientHandler: PropTypes.number.isRequired
+		deleteIngredientHandler: PropTypes.func.isRequired,
+		targetItem: PropTypes.object.isRequired
 	};
 
 	onPress(e){
 		console.log(e);
-		console.log(JSON.stringify(this.props.deleteIngredientHandler));
+		this.props.deleteIngredientHandler(this.props.targetItem);
 	}
 
 	render(){

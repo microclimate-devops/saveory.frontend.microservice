@@ -39,8 +39,8 @@ class Pantry extends Component{
 		});
 	}
 
-	deleteIngredient(e){
-		console.log(JSON.stringify(e));
+	deleteIngredient(item){
+		console.log(JSON.stringify(item));
 	}
 
 	render(){
@@ -48,7 +48,7 @@ class Pantry extends Component{
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
-				<PantryIngredients pantry={userPantry} />
+				<PantryIngredients pantry={userPantry} deleteIngredientHandler={this.deleteIngredient}/>
 			</div>
 		);
 	}

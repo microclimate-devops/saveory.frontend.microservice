@@ -50,7 +50,7 @@ class PantryIngredients extends Component{
 		var pantryColumns = this.state.pantryColumns;
 
 		//Check that the pantry is a non-empty array
-		if(!Array.isArray(pantry) || pantry.length == 0 ){
+		if(!Array.isArray(pantry) || pantry.length === 0 ){
 			pantry = this.state.pantryEmptyDescriptor;
 		}
 

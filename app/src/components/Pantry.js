@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import axios from 'axios';
 import Https from 'https';
 import PropTypes from 'prop-types';
-import PantryIngredients from "./PantryIngredients.js";
+//import PantryIngredients from "./PantryIngredients.js";
 
 class Pantry extends Component{
 	constructor(props){
@@ -44,10 +44,11 @@ class Pantry extends Component{
 
 	render(){
 
+				//<PantryIngredients pantry={this.state.pantry} />
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
-				<PantryIngredients pantry={this.state.pantry} />
+
 			</div>
 		);
 	}

@@ -60,6 +60,8 @@ class PantryIngredients extends Component{
 		return (
 						<ReactTable
 							SubComponent={(row) => {
+								console.log("seeing info from row");
+								console.log(row);
 								return (
 									<DeleteIngredientButton deleteIngredientHandler={1}/>
 								)

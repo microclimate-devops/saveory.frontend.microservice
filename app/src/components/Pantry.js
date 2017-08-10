@@ -90,6 +90,14 @@ class Pantry extends Component{
 		}
 		console.log("pantry before delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		userPantry.splice(indexToDelete, 1);
+		if(userPantry.length == 1){
+			userPantry.push({
+				item: "Empty",
+				qty: "Empty",
+				qtyUnit: "Empty",
+				expDate: "Empty"
+			});
+		}
 		console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		this.setState({pantry: userPantry});
 	}
@@ -110,6 +118,7 @@ class Pantry extends Component{
 					columns={this.state.pantryColumns}
 					filterable
 				/>
+				<h2>{JSON.stringify(this.state.pantry)}</h2>
 			</div>
 		);
 	}

@@ -54,7 +54,9 @@ class Pantry extends Component{
 			console.log("current item: "+userPantry[indexToDelete].item);
 			console.log("item.item: "+item.item);
 		}
+		console.log("pantry before delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		userPantry.splice(indexToDelete, 1);
+		console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		this.setState({pantry: userPantry});
 	}
 

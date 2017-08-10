@@ -55,6 +55,16 @@ class PantryIngredients extends Component{
 			pantry = [this.state.pantryEmptyDescriptor];
 		}
 
+		//TEST
+		if(pantry.length == 1){
+			pantry.push({
+				item: "Empty",
+				qty: "Empty",
+				qtyUnit: "Empty",
+				expDate: "Empty"
+			});
+		}
+
 		return pantry;
 	}
 
@@ -76,7 +86,6 @@ class PantryIngredients extends Component{
 					columns={pantryColumns}
 					filterable
 				/>
-				<h2>User's pantry {JSON.stringify(this.makePantryTableData())}</h2>
 			</div>
 			);
 	}

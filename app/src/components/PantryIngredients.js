@@ -63,18 +63,21 @@ class PantryIngredients extends Component{
 		var pantryColumns = this.state.pantryColumns;
 
 		return (
-			<ReactTable
-				SubComponent={(row) => {
-					console.log("seeing info from row");
-					console.log(row);
-					return (
-						<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler} targetItem={row.original}/>
-					)
-				}}
-				data={this.makePantryTableData()}
-				columns={pantryColumns}
-				filterable
-			/>
+			<div>
+				<ReactTable
+					SubComponent={(row) => {
+						console.log("seeing info from row");
+						console.log(row);
+						return (
+							<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler} targetItem={row.original}/>
+						)
+					}}
+					data={this.makePantryTableData()}
+					columns={pantryColumns}
+					filterable
+				/>
+				<h2>User's pantry {JSON.stringify(this.makePantryTableData())}</h2>
+			</div>
 			);
 	}
 }

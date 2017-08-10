@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import DeleteIngredientButton from "./DeleteIngredientButton.js";
+//import DeleteIngredientButton from "./DeleteIngredientButton.js";
 import PropTypes from 'prop-types';
 
 class PantryIngredients extends Component{
@@ -40,8 +40,8 @@ class PantryIngredients extends Component{
 	}
 
 	static propTypes = {
-		pantry: PropTypes.array.isRequired,
-		deleteIngredientHandler: PropTypes.string.isRequired
+		pantry: PropTypes.array.isRequired
+		//deleteIngredientHandler: PropTypes.string.isRequired
 	};
 
 	render(){
@@ -60,7 +60,7 @@ class PantryIngredients extends Component{
 								/*return (
 									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler}/>
 								)*/
-								return (<p>{this.props.pantryEmptyDescriptor}</p>);
+								return (<p>Test</p>);
 							}}
 							data={pantry}
 							columns={pantryColumns}

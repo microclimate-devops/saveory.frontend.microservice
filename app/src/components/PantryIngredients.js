@@ -49,6 +49,8 @@ class PantryIngredients extends Component{
 		var pantry = this.props.pantry;
 		var pantryColumns = this.state.pantryColumns;
 
+		console.log("pantry in table: "+JSON.stringify(pantry));
+
 		//Check that the pantry is a non-empty array
 		if(!Array.isArray(pantry) || pantry.length === 0 ){
 			pantry = this.state.pantryEmptyDescriptor;

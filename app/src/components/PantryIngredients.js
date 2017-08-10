@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-//import DeleteIngredientButton from "./DeleteIngredientButton.js";
+import DeleteIngredientButton from "./DeleteIngredientButton.js";
 import PropTypes from 'prop-types';
 
 class PantryIngredients extends Component{
@@ -60,9 +60,9 @@ class PantryIngredients extends Component{
 		return (
 						<ReactTable
 							SubComponent={(row) => {
-								/*return (
-									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler}/>
-								)*/
+								return (
+									<DeleteIngredientButton deleteIngredientHandler={1}/>
+								)
 								return (<p>Test</p>);
 							}}
 							data={pantry}

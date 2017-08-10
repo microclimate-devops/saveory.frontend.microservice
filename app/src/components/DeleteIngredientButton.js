@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class DeleteIngredientButton extends Component{
   static propTypes = {
-		deleteIngredientHandler: PropTypes.func.isRequired
+		deleteIngredientHandler: PropTypes.number.isRequired
 	};
 
   onPress(e){

@@ -49,7 +49,11 @@ class Pantry extends Component{
 		//remove the item from the pantry
 		var userPantry = this.state.pantry;
 		var indexToDelete;
-		for(indexToDelete = 0; indexToDelete < userPantry.length && userPantry[indexToDelete].item != item.item; indexToDelete++){}
+		for(indexToDelete = 0; indexToDelete < userPantry.length && userPantry[indexToDelete].item != item.item; indexToDelete++){
+			console.log("current element: " + JSON.stringify(userPantry[indexToDelete]));
+			console.log("current item: "+userPantry[indexToDelete].item);
+			console.log("item.item: "+item.item);
+		}
 		userPantry.splice(indexToDelete, 1);
 		this.setState({pantry: userPantry});
 	}

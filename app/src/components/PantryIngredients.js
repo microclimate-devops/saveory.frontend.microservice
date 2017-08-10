@@ -44,33 +44,38 @@ class PantryIngredients extends Component{
 		deleteIngredientHandler: PropTypes.func.isRequired
 	};
 
-	render(){
+	makePantryTableData(){
 		//Get the data for the table ready
 		var pantry = this.props.pantry;
-		var pantryColumns = this.state.pantryColumns;
 
 		console.log("pantry in table: "+JSON.stringify(pantry));
 
 		//Check that the pantry is a non-empty array
 		if(!Array.isArray(pantry) || pantry.length === 0 ){
-			console.log("pantry is not an array apparently");
 			pantry = [this.state.pantryEmptyDescriptor];
 		}
 
+		return pantry;
+	}
+
+	render(){
+		//Get the data for the table ready
+		var pantryColumns = this.state.pantryColumns;
+
 		return (
-						<ReactTable
-							SubComponent={(row) => {
-								console.log("seeing info from row");
-								console.log(row);
-								return (
-									<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler} targetItem={row.original}/>
-								)
-							}}
-							data={pantry}
-							columns={pantryColumns}
-							filterable
-						/>
-					);
+			<ReactTable
+				SubComponent={(row) => {
+					console.log("seeing info from row");
+					console.log(row);
+					return (
+						<DeleteIngredientButton deleteIngredientHandler={this.props.deleteIngredientHandler} targetItem={row.original}/>
+					)
+				}}
+				data={this.makePantryTableData()}
+				columns={pantryColumns}
+				filterable
+			/>
+			);
 	}
 }
 

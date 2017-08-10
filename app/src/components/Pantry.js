@@ -61,7 +61,6 @@ class Pantry extends Component{
 	}
 
 	render(){
-		console.log("PANTRY RENDER");
 		const userPantry = this.state.pantry;
 		return (
 			<div id="pantry">

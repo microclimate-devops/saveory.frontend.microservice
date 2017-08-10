@@ -68,6 +68,10 @@ class PantryIngredients extends Component{
 		return pantry;
 	}
 
+	handlePantryItemRemoval(item){
+		
+	}
+
 	render(){
 		//Get the data for the table ready
 		var pantryColumns = this.state.pantryColumns;

@@ -1,13 +1,47 @@
 import React, { Component } from 'react';
+import ReactTable from 'react-table';
 //import axios from 'axios';
 import Https from 'https';
+import DeleteIngredientButton from "./DeleteIngredientButton.js";
 import PropTypes from 'prop-types';
-import PantryIngredients from "./PantryIngredients.js";
 
 class Pantry extends Component{
 	constructor(props){
 		super(props);
-		this.state = {pantry: {}, error: {}, pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/" };
+		this.state = {
+			pantry: [], 
+			error: {}, 
+			pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/", 
+			pantryEmptyDescriptor: {
+				item: "Empty",
+				qty: "Empty",
+				qtyUnit: "Empty",
+				expDate: "Empty"
+			},
+			pantryColumns: [
+				{
+					Header: "Ingredients",
+					columns: [
+						{
+							Header: "Item",
+							accessor: "item"
+						},
+						{
+							Header: "Quantity",
+							accessor: "qty"
+						},
+						{
+							Header: "Quantity Unit",
+							accessor: "qtyUnit"
+						},
+						{
+							Header: "Expiration",
+							accessor: "expDate"
+						}
+					]
+				}
+			]
+		};
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 	}
 
@@ -49,7 +83,7 @@ class Pantry extends Component{
 		//remove the item from the pantry
 		var userPantry = this.state.pantry;
 		var indexToDelete;
-		for(indexToDelete = 0; indexToDelete < userPantry.length && userPantry[indexToDelete].item != item.item; indexToDelete++){
+		for(indexToDelete = 0; indexToDelete < userPantry.length && userPantry[indexToDelete].item !== item.item; indexToDelete++){
 			console.log("current element: " + JSON.stringify(userPantry[indexToDelete]));
 			console.log("current item: "+userPantry[indexToDelete].item);
 			console.log("item.item: "+item.item);
@@ -61,11 +95,21 @@ class Pantry extends Component{
 	}
 
 	render(){
-		const userPantry = this.state.pantry;
 		return (
 			<div id="pantry">
 				<h1>user {this.props.user}'s pantry</h1>
-				<PantryIngredients pantry={userPantry} deleteIngredientHandler={this.deleteIngredient}/>
+				<ReactTable
+					SubComponent={(row) => {
+						console.log("seeing info from row");
+						console.log(row);
+						return (
+							<DeleteIngredientButton deleteIngredientHandler={this.deleteIngredient} targetItem={row.original}/>
+						)
+					}}
+					data={this.state.pantry}
+					columns={this.state.pantryColumns}
+					filterable
+				/>
 			</div>
 		);
 	}

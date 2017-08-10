@@ -15,7 +15,7 @@ class Pantry extends Component{
 		user: PropTypes.string.isRequired
 	};
 
-	componentDidMount(){
+	retrievePantry(){
 		const pantryRequestURL = this.state.pantryServiceURL+"pantries?user="+this.props.user;
 		//retrieve the user's pantry from the backend
 		Https.get(pantryRequestURL, (res) => {
@@ -39,8 +39,19 @@ class Pantry extends Component{
 		});
 	}
 
+	componentDidMount(){
+		this.retrievePantry();
+	}
+
 	deleteIngredient(item){
 		console.log(JSON.stringify(item));
+		//TEST before backend implementation
+		//remove the item from the pantry
+		var userPantry = this.state.pantry;
+		var indexToDelete;
+		for(indexToDelete = 0; indexToDelete < userPantry.length && userPantry[indexToDelete].item != item.item; indexToDelete++){}
+		userPantry.splice(indexToDelete, 1);
+		this.setState({pantry: userPantry});
 	}
 
 	render(){

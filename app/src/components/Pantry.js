@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import axios from 'axios';
 import Https from 'https';
 import PropTypes from 'prop-types';
-//import PantryIngredients from "./PantryIngredients.js";
+import PantryIngredients from "./PantryIngredients.js";
 
 class Pantry extends Component{
 	constructor(props){

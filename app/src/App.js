@@ -10,10 +10,12 @@ class App extends Component {
   render() {
       	//<Home userToken={1} user="test"/>
     return (
-      <div className="App">
-	<Route component={Header} />
-	<Route path='/login' component={LoginPage} />
-      </div>
+      <Router>
+	      <div className="App">
+		<Route component={Header} />
+		<Route path='/login' component={LoginPage} />
+	      </div>
+     </Router>
     );
   }
 }

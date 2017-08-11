@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
-//import components
-import Header from './components/Header.js';
-//import Home from './components/Home.js';
-import LoginPage from './components/auth/LoginPage.js';
+//import auth components
+import SecureRoute from './components/auth/SecureRoute.js';
+import Login from './components/auth/Login.js';
+import Callback from './components/auth/Callback.js';
+import OktaWrapHeader from './components/auth/OktaWrapHeader.js';
+import OktaWrapHome from './components/auth/OktaWrapHome.js';
 
 class App extends Component {
   render() {
       	//<Home userToken={1} user="test"/>
     return (
       <div className="App">
-	<Route path="/" component={Header} />
-	<Route path='/login' component={LoginPage} />
+	<Route component={OktaWrapHeader} />
+	<SecureRoute exact={true} path="/" component={OktaWrapHome}/>
+	<Route path="/login" component={Login}/>
+	<Route path="/callback" component={Callback}/>
       </div>
     );
   }

@@ -9,7 +9,7 @@ class Pantry extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			pantry: [], 
+			pantry: [],
 			error: {}, 
 			pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/", 
 			pantryEmptyDescriptor: {
@@ -89,16 +89,16 @@ class Pantry extends Component{
 			console.log("item.item: "+item.item);
 		}
 		console.log("pantry before delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
-		/*userPantry.splice(indexToDelete, 1);
-		if(userPantry.length == 1){
+		userPantry.splice(indexToDelete, 1);
+		if(userPantry.length === 1){
 			userPantry.push({
 				item: "Empty",
 				qty: "Empty",
 				qtyUnit: "Empty",
 				expDate: "Empty"
 			});
-		}*/
-		userPantry[indexToDelete].qty *= 2;
+		}
+		//userPantry[indexToDelete].qty *= 2;
 		console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		this.setState({pantry: userPantry});
 	}

@@ -13,7 +13,7 @@ class Auth {
       url: 'https://dev-373993.oktapreview.com',
       clientId: '0oabl235egUsTUGYd0h7',
       issuer: 'https://dev-373993.oktapreview.com',
-      redirectUri: 'http://localhost:5000/callback',
+      redirectUri: 'https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/saveoryfrontend:9080/callback'
     });
   }
 

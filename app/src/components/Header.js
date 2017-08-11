@@ -24,7 +24,7 @@ class Header extends Component{
 			<div className="App-header">
 			  <img src={logo} className="App-logo" alt="logo" />
 			  <h2>Welcome to Saveory</h2>
-		    	  {this.showLoginLogoutButton}
+		    	  {this.showLoginLogoutButton()}
 			</div>
 		);
 	}

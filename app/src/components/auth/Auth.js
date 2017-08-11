@@ -13,7 +13,7 @@ class Auth {
       url: 'https://dev-373993.oktapreview.com',
       clientId: '0oabl235egUsTUGYd0h7',
       issuer: 'https://dev-373993.oktapreview.com',
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: 'http://localhost:5000/callback',
     });
   }
 

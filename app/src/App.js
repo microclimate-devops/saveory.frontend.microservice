@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import './App.css';
 //import components
 import Header from './components/Header.js';
@@ -10,12 +10,10 @@ class App extends Component {
   render() {
       	//<Home userToken={1} user="test"/>
     return (
-      <Router>
-	      <div className="App">
-		<Route path="/" component={Header} />
-		<Route path='/login' component={LoginPage} />
-	      </div>
-     </Router>
+      <div className="App">
+	<Route path="/" component={Header} />
+	<Route path='/login' component={LoginPage} />
+      </div>
     );
   }
 }

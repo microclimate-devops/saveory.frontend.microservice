@@ -29,6 +29,7 @@ export default withAuth(class Callback extends Component {
   }
 
   render() {
+    console.log("render of callback called (pathname: "+localStorage.getItem('referrerPath')+")");
     if (!this.state.parsingTokens) {
       const pathname = localStorage.getItem('referrerPath') || '/';
       console.log("pathname: "+pathname);

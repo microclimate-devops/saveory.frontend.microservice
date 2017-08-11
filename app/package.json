@@ -41,6 +41,7 @@
     "jest": "18.1.0",
     "json-loader": "0.5.4",
     "object-assign": "4.1.1",
+    "@okta/okta-signin-widget": "^2.1.0",
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
     "react-dev-utils": "^0.5.2",

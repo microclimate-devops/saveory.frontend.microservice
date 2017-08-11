@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {Route} from 'react-router-dom';
 import './App.css';
 //import components
-import Home from './components/Home.js';
+import Header from './components/Header.js';
+//import Home from './components/Home.js';
+import LoginPage from './components/auth/LoginPage.js';
 
 class App extends Component {
   render() {
+      	//<Home userToken={1} user="test"/>
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Saveory</h2>
-        </div>
-      	<Home userToken={1} user="test"/>
+	<Route component={Header} />
+	<Route path='/login' component={LoginPage} />
       </div>
     );
   }

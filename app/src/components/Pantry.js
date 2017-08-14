@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import axios from 'axios';
 import Https from 'https';
-import DeleteIngredientButton from "./DeleteIngredientButton.js";
+import DeleteIngredients from "./DeleteIngredients.js";
 import PropTypes from 'prop-types';
 
 class Pantry extends Component{
@@ -45,7 +45,8 @@ class Pantry extends Component{
 			sortOptions: {
 				defaultSortName: 'item',
 				defaultSortOrder: 'desc',
-			}
+			},
+			deleteIngredientError: false
 		};
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 	}
@@ -82,21 +83,34 @@ class Pantry extends Component{
 		this.retrievePantry();
 	}
 
-	deleteIngredient(item){
-		console.log(JSON.stringify(item));
+	findIngredientInPantry(ingredient){
+		let itemIndex = undefined;
+		let userPantry = this.state.pantry;
+		//Go through the pantry until the ingredient with the correct name is found
+		for(let i = 0; i < userPantry.length && itemIndex === undefined; i++){
+			if(userPantry[i].item === ingredient){
+				itemIndex = i;
+			}
+		}
+		return itemIndex;
+	}
+
+	deleteIngredient(ingredient){
+		console.log("PASSED INGREDIENT: "+ingredient);
 		//TEST before backend implementation
+
 		//remove the item from the pantry
 		var userPantry = this.state.pantry;
-		var indexToDelete;
-		for(indexToDelete = 0; indexToDelete < userPantry.length && userPantry[indexToDelete].item !== item.item; indexToDelete++){
-			console.log("current element: " + JSON.stringify(userPantry[indexToDelete]));
-			console.log("current item: "+userPantry[indexToDelete].item);
-			console.log("item.item: "+item.item);
+		var indexToDelete = this.findIngredientInPantry(ingredient);
+
+		console.log("pantry before delete at index "+indexToDelete+"("+(indexToDelete===undefined)+"), " + JSON.stringify(userPantry));
+		//Check that index is valid
+		if(indexToDelete !== undefined){
+			userPantry.splice(indexToDelete, 1);
 		}
-		console.log("pantry before delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
-		userPantry.splice(indexToDelete, 1);
 		console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
-		this.setState({pantry: userPantry});
+		//Update pantry and delete error
+		this.setState({pantry: userPantry, deleteIngredientError: (indexToDelete === undefined)});
 	}
 
 	render(){
@@ -121,8 +135,7 @@ class Pantry extends Component{
 				      <TableHeaderColumn dataField='qtyUnit' datasort>Unit</TableHeaderColumn>
 				      <TableHeaderColumn dataField='expDate' datasort>Expiration</TableHeaderColumn>
 				  </BootstrapTable>
-				  <DeleteIngredientButton deleteIngredientHandler={this.deleteIngredient} targetItem={this.state.pantry[0]}/>
-				<h2>{JSON.stringify(this.state.pantry)}</h2>
+				  <DeleteIngredients onDelete={this.deleteIngredient} deleteError={this.state.deleteIngredientError} />
 			</div>
 		);
 	}

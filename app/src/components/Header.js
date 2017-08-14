@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import logo from '../logo.svg';
 
 class Header extends Component{
-/*	static propTypes = {
+	static propTypes = {
 		isAuth: PropTypes.bool.isRequired,
-		logoutHandler: PropTypes.func.isRequired,
-		loginHandler: PropTypes.func.isRequired
+		logoutHandler: PropTypes.func.isRequired
 	};
-
-	showLoginLogoutButton(){
-		var returnButton;
-		if(this.props.isAuth){
-			returnButton = <button onClick={this.props.logoutHandler}>Logout</button>;
-		}else{
-			returnButton = <button onClick={this.props.loginHandler}>Login</button>;
-		}
-		return returnButton;
-	}*/
 
 	render(){
 		//{this.showLoginLogoutButton()}
@@ -25,7 +14,7 @@ class Header extends Component{
 			<div className="App-header">
 			  <img src={logo} className="App-logo" alt="logo" />
 			  <h2>Welcome to Saveory</h2>
-
+			  {this.props.isAuth && <button className="logout-button" onClick={this.props.logoutHandler}>Logout</button>}
 			</div>
 		);
 	}

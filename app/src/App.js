@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header.js';
 import Home from './components/Home.js';
+import Login from './components/Login.js';
 //import auth components
 /*import SecureRoute from './components/auth/SecureRoute.js';
 import Login from './components/auth/Login.js';
@@ -11,6 +12,36 @@ import OktaWrapHeader from './components/auth/OktaWrapHeader.js';
 import OktaWrapHome from './components/auth/OktaWrapHome.js';*/
 
 class App extends Component {
+  constructor(props){
+	super(props);
+	this.state = {
+		isAuth: false,
+		user: "me"
+	}
+	this.login = this.login.bind(this);
+	this.logout = this.logout.bind(this);
+  }
+
+  login(username){
+	console.log("logging in user")
+	this.setState({isAuth: true, user: username});
+  }
+
+  logout(){
+	this.setState({isAuth: false});	
+  }
+
+  accessHome(){
+	let content = null;
+	if(this.state.isAuth){
+		content = <Home userToken={1} user={this.state.user}/>;
+	}else{
+		content = <Login loginHandler={this.login}/>;
+	}
+	return content;
+
+  }
+
   render() {
 	/*<Route component={OktaWrapHeader} />
 	<SecureRoute exact={true} path="/" component={OktaWrapHome}/>
@@ -18,8 +49,8 @@ class App extends Component {
 	<Route path="/callback" component={Callback}/>*/
     return (
       <div className="App">
-		<Header />
-		<Home userToken={1} user="test"/>
+		<Header isAuth={this.state.isAuth} logoutHandler={this.logout}/>
+		{this.accessHome()}
       </div>
     );
   }

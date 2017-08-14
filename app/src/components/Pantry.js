@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ReactTable from 'react-table';
+//import ReactTable from 'react-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import axios from 'axios';
 import Https from 'https';
 import DeleteIngredientButton from "./DeleteIngredientButton.js";
@@ -9,7 +10,7 @@ class Pantry extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			pantry: [],
+			pantry: [ { "item" : "apple" , "qty" : 4 , "qtyUnit" : "piece" , "expDate" : "08-04-2017"} , { "item" : "whole milk" , "qty" : 2 , "qtyUnit" : "gallon" , "expDate" : "08-10-2017"}],
 			error: {}, 
 			pantryServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/", 
 			pantryEmptyDescriptor: {
@@ -40,7 +41,11 @@ class Pantry extends Component{
 						}
 					]
 				}
-			]
+			],
+			sortOptions: {
+				defaultSortName: 'item',
+				defaultSortOrder: 'desc',
+			}
 		};
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 	}
@@ -90,24 +95,12 @@ class Pantry extends Component{
 		}
 		console.log("pantry before delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		userPantry.splice(indexToDelete, 1);
-		if(userPantry.length === 1){
-			userPantry.push({
-				item: "Empty",
-				qty: "Empty",
-				qtyUnit: "Empty",
-				expDate: "Empty"
-			});
-		}
-		//userPantry[indexToDelete].qty *= 2;
 		console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		this.setState({pantry: userPantry});
 	}
 
 	render(){
-		return (
-			<div id="pantry">
-				<h1>user {this.props.user}'s pantry</h1>
-				<ReactTable
+				/*<ReactTable
 					SubComponent={(row) => {
 						console.log("seeing info from row");
 						console.log(row);
@@ -118,7 +111,17 @@ class Pantry extends Component{
 					data={this.state.pantry}
 					columns={this.state.pantryColumns}
 					filterable
-				/>
+				/>*/
+		return (
+			<div id="pantry">
+				<h1>user {this.props.user}'s pantry</h1>
+				<BootstrapTable data={this.state.pantry} options={this.state.sortOptions} striped hover>
+				      <TableHeaderColumn isKey dataField='item' datasort>Ingredient</TableHeaderColumn>
+				      <TableHeaderColumn dataField='qty' datasort>Quantity</TableHeaderColumn>
+				      <TableHeaderColumn dataField='qtyUnit' datasort>Unit</TableHeaderColumn>
+				      <TableHeaderColumn dataField='expDate' datasort>Expiration</TableHeaderColumn>
+				  </BootstrapTable>
+				  <DeleteIngredientButton deleteIngredientHandler={this.deleteIngredient} targetItem={this.state.pantry[0]}/>
 				<h2>{JSON.stringify(this.state.pantry)}</h2>
 			</div>
 		);

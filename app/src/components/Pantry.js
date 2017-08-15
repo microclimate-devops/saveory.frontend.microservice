@@ -4,6 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import axios from 'axios';
 import Https from 'https';
 import DeleteIngredients from "./DeleteIngredients.js";
+import AddIngredients from "./AddIngredients.js";
 import PropTypes from 'prop-types';
 
 class Pantry extends Component{
@@ -136,6 +137,7 @@ class Pantry extends Component{
 				      <TableHeaderColumn dataField='expDate' datasort>Expiration</TableHeaderColumn>
 				  </BootstrapTable>
 				  <DeleteIngredients onDelete={this.deleteIngredient} deleteError={this.state.deleteIngredientError} />
+				  <AddIngredients />
 			</div>
 		);
 	}

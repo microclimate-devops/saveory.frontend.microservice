@@ -1,34 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-}
-
-table {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-  border: 3px solid purple;
-}
-
-thead th:nth-child(1) {
-  width: 30%;
-}
-
-thead th:nth-child(2) {
-  width: 20%;
-}
-
-thead th:nth-child(3) {
-  width: 15%;
-}
-
-thead th:nth-child(4) {
-  width: 35%;
-}
-
-th, td {
-  padding: 20px;
+  font: 300 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #eee;
 }
 
 .error-msg{
@@ -50,12 +24,7 @@ th, td {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-body {
-  font: 300 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #eee;
-  margin: 0;
-  padding: 0;
-}
+
 .tabs {
   margin: 25px;
   background: #fff;
@@ -83,7 +52,7 @@ body {
   padding: 25px;
 }
 
-//Recipe Search stuff
+/*Recipe Search stuff*/
 /* Search 1 - bg change*/
 .search-container{
   vertical-align: middle;
@@ -129,3 +98,61 @@ body {
     background: #ffffff;
   }
 
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid purple;
+}
+
+thead th:nth-child(1) {
+  width: 30%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 35%;
+}
+
+th, td {
+  padding: 15px;
+}
+
+tr{
+	text-align: left;
+}
+
+tbody tr:hover{
+	background-color: rgba(96, 216, 249, 0.84);
+}
+
+/*Recipes*/
+.spacer{
+	clear:both;
+}
+
+.recipe-search-results-container{
+	width: 45%;
+	float: left;
+	margin-top: 30px;
+}
+
+.recipe-display-container{
+	width: 45%;
+	float: left;
+	margin-top: 30px;
+	margin-left: 5%;
+	text-align: left;
+}
+
+.recipe-display-container h3{
+	text-align: center;
+	margin-top: 0px;
+}

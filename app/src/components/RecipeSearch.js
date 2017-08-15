@@ -24,7 +24,7 @@ class RecipeSearch extends Component{
 	render(){
 		return (
 			<div className="search-container">
-				<input type="search" id="search" placeholder="Search for Recipes" onChange={this.handleChange} value={this.state.search}/>
+				<input type="search" placeholder="Search for Recipes" onChange={this.handleChange} value={this.state.search}/>
 				<button onClick={this.onSearch}>Search</button>
 			</div>
 		);

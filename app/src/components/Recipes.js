@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Https from 'https';
 import RecipeSearch from './RecipeSearch.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
 import RecipeDisplay from './RecipeDisplay.js';
@@ -10,6 +11,7 @@ class Recipes extends Component{
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.state = {
+			recipeServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/recipeservice-service:9080/RecipeService/",
 			recipeQuery: "", 
 			recipesDB:[
 				{
@@ -79,6 +81,26 @@ class Recipes extends Component{
 	static propTypes = {
 		user: PropTypes.string.isRequired
 	};
+	
+	componentDidMount(){
+		this.retrieveRecipes();
+	}	
+
+	retrieveRecipes(){
+		const recipeRequestURL = this.state.recipeServiceURL+"recipes";
+		//retrieve the user's pantry from the backend
+		Https.get(recipeRequestURL, (res) => {
+			res.on('data', (d) => {
+				//Parse the data into a JSON object
+				const recipes = JSON.parse(d);
+				console.log("recipes: "+JSON.stringify(recipes));
+
+				this.setState({recipes: recipes});
+			});
+		}).on('error', (e) => {
+			this.setState({error: e});
+		});
+	}
 
 	isQueryMatch(query, target){
 		let matchResult = -1;

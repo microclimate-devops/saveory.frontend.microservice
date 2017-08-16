@@ -83,7 +83,7 @@ class AddIngredients extends Component{
 				>
 				  <div style={dialogStyle()} >
 					<div className="login-form-container">
-						<h1>enter ingredient info</h1>	
+						<h1>Enter Ingredient</h1>	
 						<AddIngredientForm onSubmit={this.handleNewIngredientSubmit}/>
 						<InfoMessage msg={this.props.msg} showMsg={this.props.showMsg} msgIsError={this.props.msgIsError}/>
 					</div>

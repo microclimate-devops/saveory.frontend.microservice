@@ -38,8 +38,8 @@ class Login extends Component{
 		//Show the login form
 		return (
 			<div className="login-form">
-			  Username: <input type="text" onChange={this.handleUsernameInput} value={this.state.username}/><br/>
-			  Password: <input type="password" onChange={this.handlePasswordInput} value={this.state.password}/><br/>
+			 <label>Username:</label><br/><input type="text" onChange={this.handleUsernameInput} value={this.state.username}/><br/>
+			  <label>Password:</label><br/><input type="password" onChange={this.handlePasswordInput} value={this.state.password}/><br/>
 			  <button onClick={this.verifyCredentials}>Submit</button>
 		          <h2 className="error-msg">{this.state.loginError}</h2>
 			</div>

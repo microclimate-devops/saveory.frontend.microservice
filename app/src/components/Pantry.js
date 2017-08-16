@@ -129,7 +129,8 @@ class Pantry extends Component{
 		let isValid = false;
 
 		//check if it's already in pantry
-		if(this.findIngredientInPantry(ingredient) === undefined){
+		console.log("in pantry result: "+this.findIngredientInPantry(ingredient));
+		if(this.findIngredientInPantry(ingredient.item) === undefined){
 			//Make sure no fields are empty
 			if(ingredient.item.length !== 0 && ingredient.qty !== 0 && ingredient.qtyUnit.length !== 0 && ingredient.expDate.length !== 0){
 				isValid = true;

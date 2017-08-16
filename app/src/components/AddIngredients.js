@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-//import ReactTable from 'react-table';
+import PropTypes from 'prop-types';
 import { Modal } from 'react-overlays';
+import AddIngredientForm from './AddIngredientForm.js';
+import InfoMessage from './InfoMessage.js';
 
 //***********************************
 //Modal Style constants
@@ -43,7 +45,15 @@ class AddIngredients extends Component{
 		this.state = {showModal: false};
 		this.open = this.open.bind(this);
 		this.close = this.close.bind(this);
+		this.handleNewIngredientSubmit = this.handleNewIngredientSubmit.bind(this);
 	}
+
+	static PropTypes = {
+		onAddIngredient: PropTypes.func.isRequired,
+		msg: PropTypes.string.isRequired,
+		showMsg: PropTypes.bool.isRequired,
+		msgIsError: PropTypes.bool.isRequired
+	};
 
 	open(){
 		this.setState({showModal: true});
@@ -53,13 +63,16 @@ class AddIngredients extends Component{
 		this.setState({showModal: false});
 	}
 
+	handleNewIngredientSubmit(ingred){
+		this.props.onAddIngredient(ingred);
+	}
+
 	render(){
 		return (
 			<div className='modal-example'>
 				<button onClick={this.open}>
-				  Open Modal
+				  Add Ingredient
 				</button>
-				<p>Click to get the full Modal experience!</p>
 
 				<Modal
 				  aria-labelledby='modal-label'
@@ -71,7 +84,8 @@ class AddIngredients extends Component{
 				  <div style={dialogStyle()} >
 					<div className="login-form-container">
 						<h1>enter ingredient info</h1>	
-					
+						<AddIngredientForm onSubmit={this.handleNewIngredientSubmit}/>
+						<InfoMessage msg={this.props.msg} showMsg={this.props.showMsg} msgIsError={this.props.msgIsError}/>
 					</div>
 				  </div>
 				</Modal>

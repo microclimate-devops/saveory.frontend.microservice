@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 //import ReactTable from 'react-table';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import axios from 'axios';
 import Https from 'https';
 import DeleteIngredients from "./DeleteIngredients.js";
 import AddIngredients from "./AddIngredients.js";
-import PropTypes from 'prop-types';
+import InfoMessage from './InfoMessage.js';
+
 
 class Pantry extends Component{
 	constructor(props){
@@ -47,9 +49,12 @@ class Pantry extends Component{
 				defaultSortName: 'item',
 				defaultSortOrder: 'desc',
 			},
-			deleteIngredientError: false
+			actionMsg: "",
+			showActionMsg: false,
+			actionMsgIsError: false
 		};
 		this.deleteIngredient = this.deleteIngredient.bind(this);
+		this.addIngredient = this.addIngredient.bind(this);
 	}
 
 	static propTypes = {
@@ -101,17 +106,52 @@ class Pantry extends Component{
 		//TEST before backend implementation
 
 		//remove the item from the pantry
-		var userPantry = this.state.pantry;
-		var indexToDelete = this.findIngredientInPantry(ingredient);
+		let userPantry = this.state.pantry;
+		let indexToDelete = this.findIngredientInPantry(ingredient);
+		let actionMsg = "Successfully deleted."
+		let actionMsgIsError = false;
+		let showActionMsg = true;
 
-		console.log("pantry before delete at index "+indexToDelete+"("+(indexToDelete===undefined)+"), " + JSON.stringify(userPantry));
+		//console.log("pantry before delete at index "+indexToDelete+"("+(indexToDelete===undefined)+"), " + JSON.stringify(userPantry));
 		//Check that index is valid
 		if(indexToDelete !== undefined){
 			userPantry.splice(indexToDelete, 1);
+		}else{
+			actionMsg = "Failed to delete, please type the ingredient's name precisely.";
+			actionMsgIsError = true;
 		}
-		console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
-		//Update pantry and delete error
-		this.setState({pantry: userPantry, deleteIngredientError: (indexToDelete === undefined)});
+		//console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
+		//Update pantry and message stuff
+		this.setState({pantry: userPantry, actionMsg: actionMsg, showActionMsg: showActionMsg, actionMsgIsError: actionMsgIsError});
+	}
+
+	ingredientIsValid(ingredient){
+		let isValid = false;
+
+		//check if it's already in pantry
+		if(this.findIngredientInPantry(ingredient) === undefined){
+			//Make sure no fields are empty
+			if(ingredient.item.length !== 0 && ingredient.qty !== 0 && ingredient.qtyUnit.length !== 0 && ingredient.expDate.length !== 0){
+				isValid = true;
+			}
+		}
+
+		return isValid;
+	}
+
+	addIngredient(ingredient){
+		let userPantry = this.state.pantry;
+		let actionMsg = "Could not add ingredient. Please make sure the ingredient is not already in the pantry and fill all fields. "
+		let actionMsgIsError = true;
+		let showActionMsg = true;
+		if(this.ingredientIsValid(ingredient)){
+			userPantry.push(ingredient);
+			actionMsg = "Successfully added ingredient."
+			actionMsgIsError = false;
+		}
+
+		//Update pantry and message stuff
+		this.setState({pantry: userPantry, actionMsg: actionMsg, showActionMsg: showActionMsg, actionMsgIsError: actionMsgIsError});
 	}
 
 	render(){
@@ -136,8 +176,9 @@ class Pantry extends Component{
 				      <TableHeaderColumn dataField='qtyUnit' datasort>Unit</TableHeaderColumn>
 				      <TableHeaderColumn dataField='expDate' datasort>Expiration</TableHeaderColumn>
 				  </BootstrapTable>
-				  <DeleteIngredients onDelete={this.deleteIngredient} deleteError={this.state.deleteIngredientError} />
-				  <AddIngredients />
+				  <DeleteIngredients onDeleteIngredient={this.deleteIngredient} />
+				  <AddIngredients onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				  <InfoMessage msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 			</div>
 		);
 	}

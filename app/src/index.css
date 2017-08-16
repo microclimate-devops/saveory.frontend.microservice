@@ -5,19 +5,21 @@ body {
   background: #eee;
 }
 
-.error-msg{
-	color: 'red';
-}
+/*Login Stuff*/
 
 .login-form{
 	margin-top: 20px;
 }
+
+/*Header Stuff*/
 
 .logout-button{
 	position: absolute;
 	top: 15px;
 	right: 15px;
 }
+
+/*Home Stuff*/
 
 * {
   box-sizing: border-box;
@@ -52,6 +54,12 @@ body {
   padding: 25px;
 }
 
+/*Pantry stuff*/
+#pantry>div{
+	margin-top: 15px;
+}
+
+/*Recipes Stuff*/ 
 /*Recipe Search stuff*/
 /* Search 1 - bg change*/
 .search-container{
@@ -133,7 +141,6 @@ tbody tr:hover{
 	background-color: rgba(96, 216, 249, 0.84);
 }
 
-/*Recipes*/
 .spacer{
 	clear:both;
 }
@@ -156,3 +163,14 @@ tbody tr:hover{
 	text-align: center;
 	margin-top: 0px;
 }
+
+/*InfoMessage Stuff */
+
+.error-msg{
+	color: red;
+}
+
+.success-msg{
+	color: green;
+}
+

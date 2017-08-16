@@ -95,7 +95,7 @@ class Recipes extends Component{
 				const recipes = JSON.parse(d);
 				console.log("recipes: "+JSON.stringify(recipes));
 
-				this.setState({recipes: recipes});
+				this.setState({recipesDB: recipes});
 			});
 		}).on('error', (e) => {
 			this.setState({error: e});

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //import Https from 'https';
-import axios from 'axios';
+//import axios from 'axios';
+import Client from './Client.js';
 import RecipeSearch from './RecipeSearch.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
 import RecipeDisplay from './RecipeDisplay.js';
@@ -104,8 +105,8 @@ class Recipes extends Component{
 		}).on('error', (e) => {
 			this.setState({error: e});
 		});*/
-		axios.get(recipeRequestURL).then((res) => {
-			/*res.on('data', (d) => {
+		/*axios.get(recipeRequestURL).then((res) => {
+			res.on('data', (d) => {
 				//Parse the data into a JSON object
 				const recipes = JSON.parse(d);
 				console.log("recipes: "+JSON.stringify(recipes));
@@ -113,12 +114,13 @@ class Recipes extends Component{
 				//Add ccc for effect
 				recipes.push(this.state.recipesDB[0]);
 				this.setState({recipesDB: recipes});
-			});*/
+			});
 			console.log(res);
 			
 		}).catch((e) => {
 			this.setState({error: e});
-		});
+		});*/
+		Client.fetch(recipeRequestURL, (response) => {console.log(response)});
 	}
 
 	isQueryMatch(query, target){

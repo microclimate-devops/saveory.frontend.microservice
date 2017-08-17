@@ -179,6 +179,19 @@ module.exports = {
       }),
     ];
   },
+  devServer:{
+	proxy: { //proxy api calls to backend services
+		"/api/pantry": "http://pantry-service:9080/Pantry",
+		"/api/recipes": "http://recipe-service:9080/Recipes",
+		"/api/users": "http://usermanagement-service:9080/UserManagement",
+		pathRewrite: {"^/api": ""},
+		bypass: function(req, res, proxyOptions){
+			console.log("Testing proxy");
+		}
+	},
+	https: false,
+	noInfo: true
+  },
   plugins: [
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

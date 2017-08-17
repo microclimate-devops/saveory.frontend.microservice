@@ -11,7 +11,8 @@ class Recipes extends Component{
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.state = {
-			recipeServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/recipeservice-service:9080/RecipeService/",
+			//recipeServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/recipeservice-service:9080/RecipeService/",
+			recipeServiceURL: "/api/recipes/",
 			recipeQuery: "", 
 			recipesDB:[
 				{

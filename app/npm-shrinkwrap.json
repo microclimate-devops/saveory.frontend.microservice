@@ -849,6 +849,16 @@
       "from": "caniuse-db@>=1.0.30000618 <2.0.0",
       "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000713.tgz"
     },
+    "carbon-components": {
+      "version": "7.19.1",
+      "from": "carbon-components@>=7.19.1 <8.0.0",
+      "resolved": "https://registry.npmjs.org/carbon-components/-/carbon-components-7.19.1.tgz"
+    },
+    "carbon-icons": {
+      "version": "6.1.0",
+      "from": "carbon-icons@>=6.0.4 <7.0.0",
+      "resolved": "https://registry.npmjs.org/carbon-icons/-/carbon-icons-6.1.0.tgz"
+    },
     "cardinal": {
       "version": "1.0.0",
       "from": "cardinal@>=1.0.0 <2.0.0",
@@ -1827,6 +1837,11 @@
       "version": "1.2.2",
       "from": "flat-cache@>=1.2.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/flat-cache/-/flat-cache-1.2.2.tgz"
+    },
+    "flatpickr": {
+      "version": "2.6.3",
+      "from": "flatpickr@2.6.3",
+      "resolved": "https://registry.npmjs.org/flatpickr/-/flatpickr-2.6.3.tgz"
     },
     "flatten": {
       "version": "1.0.2",

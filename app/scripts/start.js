@@ -258,6 +258,15 @@ function runDevServer(host, port, protocol) {
     watchOptions: {
       ignored: /node_modules/
     },
+    proxy: { //proxy api calls to backend services
+		"/api/pantry": "http://pantry-service:9080/Pantry",
+		"/api/recipes": "http://recipe-service:9080/Recipes",
+		"/api/users": "http://usermanagement-service:9080/UserManagement",
+		pathRewrite: {"^/api": ""},
+		bypass: function(req, res, proxyOptions){
+			console.log("Testing proxy");
+		}
+    },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === "https",
     host: host

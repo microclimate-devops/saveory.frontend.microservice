@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Https from 'https';
+//import Https from 'https';
+import axios from 'axios';
 import RecipeSearch from './RecipeSearch.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
 import RecipeDisplay from './RecipeDisplay.js';
@@ -90,7 +91,7 @@ class Recipes extends Component{
 	retrieveRecipes(){
 		const recipeRequestURL = this.state.recipeServiceURL+"recipes";
 		//retrieve the user's pantry from the backend
-		Https.get(recipeRequestURL, (res) => {
+		/*Https.get(recipeRequestURL, (res) => {
 			res.on('data', (d) => {
 				//Parse the data into a JSON object
 				const recipes = JSON.parse(d);
@@ -101,6 +102,21 @@ class Recipes extends Component{
 				this.setState({recipesDB: recipes});
 			});
 		}).on('error', (e) => {
+			this.setState({error: e});
+		});*/
+		axios.get(recipeRequestURL).then((res) => {
+			/*res.on('data', (d) => {
+				//Parse the data into a JSON object
+				const recipes = JSON.parse(d);
+				console.log("recipes: "+JSON.stringify(recipes));
+
+				//Add ccc for effect
+				recipes.push(this.state.recipesDB[0]);
+				this.setState({recipesDB: recipes});
+			});*/
+			console.log(res);
+			
+		}).catch((e) => {
 			this.setState({error: e});
 		});
 	}

@@ -14,7 +14,7 @@ class Recipes extends Component{
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.state = {
 			//recipeServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/recipeservice-service:9080/RecipeService/",
-			recipeServiceURL: "/api/recipes/",
+			recipeServiceURL: "api/recipes/",
 			recipeQuery: "", 
 			recipesDB:[
 				{
@@ -121,6 +121,7 @@ class Recipes extends Component{
 			this.setState({error: e});
 		});*/
 		Client.search(recipeRequestURL, (response) => {this.setState({recipesDB: response})});
+		Client.search(recipeRequestURL, (response) => {console.log(response)});
 	}
 
 	isQueryMatch(query, target){

@@ -120,7 +120,7 @@ class Recipes extends Component{
 		}).catch((e) => {
 			this.setState({error: e});
 		});*/
-		Client.search(recipeRequestURL, (response) => {console.log(response)});
+		Client.search(recipeRequestURL, (response) => {this.setState({recipesDB: response})});
 	}
 
 	isQueryMatch(query, target){

@@ -90,7 +90,7 @@ class Recipes extends Component{
 	}	
 
 	retrieveRecipes(){
-		const recipeRequestURL = this.state.recipeServiceURL+"recipes";
+		const recipeRequestURL = this.state.recipeServiceURL;
 		//retrieve the user's pantry from the backend
 		/*Https.get(recipeRequestURL, (res) => {
 			res.on('data', (d) => {

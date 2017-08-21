@@ -1,48 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import LoginForm from './LoginForm.js';
 //import { Form, Text } from 'react-form';
 
 class Login extends Component{
 	constructor(props){
 		super(props);
-		this.verifyCredentials = this.verifyCredentials.bind(this);
-	        this.handleUsernameInput = this.handleUsernameInput.bind(this);
-	        this.handlePasswordInput = this.handlePasswordInput.bind(this);
-
-		this.state = {username: "", password: "", users: {"test": "pass"}, loginError:""};
+		this.validateLogin = this.validateLogin.bind(this);
+		this.state = { users: {"test": "pass"}, usernameIsInvalid: false, passwordIsInvalid: false};
 	}
 
-	static propTypes = {
+	static PropTypes = {
 		loginHandler: PropTypes.func.isRequired
 	};
 
-	handleUsernameInput(e){
-		this.setState({username: e.target.value});
-	}
+	validateLogin(loginData){
+		let passwordIsInvalid = true;
 
-	handlePasswordInput(e){
-		this.setState({password: e.target.value});
-	}
-
-	verifyCredentials(e){
-		//Check that recorded password equals entered password
-		if(this.state.users[this.state.username] === this.state.password){
-			this.props.loginHandler(this.state.username);
-		}else{
-			//show error message
-			this.setState({loginError: "Failed Login. Please enter your username and password"});
+		//Check that password for user equals entered password
+		if(this.state.users[loginData.username] === loginData.password){
+			passwordIsInvalid = false;
+			this.props.loginHandler(loginData.username);
 		}
+	
+		console.log("password invalid: " +passwordIsInvalid);	
+		this.setState({passwordIsInvalid: passwordIsInvalid});
 	}
 
 	render(){
 		//Show the login form
 		return (
-			<div className="login-form">
-			 <label>Username:</label><br/><input type="text" onChange={this.handleUsernameInput} value={this.state.username}/><br/>
-			  <label>Password:</label><br/><input type="password" onChange={this.handlePasswordInput} value={this.state.password}/><br/>
-			  <button onClick={this.verifyCredentials}>Submit</button>
-		          <h2 className="error-msg">{this.state.loginError}</h2>
-			</div>
+			  <LoginForm processLogin={this.validateLogin} usernameIsInvalid={this.state.usernameIsInvalid} passwordIsInvalid={this.state.passwordIsInvalid}/>
 		);
 	}
 }

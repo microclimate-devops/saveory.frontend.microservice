@@ -1,17 +1,47 @@
+/* Bluemix Guidelines */
 body {
   margin: 0;
   padding: 0;
-  font: 300 14px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #eee;
+  font: 300 14px/1.4 'IBM Helvetica', 'Helvetica Neue', 'HelveticaNeue', 'Helvetica', 'sans-serif';
+  background: #FFFFFF;
+  color: #1D364D;
+}
+
+button {
+	background-color: #602797;
 }
 
 /*Login Stuff*/
 
-.login-form{
+.login-form-container{
+	width: 60%;
+	max-width: 350px;
 	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+}
+
+.carbon-form-submit-container-button{
+	background-color: #602797;	
+}
+
+.carbon-form-submit-container-button:hover{
+	background-color: #9753E1;
+}
+
+.carbon-form-input-container-input{
+	background-color: #DFE6EB;
 }
 
 /*Header Stuff*/
+
+.App-header {
+  background-color: #F0F4F4;
+  height: 150px;
+  padding: 20px;
+  text-align: center;
+}
 
 .logout-button{
 	position: absolute;

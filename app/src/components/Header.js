@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CarbonButtonPrimary from './carbon/CarbonButtonPrimary.js';
+import HeaderTooltip from './HeaderTooltip.js';
 import logo from '../logo.svg';
 
 class Header extends Component{
@@ -15,7 +15,7 @@ class Header extends Component{
 			<div className="App-header">
 			  <img src="https://devico.io/images/react-logo-dark.svg" className="App-logo" alt={logo} />
 			  <h2>Welcome to Saveory</h2>
-			  {this.props.isAuth && <CarbonButtonPrimary addedClass="logout-button" onClick={this.props.logoutHandler} isInForm={false} buttonText="Logout"/>}
+			  {this.props.isAuth && <HeaderTooltip user={this.props.user} onLogoutClick={this.props.logoutHandler}/>}
 			</div>
 		);
 	}

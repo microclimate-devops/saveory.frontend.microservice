@@ -11,6 +11,37 @@ button {
 	background-color: #602797;
 }
 
+/*Edits to Carbon Components*/
+.bx--expandable-row td{
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+ 
+.bx--btn--primary{
+	background-color: #602797;	
+}
+
+.bx--btn--primary:hover{
+	background-color: #9753E1;
+}
+
+.bx--btn--ghost{
+	color: #602797;	
+}
+
+.bx--btn--ghost:hover{
+	color: #FFFFFF;
+	background-color: #9753E1;
+}
+
+.bx--table-sort__svg{
+	margin-left: 0.1em;
+}
+
+.carbon-form-input-container-input{
+	background-color: #DFE6EB;
+}
+
 /*Login Stuff*/
 
 .login-form-container{
@@ -22,18 +53,6 @@ button {
 	text-align: left;
 }
 
-.carbon-form-submit-container-button{
-	background-color: #602797;	
-}
-
-.carbon-form-submit-container-button:hover{
-	background-color: #9753E1;
-}
-
-.carbon-form-input-container-input{
-	background-color: #DFE6EB;
-}
-
 /*Header Stuff*/
 
 .App-header {
@@ -43,7 +62,7 @@ button {
   text-align: center;
 }
 
-.logout-button{
+.header-tooltip-container{
 	position: absolute;
 	top: 15px;
 	right: 15px;
@@ -85,6 +104,14 @@ button {
 }
 
 /*Pantry stuff*/
+.add-ingredient-button{
+	background-color: #256DD3;
+}
+
+.add-ingredient-button:hover{
+	background-color: #1F57A4;
+}
+
 #pantry>div{
 	margin-top: 15px;
 }
@@ -136,7 +163,7 @@ button {
     background: #ffffff;
   }
 
-table {
+/*table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
@@ -169,7 +196,7 @@ tr{
 
 tbody tr:hover{
 	background-color: rgba(96, 216, 249, 0.84);
-}
+}*/
 
 .spacer{
 	clear:both;

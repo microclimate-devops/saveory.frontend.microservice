@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-overlays';
+import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
 import InfoMessage from './InfoMessage.js';
 
@@ -70,9 +71,7 @@ class AddIngredients extends Component{
 	render(){
 		return (
 			<div className='modal-example'>
-				<button onClick={this.open}>
-				  Add Ingredient
-				</button>
+				<CarbonButton onClick={this.open} text="Add Ingredient" addedClass="add-ingredient-button" />
 
 				<Modal
 				  aria-labelledby='modal-label'

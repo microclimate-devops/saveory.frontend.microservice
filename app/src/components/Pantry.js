@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //import ReactTable from 'react-table';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+//import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import CarbonDataTable from './carbon/CarbonDataTable.js';
 //import axios from 'axios';
 import Https from 'https';
-import DeleteIngredients from "./DeleteIngredients.js";
 import AddIngredients from "./AddIngredients.js";
 import InfoMessage from './InfoMessage.js';
 
 
-class Pantry extends Component{
+class Pantry extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -27,20 +27,20 @@ class Pantry extends Component{
 					Header: "Ingredients",
 					columns: [
 						{
-							Header: "Item",
-							accessor: "item"
+							title: "Item",
+							selector: "item"
 						},
 						{
-							Header: "Quantity",
-							accessor: "qty"
+							title: "Quantity",
+							selector: "qty"
 						},
 						{
-							Header: "Quantity Unit",
-							accessor: "qtyUnit"
+							title: "Quantity Unit",
+							selector: "qtyUnit"
 						},
 						{
-							Header: "Expiration",
-							accessor: "expDate"
+							title: "Expiration",
+							selector: "expDate"
 						}
 					]
 				}
@@ -90,6 +90,7 @@ class Pantry extends Component{
 	}
 
 	findIngredientInPantry(ingredient){
+		console.log("ingredient: "+ingredient);
 		let itemIndex = undefined;
 		let userPantry = this.state.pantry;
 		//Go through the pantry until the ingredient with the correct name is found
@@ -102,12 +103,12 @@ class Pantry extends Component{
 	}
 
 	deleteIngredient(ingredient){
-		console.log("PASSED INGREDIENT: "+ingredient);
+		console.log("PASSED INGREDIENT: "+ingredient.item);
 		//TEST before backend implementation
 
 		//remove the item from the pantry
 		let userPantry = this.state.pantry;
-		let indexToDelete = this.findIngredientInPantry(ingredient);
+		let indexToDelete = this.findIngredientInPantry(ingredient.item);
 		let actionMsg = "Successfully deleted."
 		let actionMsgIsError = false;
 		let showActionMsg = true;
@@ -117,7 +118,7 @@ class Pantry extends Component{
 		if(indexToDelete !== undefined){
 			userPantry.splice(indexToDelete, 1);
 		}else{
-			actionMsg = "Failed to delete, please type the ingredient's name precisely.";
+			actionMsg = "Failed to delete";
 			actionMsgIsError = true;
 		}
 		//console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
@@ -156,30 +157,11 @@ class Pantry extends Component{
 	}
 
 	render(){
-				/*<ReactTable
-					SubComponent={(row) => {
-						console.log("seeing info from row");
-						console.log(row);
-						return (
-							<DeleteIngredientButton deleteIngredientHandler={this.deleteIngredient} targetItem={row.original}/>
-						)
-					}}
-					data={this.state.pantry}
-					columns={this.state.pantryColumns}
-					filterable
-				/>*/
 		return (
 			<div id="pantry">
-				<h1>user {this.props.user}'s pantry</h1>
-				<BootstrapTable data={this.state.pantry} options={this.state.sortOptions} striped hover>
-				      <TableHeaderColumn isKey dataField='item' datasort>Ingredient</TableHeaderColumn>
-				      <TableHeaderColumn dataField='qty' datasort>Quantity</TableHeaderColumn>
-				      <TableHeaderColumn dataField='qtyUnit' datasort>Unit</TableHeaderColumn>
-				      <TableHeaderColumn dataField='expDate' datasort>Expiration</TableHeaderColumn>
-				  </BootstrapTable>
-				  <DeleteIngredients onDeleteIngredient={this.deleteIngredient} />
-				  <AddIngredients onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
-				  <InfoMessage msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+			       	<CarbonDataTable headerData={this.state.pantryColumns[0].columns} tableData={this.state.pantry} tableDataIdSelector="item" onRowDelete={this.deleteIngredient}/>
+				<AddIngredients onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				<InfoMessage msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 			</div>
 		);
 	}

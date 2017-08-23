@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {DataTable} from 'carbon-components';
 import CarbonDataTableHeaderCell from './CarbonDataTableHeaderCell.js';
 import CarbonDataTableBodyRow from './CarbonDataTableBodyRow.js';
 import CarbonDataTableExpandedRow from './CarbonDataTableExpandedRow.js';
@@ -22,6 +21,8 @@ class CarbonDataTable extends Component{
 		headerData: PropTypes.array.isRequired,
 		tableData: PropTypes.array.isRequired,
 		tableDataIdSelector: PropTypes.string.isRequired,
+		tableBindMethod: PropTypes.func.isRequired,
+		tableRefreshMethod: PropTypes.func.isRequired,
 		onRowDelete: PropTypes.func,
 		enableExpandedRow: PropTypes.bool
 	};
@@ -116,13 +117,13 @@ class CarbonDataTable extends Component{
 
 	componentDidMount(){
 		//init table
-		CarbonDataTable.bindTable(this.refs.table);
+		this.props.tableBindMethod(this.refs.table, undefined);
 	}
 
 	componentDidUpdate(prevProps, prevState){
 		//update data table
 		//console.log("Refreshing Table");
-		CarbonDataTable.refreshTable();
+		this.props.tableRefreshMethod();
 	}
 
 	render(){
@@ -134,22 +135,6 @@ class CarbonDataTable extends Component{
 				</table>	
 			</div>
 		);
-	}
-}
-
-/****************************************/
-/*Static Data and Methods to Manage Table
-/****************************************/
-CarbonDataTable.bindTable = function(ele, options){
-	CarbonDataTable.dataTable = new DataTable(ele, options);
-}
-
-CarbonDataTable.refreshTable = function(){
-	//Make sure the table is initialized
-	if(CarbonDataTable.dataTable !== undefined){
-		CarbonDataTable.dataTable.refreshRows();
-	}else{
-		console.log("Need to bind table first");
 	}
 }
 

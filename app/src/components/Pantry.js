@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 //import ReactTable from 'react-table';
 //import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import CarbonDataTable from './carbon/CarbonDataTable.js';
+import {DataTable} from 'carbon-components';
 //import axios from 'axios';
 import Https from 'https';
 import AddIngredients from "./AddIngredients.js";
@@ -128,7 +129,7 @@ class Pantry extends Component {
 
 	ingredientIsValid(ingredient){
 		let isValid = false;
-
+		console.log("pantry: "+JSON.stringify(this.state.pantry));
 		//check if it's already in pantry
 		console.log("in pantry result: "+this.findIngredientInPantry(ingredient));
 		if(this.findIngredientInPantry(ingredient.item) === undefined){
@@ -159,11 +160,27 @@ class Pantry extends Component {
 	render(){
 		return (
 			<div id="pantry">
-			       	<CarbonDataTable headerData={this.state.pantryColumns[0].columns} tableData={this.state.pantry} tableDataIdSelector="item" onRowDelete={this.deleteIngredient}/>
+			       	<CarbonDataTable headerData={this.state.pantryColumns[0].columns} tableData={this.state.pantry} tableDataIdSelector="item" onRowDelete={this.deleteIngredient} tableBindMethod={Pantry.bindPantryTable} tableRefreshMethod={Pantry.refreshPantryTable}/>
 				<AddIngredients onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 				<InfoMessage msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 			</div>
 		);
+	}
+}
+
+/****************************************/
+/*Static Data and Methods to Manage Table
+/****************************************/
+Pantry.bindPantryTable = function(ele, options){
+	Pantry.pantryTable = new DataTable(ele, options);
+}
+
+Pantry.refreshPantryTable = function(){
+	//Make sure the table is initialized
+	if(Pantry.pantryTable !== undefined){
+		Pantry.pantryTable.refreshRows();
+	}else{
+		console.log("Need to bind table first");
 	}
 }
 

@@ -23,9 +23,10 @@ class CarbonFormInput extends Component{
 
 	showIfInvalid(){
 		//Update the input if it's data is invalid
-		console.log("input "+this.props.inputID+" is invalid: "+this.props.isInvalid);
 		if(this.props.isInvalid){
 			this.refs.carboninput.setAttribute('data-invalid', 'true');
+		}else{
+			this.refs.carboninput.removeAttribute('data-invalid');	
 		}
 	}
 	

@@ -15,6 +15,7 @@ class CarbonButton extends Component{
 		isGhost: PropTypes.bool,
 		isSmall: PropTypes.bool,
 		isInForm: PropTypes.bool,
+		isDisabled: PropTypes.bool,
 		isModalControl: PropTypes.bool,
 		modalTarget: PropTypes.string,
 		addedClass: PropTypes.string
@@ -26,6 +27,7 @@ class CarbonButton extends Component{
 		isGhost: false,
 		isSmall: false,
 		isInForm: false,
+		isDisabled: false,
 		isModalControl: false,
 		modalTarget: "",
 		addedClass: ""
@@ -78,10 +80,24 @@ class CarbonButton extends Component{
 		return button;
 	}
 
+	componentDidUpdate(){
+		//disable or enable if prop specifies it should be
+		if(this.props.isDisabled){
+			this.refs.button.setAttribute("disabled", "true");
+		}else{
+			this.refs.button.removeAttribute("disabled");
+		}
+	}
+
 	componentDidMount(){
 		//Setup modal link if needed
 		if(this.props.isModalControl){
 			this.refs.button.setAttribute("data-modal-target", this.props.modalTarget);
+		}
+
+		//disable if prop specifies it should be
+		if(this.props.isDisabled){
+			this.refs.button.setAttribute("disabled", "true");
 		}
 	}
 

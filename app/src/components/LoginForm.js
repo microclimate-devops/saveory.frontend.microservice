@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Form} from 'carbon-components';
 import CarbonFormInput from './carbon/CarbonFormInput.js';
 import CarbonButton from './carbon/CarbonButton.js';
 
@@ -34,12 +33,6 @@ class LoginForm extends Component{
 		};
 	
 		this.props.processLogin(loginData);
-	}
-
-	componentDidMount(){
-		//init carbon form
-		console.log("init form");
-		Form.init();
 	}
 	
 	render(){

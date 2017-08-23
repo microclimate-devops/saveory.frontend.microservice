@@ -1,59 +1,50 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CarbonFormInput from './carbon/CarbonFormInput.js';
 
 class AddIngredientForm extends Component{
 	constructor(props){
 		super(props);
+		this.state = {numberOfIngredientFields: 4};
 		this.nameChange = this.nameChange.bind(this);
 		this.qtyChange = this.qtyChange.bind(this);
 		this.qtyUnitChange = this.qtyUnitChange.bind(this);
 		this.expDateChange = this.expDateChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state = {name: "", qty: 0, qtyUnit: "", expDate: ""};	
 	}
 
 	static PropTypes = {
-		onSubmit: PropTypes.func.isRequired
+		onChange: PropTypes.func.isRequired,
+		ingredient: PropTypes.object.isRequired,
+		validateData: PropTypes.object.isRequired
 	};
 
-	nameChange(e){
+	nameChange(input){
 		//console.log("name changed: "+e.target.value);
-		this.setState({name: e.target.value});
+		this.props.onChange("item", input, this.state.numberOfIngredientFields);
 	}
 
-	qtyChange(e){
+	qtyChange(input){
 		//console.log("qty changed: "+Number(e.target.value)+" ("+typeof Number(e.target.value)+")");
-		this.setState({qty: Number(e.target.value)});
+		this.props.onChange("qty", Number(input), this.state.numberOfIngredientFields);
 	}
 
-	qtyUnitChange(e){
+	qtyUnitChange(input){
 		//console.log("qty unit changed: "+e.target.value);
-		this.setState({qtyUnit: e.target.value});
+		this.props.onChange("qtyUnit", input, this.state.numberOfIngredientFields);
 	}
 
-	expDateChange(e){
+	expDateChange(input){
 		//console.log("exp date changed: "+e.target.value);
-		this.setState({expDate: e.target.value});
-	}
-
-	handleSubmit(e){
-		const ingredient = {
-			item: this.state.name,
-			qty: this.state.qty,
-			qtyUnit: this.state.qtyUnit,
-			expDate: this.state.expDate
-		};
-		this.props.onSubmit(ingredient)	
+		this.props.onChange("expDate", input, this.state.numberOfIngredientFields);
 	}
 
 	render(){
 		return (
 			<div className="add-ingredient-form-container">
-				Name:<br/><input type="text" onChange={this.nameChange} value={this.state.name}/><br/>
-				Quantity:<br/><input type="number" onChange={this.qtyChange} value={this.state.qty}/><br/>
-				Quantity Unit:<br/><input type="text" onChange={this.qtyUnitChange} value={this.state.qtyUnit}/><br/>
-				Expiration Date:<br/><input type="date" onChange={this.expDateChange} value={this.state.expDate}/><br/>
-				<button onClick={this.handleSubmit}>Submit</button>
+				<CarbonFormInput inputText={this.props.ingredient.name} inputType="text" inputID="item" inputLabel="Ingredient Name" onChange={this.nameChange} invalidText="Please enter ingredient name" isInvalid={!this.props.validateData.name}/>
+				<CarbonFormInput inputText={this.props.ingredient.qty} inputType="number" inputID="qty" inputLabel="Quantity" onChange={this.qtyChange} invalidText="Please enter valid quantity" isInvalid={!this.props.validateData.qty}/>
+				<CarbonFormInput inputText={this.props.ingredient.qtyUnit} inputType="text" inputID="qtyUnit" inputLabel="Quantity Unit" onChange={this.qtyUnitChange} invalidText="Please enter valid quantity unit" isInvalid={!this.props.validateData.qtyUnit}/>
+				<CarbonFormInput inputText={this.props.ingredient.expDate} inputType="date" inputID="expDate" inputLabel="Expiration Date" onChange={this.expDateChange} invalidText="Please select a date" isInvalid={!this.props.validateData.expDate}/>
 			</div>
 		);
 	}

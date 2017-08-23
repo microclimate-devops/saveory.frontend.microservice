@@ -1,52 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'react-overlays';
+import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
 import InfoMessage from './InfoMessage.js';
 
-//***********************************
-//Modal Style constants
-//***********************************
-const modalStyle = {
-  position: 'fixed',
-  zIndex: 1040,
-  top: 0, bottom: 0, left: 0, right: 0
-};
-
-const backdropStyle = {
-  ...modalStyle,
-  zIndex: 'auto',
-  backgroundColor: '#000',
-  opacity: 0.5
-};
-
-const dialogStyle = function() {
-  // we use some psuedo random coords so nested modals
-  // don't sit right on top of each other.
-  let top = 50;
-  let left = 50;
-
-  return {
-    position: 'absolute',
-    width: 400,
-    top: top + '%', left: left + '%',
-    transform: `translate(-${top}%, -${left}%)`,
-    border: '1px solid #e5e5e5',
-    backgroundColor: 'white',
-    boxShadow: '0 5px 15px rgba(0,0,0,.5)',
-    padding: 20
-  };
-};
-
-
 class AddIngredients extends Component{
 	constructor(props){
 		super(props);
-		this.state = {showModal: false};
-		this.open = this.open.bind(this);
-		this.close = this.close.bind(this);
-		this.handleNewIngredientSubmit = this.handleNewIngredientSubmit.bind(this);
+		this.state = {enteredIngredient: {}, validateData: {}, numberOfIngredientFields: 0};
+		this.handleAddSubmit = this.handleAddSubmit.bind(this);
+		this.handleIngredientChange = this.handleIngredientChange.bind(this);
 	}
 
 	static PropTypes = {
@@ -56,39 +20,65 @@ class AddIngredients extends Component{
 		msgIsError: PropTypes.bool.isRequired
 	};
 
-	open(){
-		this.setState({showModal: true});
+	handleAddSubmit(e){
+		this.props.onAddIngredient(this.state.enteredIngredient);
 	}
 
-	close(){
-		this.setState({showModal: false});
+	handleIngredientChange(key, data, numberOfIngredientFields){
+		let ingredient = this.state.enteredIngredient;
+		let validateData = this.state.validateData
+
+		//Add new ingredient info
+		ingredient[key] = data;
+
+		//validate data for strings and numbers
+		if((typeof data === "string" && data.length === 0) || (typeof data === "number" && data <= 0)){
+			validateData[key] = false;
+		}else{
+			validateData[key] = true;
+		}
+			
+		this.setState({enteredIngredient: ingredient, validateData: validateData, numberOfIngredientFields: numberOfIngredientFields});
+	}
+	
+	isDataInvalid(){
+		let dataIsInvalid = false;
+		const validateData = this.state.validateData;
+		
+		//if data is empty or there are not enough entries to satisfy all fields, data is invalid
+		if(Object.keys(validateData).length === 0 || Object.keys(validateData).length !== this.state.numberOfIngredientFields){
+			dataIsInvalid = true;
+		}else{
+			//Check for occurence of validation being false
+			for(var key in validateData){
+				console.log("checking data valid: "+validateData[key]);
+				if(validateData[key] === false){
+					dataIsInvalid = true;
+					break;
+				}
+			}
+		}
+		
+		return dataIsInvalid;
 	}
 
-	handleNewIngredientSubmit(ingred){
-		this.props.onAddIngredient(ingred);
-	}
-
-	render(){
+	render(){	
 		return (
-			<div className='modal-example'>
-				<CarbonButton onClick={this.open} text="Add Ingredient" addedClass="add-ingredient-button" />
-
-				<Modal
-				  aria-labelledby='modal-label'
-				  style={modalStyle}
-				  backdropStyle={backdropStyle}
-				  show={this.state.showModal}
-				  onHide={this.close}
-				>
-				  <div style={dialogStyle()} >
-					<div className="login-form-container">
-						<h1>Enter Ingredient</h1>	
-						<AddIngredientForm onSubmit={this.handleNewIngredientSubmit}/>
-						<InfoMessage msg={this.props.msg} showMsg={this.props.showMsg} msgIsError={this.props.msgIsError}/>
-					</div>
-				  </div>
-				</Modal>
-			</div>
+		<div>
+			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget="#add-ingredient-modal" onClick={function(){}}/>
+			<CarbonModal id="add-ingredient-modal">
+				<div className="add-ingredient-modal-header-container">
+					<h1>Add Ingredient Form</h1>
+				</div>
+				<div className="add-ingredient-modal-content-container">
+					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} validateData={this.state.validateData}/>
+				</div>
+				<div className="add-ingredient-modal-footer-container">
+					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isDataInvalid()}/>
+					<InfoMessage msg={this.props.msg} showMsg={this.props.showMsg} msgIsError={this.props.msgIsError}/>
+				</div>
+			</CarbonModal>
+		</div>
 		);
 	}
 

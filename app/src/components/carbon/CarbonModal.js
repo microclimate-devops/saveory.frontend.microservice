@@ -6,10 +6,14 @@ import PropTypes from 'prop-types';
 /********************************************/
 class CarbonModal extends Component{
 	static PropTypes = {
-		id: PropTypes.string.isRequired
+		id: PropTypes.string.isRequired,
+		bindModal: PropTypes.func.isRequired
 	};
 
 	componentDidMount(){
+		//bind the modal
+		this.props.bindModal(this.refs.modal, undefined);
+
 		//Set custom attributes
 		this.refs.modal.setAttribute("data-modal", "true");
 		this.refs.modal.setAttribute("tab-index", "-1");

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {Modal} from 'carbon-components';
 import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
-import InfoMessage from './InfoMessage.js';
 
 class AddIngredients extends Component{
 	constructor(props){
 		super(props);
-		this.state = {enteredIngredient: {}, validateData: {}, numberOfIngredientFields: 0};
+		this.state = {enteredIngredient: {}, validateData: {}, numberOfIngredientFields: 0, modalTarget: "#add-ingredient-modal"};
 		this.handleAddSubmit = this.handleAddSubmit.bind(this);
 		this.handleIngredientChange = this.handleIngredientChange.bind(this);
 	}
@@ -22,6 +22,8 @@ class AddIngredients extends Component{
 
 	handleAddSubmit(e){
 		this.props.onAddIngredient(this.state.enteredIngredient);
+		//Hide modal
+		AddIngredients.hideAddIngredientModal();
 	}
 
 	handleIngredientChange(key, data, numberOfIngredientFields){
@@ -65,8 +67,8 @@ class AddIngredients extends Component{
 	render(){	
 		return (
 		<div>
-			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget="#add-ingredient-modal" onClick={function(){}}/>
-			<CarbonModal id="add-ingredient-modal">
+			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} onClick={function(){}}/>
+			<CarbonModal id="add-ingredient-modal" bindModal={AddIngredients.bindAddIngredientModal}>
 				<div className="add-ingredient-modal-header-container">
 					<h1>Add Ingredient Form</h1>
 				</div>
@@ -75,7 +77,6 @@ class AddIngredients extends Component{
 				</div>
 				<div className="add-ingredient-modal-footer-container">
 					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isDataInvalid()}/>
-					<InfoMessage msg={this.props.msg} showMsg={this.props.showMsg} msgIsError={this.props.msgIsError}/>
 				</div>
 			</CarbonModal>
 		</div>
@@ -84,6 +85,20 @@ class AddIngredients extends Component{
 
 
 }
+
+AddIngredients.bindAddIngredientModal = function(ele, options){
+	AddIngredients.addIngredientModal = new Modal(ele, options);
+}
+
+AddIngredients.hideAddIngredientModal = function(){
+	if(AddIngredients.addIngredientModal !== undefined){
+		AddIngredients.addIngredientModal.hide();
+	}else{
+		console.log("Please setup (bind) the modal before trying to close it");
+	}
+}
+
+
 
 export default AddIngredients;
 

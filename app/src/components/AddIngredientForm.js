@@ -39,12 +39,14 @@ class AddIngredientForm extends Component{
 	}
 
 	render(){
+		console.log("validate data: "+JSON.stringify(this.props.validateData));
+
 		return (
 			<div className="add-ingredient-form-container">
-				<CarbonFormInput inputText={this.props.ingredient.name} inputType="text" inputID="item" inputLabel="Ingredient Name" onChange={this.nameChange} invalidText="Please enter ingredient name" isInvalid={!this.props.validateData.name}/>
-				<CarbonFormInput inputText={this.props.ingredient.qty} inputType="number" inputID="qty" inputLabel="Quantity" onChange={this.qtyChange} invalidText="Please enter valid quantity" isInvalid={!this.props.validateData.qty}/>
-				<CarbonFormInput inputText={this.props.ingredient.qtyUnit} inputType="text" inputID="qtyUnit" inputLabel="Quantity Unit" onChange={this.qtyUnitChange} invalidText="Please enter valid quantity unit" isInvalid={!this.props.validateData.qtyUnit}/>
-				<CarbonFormInput inputText={this.props.ingredient.expDate} inputType="date" inputID="expDate" inputLabel="Expiration Date" onChange={this.expDateChange} invalidText="Please select a date" isInvalid={!this.props.validateData.expDate}/>
+				<CarbonFormInput inputData={this.props.ingredient.name} inputType="text" inputID="item" inputLabel="Ingredient Name" onChange={this.nameChange} invalidText="Please enter ingredient name" isInvalid={!this.props.validateData.item}/>
+				<CarbonFormInput inputData={this.props.ingredient.qty} inputType="number" inputID="qty" inputLabel="Quantity" onChange={this.qtyChange} invalidText="Please enter valid quantity" isInvalid={!this.props.validateData.qty}/>
+				<CarbonFormInput inputData={this.props.ingredient.qtyUnit} inputType="text" inputID="qtyUnit" inputLabel="Quantity Unit" onChange={this.qtyUnitChange} invalidText="Please enter valid quantity unit" isInvalid={!this.props.validateData.qtyUnit}/>
+				<CarbonFormInput inputData={this.props.ingredient.expDate} inputType="date" inputID="expDate" inputLabel="Expiration Date" onChange={this.expDateChange} invalidText="Please select a date" isInvalid={!this.props.validateData.expDate}/>
 			</div>
 		);
 	}

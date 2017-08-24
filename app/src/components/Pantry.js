@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //import ReactTable from 'react-table';
 //import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import CarbonDataTable from './carbon/CarbonDataTable.js';
-import {DataTable} from 'carbon-components';
+import CarbonNotification from './carbon/CarbonNotification.js';
+//import CarbonDataTable from './carbon/CarbonDataTable.js';
+import PantryTable from './PantryTable.js';
+import {DataTable, Notification} from 'carbon-components';
 //import axios from 'axios';
 import Https from 'https';
 import AddIngredients from "./AddIngredients.js";
-import InfoMessage from './InfoMessage.js';
+//import InfoMessage from './InfoMessage.js';
 
 
 class Pantry extends Component {
@@ -50,9 +52,10 @@ class Pantry extends Component {
 				defaultSortName: 'item',
 				defaultSortOrder: 'desc',
 			},
-			actionMsg: "",
+			actionMsgType: "",
+			actionMsgTitle: "",
+			actionMsgSubtitle: "",
 			showActionMsg: false,
-			actionMsgIsError: false
 		};
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
@@ -106,12 +109,13 @@ class Pantry extends Component {
 	deleteIngredient(ingredient){
 		console.log("PASSED INGREDIENT: "+ingredient.item);
 		//TEST before backend implementation
-
+		
 		//remove the item from the pantry
 		let userPantry = this.state.pantry;
 		let indexToDelete = this.findIngredientInPantry(ingredient.item);
-		let actionMsg = "Successfully deleted."
-		let actionMsgIsError = false;
+		let actionMsgTitle = "Success"
+		let actionMsgSubtitle = "The ingredient was deleted"
+		let actionMsgType = "success";
 		let showActionMsg = true;
 
 		//console.log("pantry before delete at index "+indexToDelete+"("+(indexToDelete===undefined)+"), " + JSON.stringify(userPantry));
@@ -119,12 +123,13 @@ class Pantry extends Component {
 		if(indexToDelete !== undefined){
 			userPantry.splice(indexToDelete, 1);
 		}else{
-			actionMsg = "Failed to delete";
-			actionMsgIsError = true;
+			actionMsgTitle = "Failure";
+			actionMsgSubtitle = "Failed to delete message";
+			actionMsgType = "error"
 		}
 		//console.log("pantry after delete at index "+indexToDelete+", " + JSON.stringify(userPantry));
 		//Update pantry and message stuff
-		this.setState({pantry: userPantry, actionMsg: actionMsg, showActionMsg: showActionMsg, actionMsgIsError: actionMsgIsError});
+		this.setState({pantry: userPantry, actionMsgType: actionMsgType, actionMsgTitle: actionMsgTitle, actionMsgSubtitle: actionMsgSubtitle, showActionMsg: showActionMsg});
 	}
 
 	ingredientIsValid(ingredient){
@@ -144,32 +149,35 @@ class Pantry extends Component {
 
 	addIngredient(ingredient){
 		let userPantry = this.state.pantry;
-		let actionMsg = "Could not add ingredient. Please make sure the ingredient is not already in the pantry and fill all fields. "
-		let actionMsgIsError = true;
+		let actionMsgTitle = "Failure"
+		let actionMsgSubtitle = "Could not add ingredient. Please make sure the ingredient is not already in the pantry and fill all fields. "
+		let actionMsgType = "error";
 		let showActionMsg = true;
 		if(this.ingredientIsValid(ingredient)){
 			userPantry.push(ingredient);
-			actionMsg = "Successfully added ingredient."
-			actionMsgIsError = false;
+			actionMsgTitle = "Success"
+			actionMsgSubtitle = "Ingredient was added"
+			actionMsgType = "success";
 		}
 
 		//Update pantry and message stuff
-		this.setState({pantry: userPantry, actionMsg: actionMsg, showActionMsg: showActionMsg, actionMsgIsError: actionMsgIsError});
+		this.setState({pantry: userPantry, actionMsgType: actionMsgType, actionMsgTitle: actionMsgTitle, actionMsgSubtitle: actionMsgSubtitle, showActionMsg: showActionMsg});
 	}
 
 	render(){
+		//<CarbonDataTable headerData={this.state.pantryColumns[0].columns} tableData={this.state.pantry} tableDataIdSelector="item" onRowDelete={this.deleteIngredient} tableBindMethod={Pantry.bindPantryTable} tableRefreshMethod={Pantry.refreshPantryTable}/>
 		return (
 			<div id="pantry">
-			       	<CarbonDataTable headerData={this.state.pantryColumns[0].columns} tableData={this.state.pantry} tableDataIdSelector="item" onRowDelete={this.deleteIngredient} tableBindMethod={Pantry.bindPantryTable} tableRefreshMethod={Pantry.refreshPantryTable}/>
+				<PantryTable header={this.state.pantryColumns[0].columns} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
 				<AddIngredients onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
-				<InfoMessage msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				{this.state.showActionMsg && <CarbonNotification type={this.state.actionMsgType} title={this.state.actionMsgTitle} subtitle={this.state.actionMsgSubtitle} bindMethod={Pantry.bindNotification} unbindMethod={Pantry.deleteNotification}/>}
 			</div>
 		);
 	}
 }
 
 /****************************************/
-/*Static Data and Methods to Manage Table
+/*Static Data and Methods to Manage Table and notifications
 /****************************************/
 Pantry.bindPantryTable = function(ele, options){
 	Pantry.pantryTable = new DataTable(ele, options);
@@ -184,4 +192,17 @@ Pantry.refreshPantryTable = function(){
 	}
 }
 
+Pantry.bindNotification = function(ele, options){
+	Pantry.notification = new Notification(ele, options);
+}
+
+Pantry.deleteNotification = function(){
+	console.log("Delete notification called");
+	//Make sure the table is initialized
+	if(Pantry.notification !== undefined){
+		Pantry.notification.remove();
+	}else{
+		console.log("No notification to delete");
+	}
+}
 export default Pantry;

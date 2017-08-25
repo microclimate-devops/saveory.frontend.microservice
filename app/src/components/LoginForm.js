@@ -18,12 +18,12 @@ class LoginForm extends Component{
 		passwordIsInvalid: PropTypes.bool.isRequired
 	};
 
-	handleUsernameChange(input){
-		this.setState({username: input});
+	handleUsernameChange(target){
+		this.setState({username: target.value});
 	}
 	
-	handlePasswordChange(input){
-		this.setState({password: input});
+	handlePasswordChange(target){
+		this.setState({password: target.value});
 	}
 
 	sendLoginAttempt(){

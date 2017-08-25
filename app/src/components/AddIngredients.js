@@ -8,12 +8,13 @@ import AddIngredientForm from './AddIngredientForm.js';
 class AddIngredients extends Component{
 	constructor(props){
 		super(props);
-		this.state = {enteredIngredient: {}, validateData: {}, numberOfIngredientFields: 0, modalTarget: "#add-ingredient-modal"};
+		this.state = {enteredIngredient: {}, validateData: {}, modalTarget: "#add-ingredient-modal"};
 		this.handleAddSubmit = this.handleAddSubmit.bind(this);
 		this.handleIngredientChange = this.handleIngredientChange.bind(this);
 	}
 
 	static PropTypes = {
+		ingredientMetadata: PropTypes.array.isRequired,
 		onAddIngredient: PropTypes.func.isRequired,
 		msg: PropTypes.string.isRequired,
 		showMsg: PropTypes.bool.isRequired,
@@ -26,7 +27,7 @@ class AddIngredients extends Component{
 		AddIngredients.hideAddIngredientModal();
 	}
 
-	handleIngredientChange(key, data, numberOfIngredientFields){
+	handleIngredientChange(key, data){
 		let ingredient = this.state.enteredIngredient;
 		let validateData = this.state.validateData
 
@@ -40,15 +41,15 @@ class AddIngredients extends Component{
 			validateData[key] = true;
 		}
 			
-		this.setState({enteredIngredient: ingredient, validateData: validateData, numberOfIngredientFields: numberOfIngredientFields});
+		this.setState({enteredIngredient: ingredient, validateData: validateData});
 	}
 	
 	isDataInvalid(){
 		let dataIsInvalid = false;
 		const validateData = this.state.validateData;
 		
-		//if data is empty or there are not enough entries to satisfy all fields, data is invalid
-		if(Object.keys(validateData).length === 0 || Object.keys(validateData).length !== this.state.numberOfIngredientFields){
+		//if there are not enough entries to satisfy all fields, data is invalid
+		if(Object.keys(validateData).length !== this.props.ingredientMetadata.length){
 			dataIsInvalid = true;
 		}else{
 			//Check for occurence of validation being false
@@ -73,7 +74,7 @@ class AddIngredients extends Component{
 					<h1>Add Ingredient Form</h1>
 				</div>
 				<div className="add-ingredient-modal-content-container">
-					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} validateData={this.state.validateData}/>
+					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientMetadata={this.props.ingredientMetadata} validateData={this.state.validateData}/>
 				</div>
 				<div className="add-ingredient-modal-footer-container">
 					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isDataInvalid()}/>

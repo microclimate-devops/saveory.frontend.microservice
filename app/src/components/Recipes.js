@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {Dropdown} from 'carbon-components-react';
 //import Https from 'https';
 //import axios from 'axios';
 import Client from './Client.js';
@@ -121,7 +122,7 @@ class Recipes extends Component{
 			this.setState({error: e});
 		});*/
 		Client.search(recipeRequestURL, (response) => {this.setState({recipesDB: response})});
-		Client.search(recipeRequestURL, (response) => {console.log(response)});
+		//Client.search(recipeRequestURL, (response) => {console.log(response)});
 	}
 
 	isQueryMatch(query, target){
@@ -169,6 +170,10 @@ class Recipes extends Component{
 			<div className="recipes-wrap">
 				<h1>Search for Recipes</h1>
 				<div>
+					<Dropdown className="recipe-search-dropdown" value="Select">
+						<li>test</li>
+						<li>test 2</li>
+					</Dropdown>
 					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
 					<RecipeDisplay recipe={this.state.recipeSelected} />

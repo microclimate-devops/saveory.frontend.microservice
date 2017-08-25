@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import ReactTable from 'react-table';
-//import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import CarbonNotification from './carbon/CarbonNotification.js';
-//import CarbonDataTable from './carbon/CarbonDataTable.js';
+import {InlineNotification} from 'carbon-components-react';
 import PantryTable from './PantryTable.js';
-import {DataTable, Notification} from 'carbon-components';
 //import axios from 'axios';
 import Https from 'https';
 import AddIngredients from "./AddIngredients.js";
-//import InfoMessage from './InfoMessage.js';
 
 
 class Pantry extends Component {
@@ -30,18 +25,22 @@ class Pantry extends Component {
 					Header: "Ingredients",
 					columns: [
 						{
+							type: "text",
 							title: "Item",
 							selector: "item"
 						},
 						{
+							type: "number",
 							title: "Quantity",
 							selector: "qty"
 						},
 						{
+							type: "text",
 							title: "Quantity Unit",
 							selector: "qtyUnit"
 						},
 						{
+							type: "date",
 							title: "Expiration",
 							selector: "expDate"
 						}
@@ -164,13 +163,20 @@ class Pantry extends Component {
 		this.setState({pantry: userPantry, actionMsgType: actionMsgType, actionMsgTitle: actionMsgTitle, actionMsgSubtitle: actionMsgSubtitle, showActionMsg: showActionMsg});
 	}
 
+	showNotification(){
+		let notification = null;
+		if(this.state.showActionMsg){
+				notification = <InlineNotification kind={this.state.actionMsgType} title={this.state.actionMsgTitle} subtitle={this.state.actionMsgSubtitle} role="alert"/>;
+		}
+		return notification;
+	}
+
 	render(){
-		//<CarbonDataTable headerData={this.state.pantryColumns[0].columns} tableData={this.state.pantry} tableDataIdSelector="item" onRowDelete={this.deleteIngredient} tableBindMethod={Pantry.bindPantryTable} tableRefreshMethod={Pantry.refreshPantryTable}/>
 		return (
 			<div id="pantry">
 				<PantryTable header={this.state.pantryColumns[0].columns} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
-				<AddIngredients onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
-				{this.state.showActionMsg && <CarbonNotification type={this.state.actionMsgType} title={this.state.actionMsgTitle} subtitle={this.state.actionMsgSubtitle} bindMethod={Pantry.bindNotification} unbindMethod={Pantry.deleteNotification}/>}
+				<AddIngredients ingredientMetadata={this.state.pantryColumns[0].columns} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				{this.showNotification()}
 			</div>
 		);
 	}
@@ -179,30 +185,4 @@ class Pantry extends Component {
 /****************************************/
 /*Static Data and Methods to Manage Table and notifications
 /****************************************/
-Pantry.bindPantryTable = function(ele, options){
-	Pantry.pantryTable = new DataTable(ele, options);
-}
-
-Pantry.refreshPantryTable = function(){
-	//Make sure the table is initialized
-	if(Pantry.pantryTable !== undefined){
-		Pantry.pantryTable.refreshRows();
-	}else{
-		console.log("Need to bind table first");
-	}
-}
-
-Pantry.bindNotification = function(ele, options){
-	Pantry.notification = new Notification(ele, options);
-}
-
-Pantry.deleteNotification = function(){
-	console.log("Delete notification called");
-	//Make sure the table is initialized
-	if(Pantry.notification !== undefined){
-		Pantry.notification.remove();
-	}else{
-		console.log("No notification to delete");
-	}
-}
 export default Pantry;

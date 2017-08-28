@@ -1,6 +1,9 @@
-function request(path, method, cb, body) {
+function request(path, method, cb, body, eh) {
 	//default body to empty object
 	body = body === undefined ? {} : body;
+	
+	//default error handler to display message
+	eh = eh === undefined ? (e) => {console.log("Caught error with default handler, please pass your own error handler."); console.log(e);} : eh;
 
 	const options = {
 		headers: {
@@ -19,7 +22,8 @@ function request(path, method, cb, body) {
 	return fetch(path, options)
 	.then(checkStatus)
 	.then(parseJSON)
-	.then(cb);
+	.then(cb)
+	.catch(eh);
 }
 
 function checkStatus(response) {

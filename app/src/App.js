@@ -16,15 +16,16 @@ class App extends Component {
 	super(props);
 	this.state = {
 		isAuth: false,
-		user: "me"
+		user: "me",
+		userToken: undefined,
 	}
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
   }
 
-  login(username){
-	console.log("logging in user")
-	this.setState({isAuth: true, user: username});
+  login(token){
+	console.log("logging in user with token: "+token);
+	this.setState({isAuth: true, user: token, userToken: token});
   }
 
   logout(){

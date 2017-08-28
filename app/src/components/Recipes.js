@@ -91,38 +91,8 @@ class Recipes extends Component{
 	}	
 
 	retrieveRecipes(){
-		const recipeRequestURL = this.state.recipeServiceURL;
-		//retrieve the user's pantry from the backend
-		/*Https.get(recipeRequestURL, (res) => {
-			res.on('data', (d) => {
-				//Parse the data into a JSON object
-				const recipes = JSON.parse(d);
-				console.log("recipes: "+JSON.stringify(recipes));
-
-				//Add ccc for effect
-				recipes.push(this.state.recipesDB[0]);
-				this.setState({recipesDB: recipes});
-			});
-		}).on('error', (e) => {
-			this.setState({error: e});
-		});*/
-		/*axios.get(recipeRequestURL).then((res) => {
-			res.on('data', (d) => {
-				//Parse the data into a JSON object
-				const recipes = JSON.parse(d);
-				console.log("recipes: "+JSON.stringify(recipes));
-
-				//Add ccc for effect
-				recipes.push(this.state.recipesDB[0]);
-				this.setState({recipesDB: recipes});
-			});
-			console.log(res);
-			
-		}).catch((e) => {
-			this.setState({error: e});
-		});*/
-		Client.request(recipeRequestURL, "GET", (response) => {this.setState({recipesDB: response})});
-		//Client.search(recipeRequestURL, (response) => {console.log(response)});
+		//retrieve the user's pantry from the backend	
+		Client.request(this.state.recipeServiceURL, "GET", (response) => {this.setState({recipesDB: response})});
 	}
 
 	isQueryMatch(query, target){

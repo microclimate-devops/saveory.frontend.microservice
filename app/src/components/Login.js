@@ -9,6 +9,7 @@ class Login extends Component{
 		super(props);
 		this.validateLogin = this.validateLogin.bind(this);
 		this.validateLoginCallback = this.validateLoginCallback.bind(this);
+		this.validateLoginErrorHandler = this.validateLoginErrorHandler.bind(this);
 		this.state = { userMgmtResourceURL: "api/users/", users: {"test": "pass"}, usernameIsInvalid: false, passwordIsInvalid: false};
 	}
 
@@ -17,14 +18,26 @@ class Login extends Component{
 	};
 
 	validateLoginCallback(resp){
-		console.log(resp);
+		const userToken = resp.token;
+
+		if(userToken !== undefined){
+			this.props.loginHandler(userToken);
+		}else{
+			console.log("Request succeeded but found no token in response");
+		}
+	}
+
+	validateLoginErrorHandler(e){
+		//Show error message
+		console.log("Error: ");
+		console.log(e);
 	}
 
 	validateLogin(loginData){
 		console.log("verifying user credentials with: "+JSON.stringify(loginData));
 		const loginApiUrl = this.state.userMgmtResourceURL+"login";
 		//Check with user management service to verify credentials
-		Client.request(loginApiUrl, "POST", this.validateLoginCallback, loginData);
+		Client.request(loginApiUrl, "POST", this.validateLoginCallback, loginData, this.validateLoginErrorHandler);
 		
 	}
 

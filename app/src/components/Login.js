@@ -21,14 +21,14 @@ class Login extends Component{
 	}
 
 	validateLogin(loginData){
-		console.log("verifying user credentials with: "+JSON.stringify());
-		const loginApiUrl = this.state.userMgmtResourceURL + "login";
+		console.log("verifying user credentials with: "+JSON.stringify(loginData));
+		const loginApiUrl = this.state.userMgmtResourceURL+"login";
 		//Check with user management service to verify credentials
-		Client.request(loginApiUrl, "POST", this.validateLoginCallback, loginData);
+		Client.request(loginApiUrl, "GET", (res) => {console.log(res)}, loginData);
 		
 	}
 
-	validateLogin_frontendonly(loginData){
+	validateLogin_onlyfrontend(loginData){
 		let passwordIsInvalid = true;
 
 		//Check that password for user equals entered password

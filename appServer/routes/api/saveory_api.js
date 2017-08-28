@@ -8,23 +8,23 @@ var apiRoutes = {
 };
 
 //proxy requests to pantry to actual kubernetes service
-router.all('/pantry', function(req, res){
+router.all(['/pantry', '/pantry*'], function(req, res){
 	var reqUrl = apiRoutes.pantry + req.url;
 	//res.send("{\"url\": \""+reqUrl+"\"}");
 	req.pipe(request(reqUrl)).pipe(res);
 });
 
 //proxy requests to pantry to actual kubernetes service
-router.all('/recipes', function(req, res){
+router.all(['/recipes', '/recipes*'], function(req, res){
 	var reqUrl = apiRoutes.recipes + req.url;
 	//res.send("{\"url\": \""+reqUrl+"\"}");
 	req.pipe(request(reqUrl)).pipe(res);
 });
 
 //proxy requests to pantry to actual kubernetes service
-router.all('/users', function(req, res){
+router.all(['/users', '/users*'], function(req, res){
 	var reqUrl = apiRoutes.user + req.url;
-	//res.send("Will send to this url: "+reqUrl);
+	//res.send("{\"url\": \""+reqUrl+"\"}");
 	req.pipe(request(reqUrl)).pipe(res);
 });
 

@@ -4,7 +4,7 @@ var router = express.Router();
 var apiRoutes = {
 	pantry: "http://pantry-service:9080/Pantry",
 	recipes: "http://recipeservice-service:9080/RecipeService",
-	user: "http://usermangement-service:9080/UserManagment"
+	user: "http://usermanagement-service:9080/UserManagement"
 };
 
 //proxy requests to pantry to actual kubernetes service
@@ -22,7 +22,7 @@ router.all('/recipes', function(req, res){
 });
 
 //proxy requests to pantry to actual kubernetes service
-router.all('/user', function(req, res){
+router.all('/users', function(req, res){
 	var reqUrl = apiRoutes.user + req.url;
 	//res.send("Will send to this url: "+reqUrl);
 	req.pipe(request(reqUrl)).pipe(res);

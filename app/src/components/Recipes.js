@@ -121,7 +121,7 @@ class Recipes extends Component{
 		}).catch((e) => {
 			this.setState({error: e});
 		});*/
-		Client.search(recipeRequestURL, (response) => {this.setState({recipesDB: response})});
+		Client.request(recipeRequestURL, "GET", (response) => {this.setState({recipesDB: response})});
 		//Client.search(recipeRequestURL, (response) => {console.log(response)});
 	}
 

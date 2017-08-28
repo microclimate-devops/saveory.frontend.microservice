@@ -1,10 +1,19 @@
-function search(path, cb) {
-  return fetch(path, {
-    accept: "application/json"
-  })
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(cb);
+function request(path, method, cb, body) {
+	//default body to empty object
+	body = body === undefined ? {} : body;
+
+	//perform fetch with defined options
+	return fetch(path, {
+		headers: {
+			'Accept': "application/json",
+			'Content-Type': "application/json"
+		},
+		method: method,
+		body: JSON.stringify(body)	
+	})
+	.then(checkStatus)
+	.then(parseJSON)
+	.then(cb);
 }
 
 function checkStatus(response) {

@@ -854,6 +854,18 @@
       "from": "carbon-components@>=7.19.1 <8.0.0",
       "resolved": "https://registry.npmjs.org/carbon-components/-/carbon-components-7.19.1.tgz"
     },
+    "carbon-components-react": {
+      "version": "3.9.3",
+      "from": "carbon-components-react@latest",
+      "resolved": "https://registry.npmjs.org/carbon-components-react/-/carbon-components-react-3.9.3.tgz",
+      "dependencies": {
+        "flatpickr": {
+          "version": "3.0.7",
+          "from": "flatpickr@>=3.0.7 <4.0.0",
+          "resolved": "https://registry.npmjs.org/flatpickr/-/flatpickr-3.0.7.tgz"
+        }
+      }
+    },
     "carbon-icons": {
       "version": "6.1.0",
       "from": "carbon-icons@>=6.0.4 <7.0.0",
@@ -3890,6 +3902,18 @@
       "from": "react@latest",
       "resolved": "https://registry.npmjs.org/react/-/react-15.6.1.tgz"
     },
+    "react-addons-css-transition-group": {
+      "version": "15.6.0",
+      "from": "react-addons-css-transition-group@>=15.4.2 <16.0.0",
+      "resolved": "https://registry.npmjs.org/react-addons-css-transition-group/-/react-addons-css-transition-group-15.6.0.tgz",
+      "dependencies": {
+        "react-transition-group": {
+          "version": "1.2.0",
+          "from": "react-transition-group@>=1.2.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/react-transition-group/-/react-transition-group-1.2.0.tgz"
+        }
+      }
+    },
     "react-autobind": {
       "version": "1.0.6",
       "from": "react-autobind@>=1.0.6 <2.0.0",
@@ -5018,6 +5042,11 @@
       "version": "1.0.0",
       "from": "which-module@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/which-module/-/which-module-1.0.0.tgz"
+    },
+    "window-or-global": {
+      "version": "1.0.1",
+      "from": "window-or-global@>=1.0.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/window-or-global/-/window-or-global-1.0.1.tgz"
     },
     "window-size": {
       "version": "0.1.0",

@@ -31,5 +31,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const Client = { search };
+const Client = { request };
 export default Client;

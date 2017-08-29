@@ -7,6 +7,7 @@
     "fsevents": "*"
   },
   "dependencies": {
+    "carbon-components": "^7.19.1",
     "carbon-components-react": "^3.9.3",
     "carbon-icons": "^6.1.0",
     "react": "^15.6.1",

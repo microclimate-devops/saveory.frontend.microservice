@@ -70,7 +70,7 @@ class CarbonButton extends Component{
 
 	showButton(){
 		const className = this.determineHtmlClass();
-		let button = <button ref="button" type="button" onClick={this.handleClick} className={className}>{this.props.text}</button>
+		let button = <button ref="button" type="button" onClick={this.handleClick} className={className}>{this.props.text} {this.props.children}</button>
 
 		//Put in form div if it's being rendered in a form
 		if(this.props.isInForm){

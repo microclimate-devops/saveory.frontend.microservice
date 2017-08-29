@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Dropdown} from 'carbon-components-react';
+//import {Dropdown} from 'carbon-components-react';
 //import Https from 'https';
 //import axios from 'axios';
 import Client from './Client.js';
@@ -138,12 +138,7 @@ class Recipes extends Component{
 	render(){
 		return (
 			<div className="recipes-wrap">
-				<h1>Search for Recipes</h1>
-				<div>
-					<Dropdown className="recipe-search-dropdown" value="Select">
-						<li>test</li>
-						<li>test 2</li>
-					</Dropdown>
+				<div>	
 					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
 					<RecipeDisplay recipe={this.state.recipeSelected} />

@@ -21,7 +21,7 @@ class Home extends Component{
 			<div className="content-wrap">
 				<Tabs selected={0}>
 					<Pane label="Pantry"><Pantry user={this.props.user}/></Pane>
-					<Pane label="Recipe Search"><Recipes user={this.props.user}/></Pane>
+					<Pane label="Recipes"><Recipes user={this.props.user}/></Pane>
 				</Tabs>
 			</div>
 		);

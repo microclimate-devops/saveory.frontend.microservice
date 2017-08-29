@@ -14,7 +14,7 @@ function request(path, method, cb, body, eh) {
 	}
 	
 	//Add body if method is not GET
-	if(method != "GET"){
+	if(method !== "GET"){
 		options.body = JSON.stringify(body);
 	}
 

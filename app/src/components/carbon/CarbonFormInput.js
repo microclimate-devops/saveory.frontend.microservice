@@ -14,7 +14,12 @@ class CarbonFormInput extends Component{
 		inputLabel: PropTypes.string.isRequired,
 		onChange: PropTypes.func.isRequired,
 		invalidText: PropTypes.string.isRequired,
-		isInvalid: PropTypes.bool.isRequired
+		isInvalid: PropTypes.bool.isRequired,
+		className: PropTypes.string
+	};
+
+	static defaultProps = {
+		className: ""
 	};	
 
 	handleChange(e){
@@ -43,7 +48,7 @@ class CarbonFormInput extends Component{
 	render(){
 		//{this.props.isInvalid && "data-invalid"} 
 		return (
-			<div className="bx--form-item carbon-form-input-container">
+			<div className={"bx--form-item carbon-form-input-container "+this.props.className}>
 			  <label htmlFor={this.props.inputID} className="bx--label">{this.props.inputLabel}</label>
 			  <input ref="carboninput" id={this.props.inputID} type={this.props.inputType} className="bx--text-input carbon-form-input-container-input" onChange={this.handleChange} value={this.props.inputData} />
 			  <div className="bx--form-requirement carbon-form-input-container-invalid">

@@ -67,7 +67,7 @@ class AddIngredients extends Component{
 
 	render(){	
 		return (
-		<div>
+		<div className="add-ingredient-container">
 			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} onClick={function(){}}/>
 			<CarbonModal id="add-ingredient-modal" bindModal={AddIngredients.bindAddIngredientModal}>
 				<div className="add-ingredient-modal-header-container">

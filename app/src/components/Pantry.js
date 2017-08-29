@@ -174,6 +174,9 @@ class Pantry extends Component {
 	render(){
 		return (
 			<div id="pantry">
+				<div className="pantry-table-description-container">
+					<h3>{this.props.user}'s Pantry</h3>
+				</div>
 				<PantryTable header={this.state.pantryColumns[0].columns} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
 				<AddIngredients ingredientMetadata={this.state.pantryColumns[0].columns} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 				{this.showNotification()}

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 //import {Route} from 'react-router-dom';
-import './App.css';
 import Header from './components/Header.js';
 import Home from './components/Home.js';
-import Login from './components/Login.js';
+//import Login from './components/Login.js';
 //import auth components
 /*import SecureRoute from './components/auth/SecureRoute.js';
 import Login from './components/auth/Login.js';
@@ -33,12 +32,17 @@ class App extends Component {
   }
 
   accessHome(){
-	let content = null;
+	//TEST DESIGN (DO NOT LEAVE FOR PROD)
+	const content = <Home userToken={1} user={this.state.user}/>;
+	
+
+	//REAL
+	/*let content = null;
 	if(this.state.isAuth){
 		content = <Home userToken={1} user={this.state.user}/>;
 	}else{
 		content = <Login loginHandler={this.login}/>;
-	}
+	}*/
 	return content;
 
   }

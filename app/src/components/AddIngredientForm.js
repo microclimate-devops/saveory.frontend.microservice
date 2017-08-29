@@ -33,7 +33,7 @@ class AddIngredientForm extends Component{
 			currValue = this.props.ingredient[currSelector];
 			currIsInvalid = !this.props.validateData[currSelector];
 
-			currInput = <CarbonFormInput key={currValue} inputData={currValue} inputType={fieldMetadata.type} inputID={currSelector} inputLabel={fieldMetadata.title} onChange={this.inputChange} invalidText="Required" isInvalid={currIsInvalid}/>
+			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={fieldMetadata.type} inputID={currSelector} inputLabel={fieldMetadata.title} onChange={this.inputChange} invalidText="Required" isInvalid={currIsInvalid}/>
  
 
 			//Add the input to list

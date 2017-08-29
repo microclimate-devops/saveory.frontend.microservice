@@ -62,15 +62,19 @@ class PantryTable extends Component{
 			//sort the ingredients according to current settings
 			let ingredients = this.sortIngredients();						
 			//Create a list of JSX ingredient rows
-			return ingredients.map((ingredient, i) => {return [<PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} onExpander={this.handleExpandingRow} isEven={i%2 === 0}/>, <PantryTableIngredientExpand key={"expand-"+i} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} isEven={i%2 === 0} onDelete={this.props.onRowDelete}/>]});
+			return ingredients.map((ingredient, i) => {return [<PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} onExpander={this.handleExpandingRow} isEven={false}/>, <PantryTableIngredientExpand key={"expand-"+i} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} isEven={false} onDelete={this.props.onRowDelete}/>]});
 		}
 	}
 
 	handleSortAction(e){
+		const newSort = e.target.getAttribute('id');
+		const currSortDir = this.state.isSortedDesc;
+
 		/*console.log("sort clicked");
 		console.log(e.target);*/
-		const currSortDir = this.state.isSortedDesc;
-		this.setState({isSortedDesc: !currSortDir, currSort: e.target.getAttribute('id')});
+
+		//update state
+		this.setState({isSortedDesc: !currSortDir, currSort: newSort});
 	}
 
 	determineHeaderSortDir(selector){
@@ -86,7 +90,7 @@ class PantryTable extends Component{
 	showHeader(){
 		if(Array.isArray(this.props.data)){
 			//console.log("header data: "+ JSON.stringify(this.props.header));
-			return this.props.header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem.selector)} onClick={this.handleSortAction} className="table-header-sortable" id={headerItem.selector}>{headerItem.title}</TableHeader>});
+			return this.props.header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem.selector)} onClick={this.handleSortAction} className={"table-header-sortable" + (this.state.currSort === headerItem.selector ? " pantry-table-header-sort-selected": "")} id={headerItem.selector}>{headerItem.title}</TableHeader>});
 		}
 	}
 

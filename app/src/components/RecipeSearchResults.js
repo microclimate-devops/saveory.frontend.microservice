@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import JsonTable from 'react-json-table';
+//import JsonTable from 'react-json-table';
 
 class RecipeSearchResults extends Component{
 	constructor(props){
@@ -22,6 +22,7 @@ class RecipeSearchResults extends Component{
 				//row click
 				onRowSelect: this.handleResultSelect
 			},
+			resultItemTitleSelector: "name"
 		};
 	}
 	static PropTypes = {
@@ -29,13 +30,26 @@ class RecipeSearchResults extends Component{
 		onResultSelected: PropTypes.func.isRequired
 	};
 
-	handleResultSelect(e, row){
-		console.log("row selected: "+JSON.stringify(row));
-		this.props.onResultSelected(row.index);
+	handleResultSelect(e){
+		const elementIndex = Number(e.target.getAttribute('id'));
+		console.log("row selected: "+elementIndex);
+		this.props.onResultSelected(elementIndex);
+	}
+
+	showResultItem(item, i){
+		return (
+			<li key={i} id={i.toString()} className="recipe-search-results-item" onClick={this.handleResultSelect}>
+				{item[this.state.resultItemTitleSelector]}
+			</li>
+		);
+	}
+
+	showResultItems(){
+		return this.props.recipes.map((item, i) => {return this.showResultItem(item, i)});
 	}
 
 	render(){
-		const columns = [{key: 'name', label: 'Results'}];
+		//const columns = [{key: 'name', label: 'Results'}];
 		/*const resultTableOptions = {
 				//sort
 				defaultSortName: 'item',
@@ -55,9 +69,12 @@ class RecipeSearchResults extends Component{
 				      <TableHeaderColumn isKey={true} dataField='name' datasort={true}>Results</TableHeaderColumn>
 				  </BootstrapTable>
 		*/
+		//<JsonTable rows={this.props.recipes} columns={columns} onClickRow={this.handleResultSelect}/>
 		return (
 			<div className="recipe-search-results-container">
-				<JsonTable rows={this.props.recipes} columns={columns} onClickRow={this.handleResultSelect}/>
+				<ul className="recipe-search-results-list">
+					{this.showResultItems()}
+				</ul>
 			</div>
 		);
 	}	

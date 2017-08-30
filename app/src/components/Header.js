@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'carbon-components-react';
 import CarbonButton from './carbon/CarbonButton.js';
-import HeaderTooltip from './HeaderTooltip.js';
+import HeaderTool from './HeaderTool.js';
 
 class Header extends Component{
 	constructor(props){
@@ -23,15 +23,15 @@ class Header extends Component{
 		//{this.showLoginLogoutButton()}
 		return (
 			<div className="App-header">
-			  <div className="header-menu-container">
+			  {this.props.isAuth && <div className="header-menu-container">
 				<CarbonButton onClick={this.activateMenu} text="">
 					<Icon name="menu" />
 				</CarbonButton>
-			  </div>
+			  </div>}
 			  <div className="header-app-name-container">
 				<h1>Saveory</h1>
 			  </div>
-			  {this.props.isAuth && <HeaderTooltip user={this.props.user} onLogoutClick={this.props.logoutHandler}/>}
+			  {this.props.isAuth && <HeaderTool user={this.props.user} onLogoutClick={this.props.logoutHandler}/>}
 			</div>
 		);
 	}

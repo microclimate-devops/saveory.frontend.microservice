@@ -74,7 +74,65 @@ class Recipes extends Component{
 						}
 					],
 					tag: ["gluten", "dairy"]
+				},
+				{
+					name: "Choc Chip Cookiesssssssss ssssssssss ssssssssssss ssssssss ssssssssssss",
+					id: "06gvde",
+					description: "This is such an easy chocolate chip cookie. No special equipment, no creaming -- a perfect cookie to do with kids. We love how versatile this dough is, too. It makes an awesome rocky road bar cookie.",
+					instructions: "Evenly position 2 racks in the middle of the oven and preheat to 375 degrees F. (on convection setting if you have it.) Line 2 baking sheets with parchment paper or silicone sheets. (If you only have 1 baking sheet, let it cool completely between batches.)\n\nPut the butter in a microwave safe bowl, cover and microwave on medium power until melted. (Alternatively melt in a small saucepan.) Cool slightly. Whisk the sugars, eggs, butter and vanilla in a large bowl until smooth.\n\nWhisk the flour, baking soda and salt in another bowl. Stir the dry ingredients into the wet ingredients with a wooden spoon; take care not to over mix. Stir in the chocolate chips or chunks.\n\nScoop heaping tablespoons of the dough onto the prepared pans. Wet hands slightly and roll the dough into balls. Space the cookies about 2-inches apart on the pans. Bake, until golden, but still soft in the center, 12 to 16 minutes, depending on how chewy or crunchy you like your cookies. Transfer hot cookies with a spatula to a rack to cool. Serve.\n\nStore cookies in a tightly sealed container for up to 5 days.",
+					ingredients: [
+						{
+							name: "unsalted butter",
+							id: "90f9f",
+							quantity: "1/2 cup",
+							notes: ""
+						},
+						{
+							name: "dark brown sugar",
+							id: "90f9f",
+							quantity: "3/4 cup",
+							notes: ""
+						},
+						{
+							name: "sugar",
+							id: "90f9f",
+							quantity: "3/4 cup",
+							notes: ""
+						},
+						{
+							name: "eggs",
+							id: "90f9f",
+							quantity: "2",
+							notes: ""
+						},
+						{
+							name: "vanilla extract",
+							id: "90f9f",
+							quantity: "1 tsp",
+							notes: ""
+						},
+						{
+							name: "semisweet chocolate chips",
+							id: "90f9f",
+							quantity: "1 (12-ounce) bag",
+							notes: ""
+						},
+						{
+							name: "baking soda",
+							id: "90f9f",
+							quantity: "3/4 tsp",
+							notes: ""
+						},
+						{
+							name: "salt",
+							id: "90f9f",
+							quantity: "1 tsp",
+							notes: ""
+						}
+					],
+					tag: ["gluten", "dairy"]
 				}
+
 			],
 			recipes: [],
 			recipeSelected: {}
@@ -138,7 +196,7 @@ class Recipes extends Component{
 	render(){
 		return (
 			<div className="recipes-wrap">
-				<div>	
+				<div className="recipes-container">	
 					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
 					<RecipeDisplay recipe={this.state.recipeSelected} />

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Table, TableBody, TableHead, TableHeader, TableRow} from 'carbon-components-react'; 
 import PantryTableIngredient from './PantryTableIngredient.js';
-import PantryTableIngredientExpand from './PantryTableIngredientExpand.js';
+//import PantryTableIngredientExpand from './PantryTableIngredientExpand.js';
 
 class PantryTable extends Component{
 	constructor(props){
@@ -62,7 +62,8 @@ class PantryTable extends Component{
 			//sort the ingredients according to current settings
 			let ingredients = this.sortIngredients();						
 			//Create a list of JSX ingredient rows
-			return ingredients.map((ingredient, i) => {return [<PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} onExpander={this.handleExpandingRow} isEven={false}/>, <PantryTableIngredientExpand key={"expand-"+i} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} isEven={false} onDelete={this.props.onRowDelete}/>]});
+			//return ingredients.map((ingredient, i) => {return [<PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} onExpander={this.handleExpandingRow} isEven={false}/>, <PantryTableIngredientExpand key={"expand-"+i} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} isEven={false} onDelete={this.props.onRowDelete}/>]});
+			return ingredients.map((ingredient, i) => {return <PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} onDelete={this.props.onRowDelete} isEven={false}/>});
 		}
 	}
 
@@ -95,12 +96,14 @@ class PantryTable extends Component{
 	}
 
 	render(){
+		//<TableHeader />
 		return(
 		<Table className="pantry-table" containerClassName="pantry-table-container">
 			<TableHead className="pantry-table-head">
 				<TableRow className="pantry-table-header-row" header={true} even={true}>
-					<TableHeader />
+					<TableHeader/>
 					{this.showHeader()}
+					<TableHeader>Actions</TableHeader>
 				</TableRow>
 			</TableHead>
 			<TableBody>

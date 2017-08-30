@@ -55,7 +55,7 @@ button {
 .login-form-container{
 	width: 60%;
 	max-width: 350px;
-	margin-top: 20px;
+	margin-top: 100px;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
@@ -75,7 +75,8 @@ button {
 }
 
 .header-menu-container{
-	position: absolute;
+	position: relative;
+	float: left;
 }
 
 .header-menu-container button{
@@ -83,12 +84,41 @@ button {
 	width: 60px;
 }
 
-.header-tooltip-container{
-	position: absolute;
-	top: 15px;
-	right: 15px;
+.header-menu-container button svg path{
+	fill: #FFFFFF;
 }
 
+.header-tool-container{
+	right: 15px;
+	float: right;
+	margin-top: -30px;
+  	position: relative;
+}
+
+.header-tool-list li{
+	display: inline-block;
+	margin-right: 30px;
+	padding-bottom: 3px;
+	cursor: pointer;
+}
+
+.header-tool-list li:hover{
+	border-bottom: 1px solid #FFFFFF;
+}
+
+.header-tool-list li svg{
+	float: left;
+}
+
+.header-tool-list li svg path{
+	fill: #FFFFFF;
+}
+
+.header-tool-list li p{
+	float: left;
+	margin-left: 10px;
+	color: #F0F4F4;
+}
 /*Home Stuff*/
 
 * {
@@ -129,13 +159,13 @@ button {
 	margin-top: 15px;
 }
 
-.add-ingredient-button{
+/*.add-ingredient-button{
 	background-color: #256DD3;
 }
 
 .add-ingredient-button:hover{
 	background-color: #1F57A4;
-}
+}*/
 
 #pantry{
 	margin: 0 auto;
@@ -145,6 +175,11 @@ button {
 
 .pantry-table{
 	border: none;
+}
+
+.pantry-table tbody tr{
+	border-left: none;
+	border-right: none;
 }
 
 .pantry-table-description-container{
@@ -200,6 +235,22 @@ button {
 .recipe-search-button-container{
 	float: left;
 	margin-top: 29px;
+}
+
+.recipe-search-results-list{
+/*	border: 2px solid #B8C1C1;*/
+}
+
+.recipe-search-results-list li{
+	box-sizing: border-box;
+    	width: 100%;
+    	padding: 10px;
+	border-top: 1px solid #D0DADA;
+	border-bottom: 1px solid #D0DADA;
+}
+
+.recipe-search-results-list li:hover{
+	background-color: #DFE6EB;
 }
 
 /*table {

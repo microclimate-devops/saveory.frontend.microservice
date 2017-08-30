@@ -19,12 +19,14 @@ class Login extends Component{
 
 	validateLoginCallback(resp){
 		const userToken = resp.token;
+		let passwordIsInvalid = true;
 
 		if(userToken !== undefined){
 			this.props.loginHandler(userToken);
-		}else{
-			console.log("Request succeeded but found no token in response");
+			passwordIsInvalid = false;
 		}
+
+		this.setState({passwordIsInvalid: passwordIsInvalid});
 	}
 
 	validateLoginErrorHandler(e){
@@ -33,7 +35,7 @@ class Login extends Component{
 		console.log(e);
 	}
 
-	validateLogin(loginData){
+	validateLogin_real(loginData){
 		console.log("verifying user credentials with: "+JSON.stringify(loginData));
 		const loginApiUrl = this.state.userMgmtResourceURL+"login";
 		//Check with user management service to verify credentials
@@ -41,7 +43,7 @@ class Login extends Component{
 		
 	}
 
-	validateLogin_onlyfrontend(loginData){
+	validateLogin(loginData){
 		let passwordIsInvalid = true;
 
 		//Check that password for user equals entered password

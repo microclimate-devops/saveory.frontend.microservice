@@ -167,6 +167,10 @@ button {
 	background-color: #1F57A4;
 }*/
 
+.delete-ingredient-icon{
+	cursor: pointer;
+}
+
 #pantry{
 	margin: 0 auto;
 	width: 85%;

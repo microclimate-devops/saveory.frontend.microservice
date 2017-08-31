@@ -34,7 +34,7 @@ class PantryTableIngredient extends Component{
 		}
 
 		//Add row actions
-		row.push(<TableData key="actions" className="pantry-table-row-actions"><Icon name="delete" height="24" width="24" onClick={this.handleDelete}/></TableData>);
+		row.push(<TableData key="actions" className="pantry-table-row-actions"><Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/></TableData>);
 
 		return row;
 	}

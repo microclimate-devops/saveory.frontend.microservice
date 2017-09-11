@@ -109,6 +109,8 @@ class Pantry extends Component {
 	}
 
 	handlePantryResponse(resp){
+		console.log("Received resp");
+		console.log(resp);
 		//Handle different response codes
 		if(resp.code !== undefined){
 			switch(resp) {

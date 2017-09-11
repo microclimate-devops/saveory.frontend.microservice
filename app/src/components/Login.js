@@ -35,7 +35,7 @@ class Login extends Component{
 		console.log(e);
 	}
 
-	validateLogin_real(loginData){
+	validateLogin(loginData){
 		console.log("verifying user credentials with: "+JSON.stringify(loginData));
 		const loginApiUrl = this.state.userMgmtResourceURL+"login";
 		//Check with user management service to verify credentials
@@ -43,7 +43,7 @@ class Login extends Component{
 		
 	}
 
-	validateLogin(loginData){
+	validateLogin_old(loginData){
 		let passwordIsInvalid = true;
 
 		//Check that password for user equals entered password

@@ -156,7 +156,7 @@ class Recipes extends Component{
 	retrieveRecipes(){
 		//retrieve the user's pantry from the backend	
 		//Client.request(this.state.recipeServiceURL, "GET", (response) => {this.setState({recipesDB: response})});
-		Client.request(this.state.recipeServiceURL, "GET", this.handleRecipeResponse);
+		Client.request(this.state.recipeServiceURL, "GET", (response) => {this.handleRecipeResponse(response)});
 	}
 
 	isQueryMatch(query, target){

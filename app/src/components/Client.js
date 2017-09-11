@@ -30,10 +30,11 @@ function request(path, method, cb, eh, body) {
 	.then(checkStatus)
 	.then(parseJSON)
 	.then(cb)
-	.catch(eh);
+	.catch((e) => {console.log(e); eh(e);});
 }
 
 function checkStatus(response) {
+  console.log("Response status: "+response.status);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

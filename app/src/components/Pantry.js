@@ -143,7 +143,7 @@ class Pantry extends Component {
 
 	retrievePantry(){
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL, "GET", (response) => {this.handlePantryResponse(response)});
+		Client.request(pantryRequestURL, "GET", (response) => {this.handlePantryResponse(response)}, (e) => {console.log("error"); console.log(e)});
 	}
 
 	componentDidMount(){

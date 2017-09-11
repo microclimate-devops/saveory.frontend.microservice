@@ -61,8 +61,8 @@ class Pantry extends Component {
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
 		this.setPantry = this.setPantry.bind(this);
-		this.handlePantryResponse = this.handlePantryResponse(this);
-		this.handlePantryError = this.handlePantryError(this);
+		/*this.handlePantryResponse = this.handlePantryResponse(this);
+		this.handlePantryError = this.handlePantryError(this);*/
 	}
 
 	static propTypes = {

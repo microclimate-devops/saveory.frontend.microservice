@@ -151,7 +151,7 @@ class Pantry extends Component {
 
 	retrievePantry(){
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL, "GET", this.handlePantryResponse, this.handlePantryError);
+		Client.request(pantryRequestURL, "GET", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)});
 	}
 
 	componentDidMount(){
@@ -174,7 +174,7 @@ class Pantry extends Component {
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL + "/ingredient/" + ingredient.item, "DELETE", this.handlePantryResponse, this.handlePantryError);
+		Client.request(pantryRequestURL + "/ingredient/" + ingredient.item, "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)});
 	}
 
 	ingredientIsValid(ingredient){
@@ -195,7 +195,7 @@ class Pantry extends Component {
 	addIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL + "/ingredient", "POST", this.handlePantryResponse, this.handlePantryError, ingredient);
+		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)}, ingredient);
 	}
 
 	showNotification(){

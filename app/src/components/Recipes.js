@@ -13,6 +13,7 @@ class Recipes extends Component{
 		super(props)
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
+		this.handleRecipeResponse = this.handleRecipeResponse(this);
 		this.state = {
 			//recipeServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/recipeservice-service:9080/RecipeService/",
 			recipeServiceURL: "api/recipes/",
@@ -148,9 +149,14 @@ class Recipes extends Component{
 		this.retrieveRecipes();
 	}	
 
+	handleRecipeResponse(response){
+		this.setState({recipesDB: response});
+	}
+
 	retrieveRecipes(){
 		//retrieve the user's pantry from the backend	
-		Client.request(this.state.recipeServiceURL, "GET", (response) => {this.setState({recipesDB: response})});
+		//Client.request(this.state.recipeServiceURL, "GET", (response) => {this.setState({recipesDB: response})});
+		Client.request(this.state.recipeServiceURL, "GET", this.handleRecipeResponse);
 	}
 
 	isQueryMatch(query, target){

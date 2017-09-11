@@ -61,6 +61,8 @@ class Pantry extends Component {
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
 		this.setPantry = this.setPantry.bind(this);
+		this.handlePantryResponse = this.handlePantryResponse(this);
+		this.handlePantryError = this.handlePantryError(this);
 	}
 
 	static propTypes = {
@@ -136,6 +138,12 @@ class Pantry extends Component {
 		}
 	}
 
+	handlePantryError(e){
+		console.log("caught error");
+		console.log(e);
+		this.setNotification({title: "error", subtitle: "Got an error while trying to send request to pantry service", isGood:false});
+	}
+
 	testGetPantry(url){
 		//this.setPantry({"id":"59b3152846e0fb000175a6e4","user":"daniel","pantry":[{"item":"apple","qty":10,"qtyUnit":"piece","expDate":"08-04-2017","contains":"false"}]});
 		this.setPantry({code: 500, status:"Error", msg:"Failed"});
@@ -143,7 +151,7 @@ class Pantry extends Component {
 
 	retrievePantry(){
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL, "GET", (response) => {this.handlePantryResponse(response)}, (e) => {console.log("error"); console.log(e)});
+		Client.request(pantryRequestURL, "GET", (response) => {this.handlePantryResponse(response)}, this.handlePantryError);
 	}
 
 	componentDidMount(){
@@ -166,7 +174,7 @@ class Pantry extends Component {
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL + "/ingredient/" + ingredient.item, "DELETE", (response) => {this.handlePantryResponse(response)});
+		Client.request(pantryRequestURL + "/ingredient/" + ingredient.item, "DELETE", (response) => {this.handlePantryResponse(response)}, this.handlePantryError);
 	}
 
 	ingredientIsValid(ingredient){
@@ -187,7 +195,7 @@ class Pantry extends Component {
 	addIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		Client.request(pantryRequestURL + "/ingredient", "POST", (response) => {this.handlePantryResponse(response)});
+		Client.request(pantryRequestURL + "/ingredient", "POST", (response) => {this.handlePantryResponse(response)}, this.handlePantryError);
 	}
 
 	showNotification(){

@@ -151,8 +151,11 @@ class Pantry extends Component {
 
 	retrievePantry(){
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
-		const that = this;
-		Client.request(pantryRequestURL, "GET", (resp) => {that.handlePantryResponse(resp)}, (e) => {that.handlePantryError(e)});
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET", 
+			(resp) => {this.handlePantryResponse(resp)}, 
+			(e) => {this.handlePantryError(e)}
+		);
 	}
 
 	componentDidMount(){

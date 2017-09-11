@@ -1,4 +1,5 @@
 function request(path, method, cb, eh, body) {
+	console.log("Path of request: "+path);
 	//default body to empty object
 	body = body === undefined ? {} : body;
 	

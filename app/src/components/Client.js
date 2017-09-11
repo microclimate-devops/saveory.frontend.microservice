@@ -3,7 +3,14 @@ function request(path, method, cb, eh, body) {
 	body = body === undefined ? {} : body;
 	
 	//default error handler to display message
-	eh = eh === undefined ? (e) => {console.log("Caught error with default handler, please pass your own error handler."); console.log(e);} : eh;
+	//eh = eh === undefined ? (e) => {console.log("Caught error with default handler, please pass your own error handler."); console.log(e);} : eh;
+	if(eh === undefined || typeof eh !== 'function'){
+		console.log("Didn't find adequate error handler for "+method+" to "+path);
+		eh = (e) => {
+			console.log("No error handler defined. Using default");
+			console.log(e);
+		};
+	}
 
 	const options = {
 		headers: {

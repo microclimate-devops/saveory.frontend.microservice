@@ -39,7 +39,7 @@ class Login extends Component{
 		console.log("verifying user credentials with: "+JSON.stringify(loginData));
 		const loginApiUrl = this.state.userMgmtResourceURL+"login";
 		//Check with user management service to verify credentials
-		Client.request(loginApiUrl, "POST", this.validateLoginCallback, loginData, this.validateLoginErrorHandler);
+		Client.request(loginApiUrl, "POST", this.validateLoginCallback, this.validateLoginErrorHandler, loginData);
 		
 	}
 

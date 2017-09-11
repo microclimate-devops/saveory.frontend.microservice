@@ -1,4 +1,4 @@
-function request(path, method, cb, body, eh) {
+function request(path, method, cb, eh, body) {
 	//default body to empty object
 	body = body === undefined ? {} : body;
 	

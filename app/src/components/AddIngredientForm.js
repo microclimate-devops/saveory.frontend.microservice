@@ -30,7 +30,7 @@ class AddIngredientForm extends Component{
 		let currIsInvalid = undefined;
 
 		//Use the ingredient metadata to determine input fields and types
-		for(var currSelector of this.props.ingredientFields){
+		for(var i = 0; i < ingredientFields.length; i++){
 			//Gather data about the field
 			currSelector = ingredientFields[i];
 			currValue = this.props.ingredient[currSelector];

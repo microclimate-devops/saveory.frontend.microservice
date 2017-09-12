@@ -11,7 +11,8 @@ class AddIngredientForm extends Component{
 	static PropTypes = {
 		onChange: PropTypes.func.isRequired,
 		ingredient: PropTypes.object.isRequired,
-		ingredientMetadata: PropTypes.array.isRequired,
+		ingredientFields: PropTypes.array.isRequired,
+		ingredientFieldTypes: PropTypes.array.isRequired,
 		validateData: PropTypes.object.isRequired
 	};
 
@@ -20,6 +21,8 @@ class AddIngredientForm extends Component{
 	}
 
 	showInputs(){
+		const ingredientFields = this.props.ingredientFields;
+		const ingredientFieldTypes = this.props.ingredientFieldTypes;
 		let inputs = [];
 		let currInput = undefined;
 		let currSelector = undefined;
@@ -27,13 +30,13 @@ class AddIngredientForm extends Component{
 		let currIsInvalid = undefined;
 
 		//Use the ingredient metadata to determine input fields and types
-		for(var fieldMetadata of this.props.ingredientMetadata){
+		for(var currSelector of this.props.ingredientFields){
 			//Gather data about the field
-			currSelector = fieldMetadata.selector;
+			currSelector = ingredientFields[i];
 			currValue = this.props.ingredient[currSelector];
 			currIsInvalid = !this.props.validateData[currSelector];
 
-			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={fieldMetadata.type} inputID={currSelector} inputLabel={fieldMetadata.title} onChange={this.inputChange} invalidText="Required" isInvalid={currIsInvalid}/>
+			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={currSelector} inputLabel={currSelector} onChange={this.inputChange} invalidText="Required" isInvalid={currIsInvalid}/>
  
 
 			//Add the input to list

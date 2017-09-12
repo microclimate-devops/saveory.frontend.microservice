@@ -14,7 +14,8 @@ class Pantry extends Component {
 		this.state = {
 			pantryServiceURL: "/api/pantry/",
 			pantry: [],
-			tableHeader: [],
+			ingredientFields: [],
+			ingredientFieldTypes: [],
 			notification: {
 				type: "",
 				title: "",
@@ -30,6 +31,7 @@ class Pantry extends Component {
 	}
 
 	static propTypes = {
+		userToken: PropTypes.string.isRequired,
 		user: PropTypes.string.isRequired
 	};
 
@@ -89,13 +91,8 @@ class Pantry extends Component {
 		this.setNotification({title: "error", subtitle: "Got an error while trying to send request to pantry service", isGood:false});
 	}
 
-	testGetPantry(url){
-		//this.setPantry({"id":"59b3152846e0fb000175a6e4","user":"daniel","pantry":[{"item":"apple","qty":10,"qtyUnit":"piece","expDate":"08-04-2017","contains":"false"}]});
-		this.setPantry({code: 500, status:"Error", msg:"Failed"});
-	}
-
 	retrievePantry(){
-		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
+		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {this.handlePantryResponse(resp)}, 
@@ -103,16 +100,26 @@ class Pantry extends Component {
 		);
 	}
 
-	retrieveIngredient(){
+	retrieveIngredientFields(){
 		const pantryRequestURL = this.state.pantryServiceURL + "/spec/ingredient";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
-			(resp) => {this.setState({ingredient: resp})}, 
+			(resp) => {this.setState({ingredientFields: resp})}, 
+		);	
+	}
+
+	retrieveIngredientFieldTypes(){
+		const pantryRequestURL = this.state.pantryServiceURL + "/spec/ingredient/types";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET", 
+			(resp) => {this.setState({ingredientFieldTypes: resp})}, 
 		);	
 	}
 
 	componentDidMount(){
 		this.retrievePantry();
+		this.retrieveIngredientFields();
+		this.retrieveIngredientFieldTypes();
 	}
 
 	findIngredientInPantry(ingredient){
@@ -130,7 +137,7 @@ class Pantry extends Component {
 
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
-		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
+		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		Client.request(pantryRequestURL + "/ingredient/" + ingredient.item, "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)});
 	}
 
@@ -151,7 +158,7 @@ class Pantry extends Component {
 
 	addIngredient(ingredient){
 		//send a request to add the ingredient
-		const pantryRequestURL = this.state.pantryServiceURL + this.props.user;
+		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)}, ingredient);
 	}
 
@@ -169,8 +176,8 @@ class Pantry extends Component {
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>
-				<PantryTable header={this.state.tableHeader} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
-				<AddIngredients ingredientMetadata={this.state.tableHeader} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
+				<AddIngredients ingredientFields={this.state.ingredientFields} ingredientFieldTypes={this.state.ingredientFieldTypes} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 				{this.showNotification()}
 			</div>
 		);

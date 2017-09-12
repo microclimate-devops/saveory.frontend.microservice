@@ -20,8 +20,8 @@ class Home extends Component{
 		return (
 			<div className="content-wrap">
 				<Tabs selected={0}>
-					<Pane label="Pantry"><Pantry user={this.props.user}/></Pane>
-					<Pane label="Recipes"><Recipes user={this.props.user}/></Pane>
+					<Pane label="Pantry"><Pantry userToken={this.props.userToken} user={this.props.user}/></Pane>
+					<Pane label="Recipes"><Recipes userToken={this.props.userToken}/></Pane>
 				</Tabs>
 			</div>
 		);

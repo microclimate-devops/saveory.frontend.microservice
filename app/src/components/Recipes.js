@@ -142,7 +142,7 @@ class Recipes extends Component{
 	}
 	
 	static propTypes = {
-		user: PropTypes.string.isRequired
+		userToken: PropTypes.string.isRequired
 	};
 	
 	componentDidMount(){

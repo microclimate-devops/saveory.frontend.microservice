@@ -14,7 +14,6 @@ class LoginForm extends Component{
 
 	static PropTypes = {
 		processLogin: PropTypes.func.isRequired,
-		usernameIsInvalid: PropTypes.bool.isRequired,
 		passwordIsInvalid: PropTypes.bool.isRequired
 	};
 
@@ -38,7 +37,7 @@ class LoginForm extends Component{
 	render(){
 		return(
 			<div className="login-form-container">
-				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleUsernameChange} invalidText="Username is taken" isInvalid={this.props.usernameIsInvalid}/>
+				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleUsernameChange}/>
 				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handlePasswordChange} invalidText="Username or password is incorrect" isInvalid={this.props.passwordIsInvalid}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>
 			</div>	

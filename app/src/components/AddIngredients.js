@@ -14,7 +14,8 @@ class AddIngredients extends Component{
 	}
 
 	static PropTypes = {
-		ingredientMetadata: PropTypes.array.isRequired,
+		ingredientFields: PropTypes.array.isRequired,
+		ingredientFieldTypes: PropTypes.array.isRequired,
 		onAddIngredient: PropTypes.func.isRequired,
 		msg: PropTypes.string.isRequired,
 		showMsg: PropTypes.bool.isRequired,
@@ -49,7 +50,7 @@ class AddIngredients extends Component{
 		const validateData = this.state.validateData;
 		
 		//if there are not enough entries to satisfy all fields, data is invalid
-		if(Object.keys(validateData).length !== this.props.ingredientMetadata.length){
+		if(Object.keys(validateData).length !== this.props.ingredientFields.length){
 			dataIsInvalid = true;
 		}else{
 			//Check for occurence of validation being false
@@ -71,10 +72,10 @@ class AddIngredients extends Component{
 			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} onClick={function(){}}/>
 			<CarbonModal id="add-ingredient-modal" bindModal={AddIngredients.bindAddIngredientModal}>
 				<div className="add-ingredient-modal-header-container">
-					<h1>Add Ingredient Form</h1>
+					<h1>Add Ingredient</h1>
 				</div>
 				<div className="add-ingredient-modal-content-container">
-					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientMetadata={this.props.ingredientMetadata} validateData={this.state.validateData}/>
+					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientFields={this.props.ingredientFields} ingredientFieldTypes={this.props.ingredientFieldTypes} validateData={this.state.validateData}/>
 				</div>
 				<div className="add-ingredient-modal-footer-container">
 					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isDataInvalid()}/>

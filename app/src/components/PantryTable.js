@@ -88,11 +88,23 @@ class PantryTable extends Component{
 		return sortDir;
 	}
 
-	showHeader(){
+	showIngredientHeader(){
 		if(Array.isArray(this.props.header)){
 			//console.log("header data: "+ JSON.stringify(this.props.header));
 			return this.props.header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem)} onClick={this.handleSortAction} className={"table-header-sortable" + (this.state.currSort === headerItem ? " pantry-table-header-sort-selected": "")} id={headerItem}>{headerItem}</TableHeader>});
 		}
+	}
+
+	showHeader(){
+		console.log("CHECK here for data");
+		console.log(this.props.data);
+		return (
+			<TableRow className="pantry-table-header-row" header={true} even={true}>
+				<TableHeader/>
+				{this.showIngredientHeader()}
+				<TableHeader>Actions</TableHeader>
+			</TableRow>
+		);
 	}
 
 	render(){
@@ -100,11 +112,7 @@ class PantryTable extends Component{
 		return(
 		<Table className="pantry-table" containerClassName="pantry-table-container">
 			<TableHead className="pantry-table-head">
-				<TableRow className="pantry-table-header-row" header={true} even={true}>
-					<TableHeader/>
-					{this.showHeader()}
-					<TableHeader>Actions</TableHeader>
-				</TableRow>
+				{this.showHeader()}
 			</TableHead>
 			<TableBody>
 				{this.showIngredients()}

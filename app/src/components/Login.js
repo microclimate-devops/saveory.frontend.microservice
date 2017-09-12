@@ -10,7 +10,7 @@ class Login extends Component{
 		this.validateLogin = this.validateLogin.bind(this);
 		this.validateLoginCallback = this.validateLoginCallback.bind(this);
 		this.validateLoginErrorHandler = this.validateLoginErrorHandler.bind(this);
-		this.state = { userMgmtResourceURL: "api/users/", users: {"test": "pass"}, usernameIsInvalid: false, passwordIsInvalid: false};
+		this.state = { userMgmtResourceURL: "api/users/", users: {"test": "pass"}, passwordIsInvalid: false};
 	}
 
 	static PropTypes = {
@@ -18,11 +18,10 @@ class Login extends Component{
 	};
 
 	validateLoginCallback(resp){
-		const userToken = resp.token;
 		let passwordIsInvalid = true;
-
-		if(userToken !== undefined){
-			this.props.loginHandler(userToken);
+		
+		if(resp.token !== undefined){
+			this.props.loginHandler(resp);
 			passwordIsInvalid = false;
 		}
 
@@ -33,6 +32,7 @@ class Login extends Component{
 		//Show error message
 		console.log("Error: ");
 		console.log(e);
+		this.setState({passwordIsInvalid: true});
 	}
 
 	validateLogin(loginData){

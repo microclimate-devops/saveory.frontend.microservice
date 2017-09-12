@@ -15,16 +15,17 @@ class App extends Component {
 	super(props);
 	this.state = {
 		isAuth: false,
-		user: "me",
+		username: undefined,
+		userID: undefined,
 		userToken: undefined,
 	}
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
   }
 
-  login(token){
-	console.log("logging in user with token: "+token);
-	this.setState({isAuth: true, user: token, userToken: token});
+  login(userData){
+	console.log("logging in user with token: "+userData.token);
+	this.setState({isAuth: true, userID: userData.username, username: userData.name, userToken: userData.token});
   }
 
   logout(){
@@ -39,7 +40,7 @@ class App extends Component {
 	//REAL
 	let content = null;
 	if(this.state.isAuth){
-		content = <Home userToken={1} user={this.state.user}/>;
+		content = <Home userToken={this.state.userToken} user={this.state.username}/>;
 	}else{
 		content = <Login loginHandler={this.login}/>;
 	}

@@ -98,13 +98,18 @@ class PantryTable extends Component{
 	showHeader(){
 		console.log("CHECK here for data");
 		console.log(this.props.data);
-		return (
-			<TableRow className="pantry-table-header-row" header={true} even={true}>
-				<TableHeader/>
-				{this.showIngredientHeader()}
-				<TableHeader>Actions</TableHeader>
-			</TableRow>
-		);
+		let headerRow = undefined;
+		//Show the header if there is data to show in the table
+		if(this.props.data.length > 0){
+			headerRow = (
+				<TableRow className="pantry-table-header-row" header={true} even={true}>
+					<TableHeader/>
+					{this.showIngredientHeader()}
+					<TableHeader>Actions</TableHeader>
+				</TableRow>
+			);
+		}
+		return headerRow;
 	}
 
 	render(){

@@ -101,7 +101,7 @@ class Pantry extends Component {
 	}
 
 	retrieveIngredientFields(){
-		const pantryRequestURL = this.state.pantryServiceURL + "/spec/ingredient";
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {this.setState({ingredientFields: resp})}, 
@@ -109,7 +109,7 @@ class Pantry extends Component {
 	}
 
 	retrieveIngredientFieldTypes(){
-		const pantryRequestURL = this.state.pantryServiceURL + "/spec/ingredient/types";
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {this.setState({ingredientFieldTypes: resp})}, 
@@ -184,7 +184,4 @@ class Pantry extends Component {
 	}
 }
 
-/****************************************/
-/*Static Data and Methods to Manage Table and notifications
-/****************************************/
 export default Pantry;

@@ -13,50 +13,14 @@ class Pantry extends Component {
 		super(props);
 		this.state = {
 			pantryServiceURL: "/api/pantry/",
-			pantry: [ { "item" : "apple" , "qty" : 4 , "qtyUnit" : "piece" , "expDate" : "08-04-2017"} , { "item" : "whole milk" , "qty" : 2 , "qtyUnit" : "gallon" , "expDate" : "08-10-2017"}],
-			error: {}, 
-
-			pantryEmptyDescriptor: {
-				item: "Empty",
-				qty: "Empty",
-				qtyUnit: "Empty",
-				expDate: "Empty"
-			},
-			pantryColumns: [
-				{
-					Header: "Ingredients",
-					columns: [
-						{
-							type: "text",
-							title: "Item",
-							selector: "item"
-						},
-						{
-							type: "number",
-							title: "Quantity",
-							selector: "qty"
-						},
-						{
-							type: "text",
-							title: "Quantity Unit",
-							selector: "qtyUnit"
-						},
-						{
-							type: "date",
-							title: "Expiration",
-							selector: "expDate"
-						}
-					]
-				}
-			],
-			sortOptions: {
-				defaultSortName: 'item',
-				defaultSortOrder: 'desc',
-			},
-			actionMsgType: "",
-			actionMsgTitle: "",
-			actionMsgSubtitle: "",
-			showActionMsg: false,
+			pantry: [],
+			tableHeader: [],
+			notification: {
+				type: "",
+				title: "",
+				subtitle: "",
+				show: false,
+			}
 		};
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
@@ -68,30 +32,6 @@ class Pantry extends Component {
 	static propTypes = {
 		user: PropTypes.string.isRequired
 	};
-
-	retrievePantry_old(){
-		const pantryRequestURL = "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/microservicetalkingbackend-service:9080/microservicetalkingbackend/pantries?user="+this.props.user;
-		//retrieve the user's pantry from the backend
-		Https.get(pantryRequestURL, (res) => {
-			res.on('data', (d) => {
-				//Parse the data into a JSON object
-				const resultObj = JSON.parse(d);
-				var userPantry;
-
-				//If the result is an array then use the first element as the user's pantry
-				if(Array.isArray(resultObj)){
-					userPantry = resultObj[0].pantry;
-				}else{
-					userPantry = resultObj.pantry;
-				}
-				console.log("user's pantry: "+JSON.stringify(userPantry));
-
-				this.setState({pantry: userPantry});
-			});
-		}).on('error', (e) => {
-			this.setState({error: e});
-		});
-	}
 
 	setNotification(opts){
 		//Set values from passed options, apply defaults if necessary 
@@ -110,9 +50,9 @@ class Pantry extends Component {
 		}
 	}
 
+	
+
 	handlePantryResponse(resp){
-		console.log("Received resp");
-		console.log(resp);
 		//Handle different response codes
 		if(resp.code !== undefined){
 			switch(resp) {
@@ -122,11 +62,16 @@ class Pantry extends Component {
 					//Need to refresh the pantry
 					this.retrievePantry();
 					break;
+
+				case 204: //The user's pantry was not found
+					this.setNotification({title: "Empty Pantry", subtitle:"Please add your first ingredient", isGood:true});
+					break;
 				case 500:
 					this.setNotification({title: "Error", subtitle:resp.msg, isGood:false});
 					break;
-					
-					
+				default:	
+					this.setNotification({title: "Unknown Response", subtitle:resp.msg, isGood:false});
+					break;
 			}
 		}else if(resp.pantry != undefined){ //The response is the pantry itself
 			this.setState({pantry: resp.pantry});
@@ -156,6 +101,14 @@ class Pantry extends Component {
 			(resp) => {this.handlePantryResponse(resp)}, 
 			(e) => {this.handlePantryError(e)}
 		);
+	}
+
+	retrieveIngredient(){
+		const pantryRequestURL = this.state.pantryServiceURL + "/spec/ingredient";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET", 
+			(resp) => {this.setState({ingredient: resp})}, 
+		);	
 	}
 
 	componentDidMount(){
@@ -216,8 +169,8 @@ class Pantry extends Component {
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>
-				<PantryTable header={this.state.pantryColumns[0].columns} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
-				<AddIngredients ingredientMetadata={this.state.pantryColumns[0].columns} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				<PantryTable header={this.state.tableHeader} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
+				<AddIngredients ingredientMetadata={this.state.tableHeader} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 				{this.showNotification()}
 			</div>
 		);

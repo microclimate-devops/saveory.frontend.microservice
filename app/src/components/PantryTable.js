@@ -89,9 +89,9 @@ class PantryTable extends Component{
 	}
 
 	showHeader(){
-		if(Array.isArray(this.props.data)){
+		if(Array.isArray(this.props.header)){
 			//console.log("header data: "+ JSON.stringify(this.props.header));
-			return this.props.header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem.selector)} onClick={this.handleSortAction} className={"table-header-sortable" + (this.state.currSort === headerItem.selector ? " pantry-table-header-sort-selected": "")} id={headerItem.selector}>{headerItem.title}</TableHeader>});
+			return this.props.header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem)} onClick={this.handleSortAction} className={"table-header-sortable" + (this.state.currSort === headerItem ? " pantry-table-header-sort-selected": "")} id={headerItem}>{headerItem}</TableHeader>});
 		}
 	}
 

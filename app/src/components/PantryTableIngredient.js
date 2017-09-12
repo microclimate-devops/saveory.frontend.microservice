@@ -29,8 +29,7 @@ class PantryTableIngredient extends Component{
 		row.push(<TableData key="expander"/>);
 		//use the data accesssors prop to create the row with data in the correct order
 		for(var accessor of this.props.dataAccessors){
-			selector = accessor.selector;
-			row.push(<TableData key={selector} className="pantry-table-ingredient">{this.props.data[selector]}</TableData>);
+			row.push(<TableData key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
 		}
 
 		//Add row actions

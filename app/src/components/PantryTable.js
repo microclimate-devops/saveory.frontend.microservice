@@ -15,7 +15,9 @@ class PantryTable extends Component{
 	static PropTypes = {
 		header: PropTypes.array.isRequired,
 		data: PropTypes.array.isRequired,
+		fieldEditable: PropTypes.array.isRequired,
 		onRowDelete: PropTypes.func.isRequired,
+		onRowEdit: PropTypes.func.isRequired,
 		tableDataIdSelector: PropTypes.func.isRequired
 	};
 
@@ -63,7 +65,7 @@ class PantryTable extends Component{
 			let ingredients = this.sortIngredients();						
 			//Create a list of JSX ingredient rows
 			//return ingredients.map((ingredient, i) => {return [<PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} onExpander={this.handleExpandingRow} isEven={false}/>, <PantryTableIngredientExpand key={"expand-"+i} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} isEven={false} onDelete={this.props.onRowDelete}/>]});
-			return ingredients.map((ingredient, i) => {return <PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} onDelete={this.props.onRowDelete} isEven={false}/>});
+			return ingredients.map((ingredient, i) => {return <PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} fieldEditable={this.props.fieldEditable} onDelete={this.props.onRowDelete} onEdit={this.props.onRowEdit} isEven={false}/>});
 		}
 	}
 

@@ -18,7 +18,13 @@ class AddIngredientForm extends Component{
 	};
 
 	inputChange(target){
-		this.props.onChange(target.getAttribute('id'), target.value);
+		//get selector 
+		const targetIndex = Number(target.getAttribute('id'));
+		const selector = this.props.ingredientFields[targetIndex];
+		//convert to number if the field specifies it should be
+		let value = this.props.ingredientFieldTypes[targetIndex] === "number" ? Number(target.value) : target.value;
+		
+		this.props.onChange(selector, value);
 	}
 
 	showInputs(){
@@ -39,7 +45,7 @@ class AddIngredientForm extends Component{
 			//try to get validate data, default if not there
 			currValidateData = this.props.validateData[currSelector] || {};
 
-			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={currSelector} inputLabel={currSelector} onChange={this.inputChange} invalidText={currValidateData.msg} isInvalid={!currValidateData.valid} className="add-ingredient-form-item"/>
+			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={i} inputLabel={currSelector} onChange={this.inputChange} invalidText={currValidateData.msg} isInvalid={!currValidateData.valid} className="add-ingredient-form-item"/>
 
 			//Add the input to list
 			inputs.push(currInput);

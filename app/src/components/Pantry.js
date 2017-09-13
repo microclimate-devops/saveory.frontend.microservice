@@ -16,6 +16,7 @@ class Pantry extends Component {
 			pantry: [],
 			ingredientFields: [],
 			ingredientFieldTypes: [],
+			ingredientFieldEditable: [],
 			ingredientFieldOptions: {},
 			notification: {
 				type: "",
@@ -24,11 +25,10 @@ class Pantry extends Component {
 				show: false,
 			}
 		};
-		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
+		this.updateIngredient = this.updateIngredient.bind(this);
+		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.setPantry = this.setPantry.bind(this);
-		/*this.handlePantryResponse = this.handlePantryResponse(this);
-		this.handlePantryError = this.handlePantryError(this);*/
 	}
 
 	static propTypes = {
@@ -127,6 +127,16 @@ class Pantry extends Component {
 		);	
 	}
 
+	retrieveIngredientEditableFields(){
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/edits";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET", 
+			(resp) => {
+				this.setState({ingredientFieldEditable: resp});
+			}, 
+		);	
+	}
+
 	retrieveIngredientFields(){
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
 		// eslint-disable-next-line
@@ -153,16 +163,22 @@ class Pantry extends Component {
 		this.retrieveIngredientFields();
 	}
 
-	deleteIngredient(ingredient){
-		//send request to delete the ingredient
-		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient/" + ingredient[this.state.ingredientFields[0]], "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
-	}
-
 	addIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.")}, ingredient);
+	}
+
+	updateIngredient(ingredient){
+		//send a request to add the ingredient
+		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
+		Client.request(pantryRequestURL + "/ingredient/" + ingredient[this.state.ingredientFields[0]], "PUT", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not update the ingredient. Please make sure all fields are properly formatted.")}, ingredient);
+	}
+
+	deleteIngredient(ingredient){
+		//send request to delete the ingredient
+		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
+		Client.request(pantryRequestURL + "/ingredient/" + ingredient[this.state.ingredientFields[0]], "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
 	}
 
 	showNotification(){
@@ -179,7 +195,7 @@ class Pantry extends Component {
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>
-				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
+				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} fieldEditable={this.state.ingredientFieldEditable} onRowDelete={this.deleteIngredient} onRowEdit={this.updateIngredient} tableDataIdSelector="item"/>
 				<AddIngredients ingredientFields={this.state.ingredientFields} ingredientFieldTypes={this.state.ingredientFieldTypes} ingredientFieldOptions={this.state.ingredientFieldOptions} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 				{this.showNotification()}
 			</div>

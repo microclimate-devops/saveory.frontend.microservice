@@ -7,6 +7,7 @@ class PantryTableIngredient extends Component{
 		super(props);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
+		this.fieldChanged = this.fieldChanged.bind(this);
 		this.state = {isEditing: false};
 	}
 
@@ -52,10 +53,7 @@ class PantryTableIngredient extends Component{
 		let isEditing = this.state.isEditing;
 		//If the state is currently in edit mode, then the user clicked the save button and we should send the edits
 		if(isEditing){
-			this.setRowEditable(false); 
 			this.sendEdit();
-		}else{ //Prepare for edits
-			this.setRowEditable(true);
 		}
 
 		//Invert the status
@@ -63,16 +61,31 @@ class PantryTableIngredient extends Component{
 
 	}
 
+	fieldChanged(e){
+		console.log("A field changed: "+e.target.getAttribute('id'));
+	}
+
 	showRow(){
+		const dataAccessors = this.props.dataAccessors;
 		let row = [];
-		let selector = "";
+		let editable = undefined;
+		let accessor = undefined;
 		
 		//Add expander
 		//row.push(<TableData key="expander" expanded={this.props.isExpanded === undefined ? false : this.props.isExpanded} onClick={this.handleExpander}></TableData>);
 		row.push(<TableData key="expander"/>);
 		//use the data accesssors prop to create the row with data in the correct order
-		for(var accessor of this.props.dataAccessors){
-			row.push(<TableData ref={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
+		for(var i = 0; i < dataAccessors.length; i++){
+			accessor = dataAccessors[i];
+
+			//Determine if the current field is allowed to be edited
+			if(!this.props.fieldEditable[i]){
+				editable = false;
+			}else{
+				editable = this.state.isEditing;
+			}
+
+			row.push(<TableData {...{'contentEditable': editable.toString()}} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
 		}
 
 		//Add row actions

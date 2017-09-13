@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Modal} from 'carbon-components';
+//import {Modal} from 'carbon-components';
 import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
@@ -29,24 +29,37 @@ class AddIngredients extends Component{
 		AddIngredients.hideAddIngredientModal();
 	}
 
+	validateField(key, data){
+		const fieldOptions = this.props.ingredientFieldOptions[key];
+		let isValid = true;
+		let invalidMsg = "";
+		
+		//Check for empty data
+		if((typeof data === "string" && data.length === 0) || (typeof data === "number" && data <= 0)){
+			isValid=false;
+			invalidMsg = "Required";
+		}
+		//If valid options were defined for this field, make sure the data matches an option
+		else if(Array.isArray(fieldOptions) && !fieldOptions.includes(data)){ 
+			console.log("The input of "+data+" is not in the valid options array: "+JSON.stringify(fieldOptions));
+			isValid=false;
+			invalidMsg = "Please enter one of these values: "+fieldOptions.toString();
+		}
+		return {valid: isValid, msg: invalidMsg};
+	}
+
 	handleIngredientChange(key, data){
 		let ingredient = this.state.enteredIngredient;
 		let validateData = this.state.validateData
 
 		//Add new ingredient info
 		ingredient[key] = data;
-
-		//validate data for strings and numbers
-		if((typeof data === "string" && data.length === 0) || (typeof data === "number" && data <= 0)){
-			validateData[key] = false;
-		}else{
-			validateData[key] = true;
-		}
+		validateData[key] = this.isFieldValid(key, data);
 			
 		this.setState({enteredIngredient: ingredient, validateData: validateData});
 	}
 	
-	isDataInvalid(){
+	isAnyDataInvalid(){
 		let dataIsInvalid = false;
 		const validateData = this.state.validateData;
 		
@@ -76,10 +89,10 @@ class AddIngredients extends Component{
 					<h1>Add Ingredient</h1>
 				</div>
 				<div className="add-ingredient-modal-content-container">
-					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientFields={this.props.ingredientFields} ingredientFieldTypes={this.props.ingredientFieldTypes} ingredientFieldOptions={this.props.ingredientFieldOptions} validateData={this.state.validateData}/>
+					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientFields={this.props.ingredientFields} ingredientFieldTypes={this.props.ingredientFieldTypes} validateData={this.state.validateData}/>
 				</div>
 				<div className="add-ingredient-modal-footer-container">
-					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isDataInvalid()}/>
+					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isAnyDataInvalid()}/>
 				</div>
 			</CarbonModal>
 		</div>
@@ -89,7 +102,7 @@ class AddIngredients extends Component{
 
 }
 
-AddIngredients.bindAddIngredientModal = function(ele, options){
+/*AddIngredients.bindAddIngredientModal = function(ele, options){
 	AddIngredients.addIngredientModal = new Modal(ele, options);
 }
 
@@ -99,7 +112,7 @@ AddIngredients.hideAddIngredientModal = function(){
 	}else{
 		console.log("Please setup (bind) the modal before trying to close it");
 	}
-}
+}*/
 
 
 

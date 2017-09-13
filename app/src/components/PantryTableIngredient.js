@@ -25,6 +25,8 @@ class PantryTableIngredient extends Component{
 	}
 
 	setRowEditable(isEditable){
+		console.log("editable fields: "+JSON.stringify(this.props.fieldEditable));
+		console.log("available refs: "+JSON.stringify(this.refs));
 		const dataAccessors = this.props.dataAccessors;
 		//Mark each editable field to the desired edit state
 		for(var i = 0; i < dataAccessors.length; i++){
@@ -41,6 +43,7 @@ class PantryTableIngredient extends Component{
 			editedIngredient[accessor] = this.refs[accessor].innerHTML;
 		}
 			
+		console.log("Sending ingredient to be edited: "+JSON.stringify(editedIngredient));
 		//Send to handler
 		this.props.onEdit(editedIngredient);
 	}
@@ -75,7 +78,7 @@ class PantryTableIngredient extends Component{
 		//Add row actions
 		row.push(<TableData key="actions" className="pantry-table-row-actions">
 				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
-				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "edit" : "checkmark--outline"} height="24" width="24" onClick={this.handleEdit}/>
+				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "checkmark--outline" : "edit"} height="24" width="24" onClick={this.handleEdit}/>
 			</TableData>);
 
 		return row;

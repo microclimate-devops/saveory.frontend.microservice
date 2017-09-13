@@ -36,7 +36,8 @@ class AddIngredientForm extends Component{
 			//Gather data about the field
 			currSelector = ingredientFields[i];
 			currValue = this.props.ingredient[currSelector];
-			currValidateData = this.props.validateData[currSelector];
+			//try to get validate data, default if not there
+			currValidateData = this.props.validateData[currSelector] || {};
 
 			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={currSelector} inputLabel={currSelector} onChange={this.inputChange} invalidText={currValidateData.msg} isInvalid={!currValidateData.valid} className="add-ingredient-form-item"/>
 

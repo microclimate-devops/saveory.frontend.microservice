@@ -54,7 +54,7 @@ class AddIngredients extends Component{
 
 		//Add new ingredient info
 		ingredient[key] = data;
-		validateData[key] = this.isFieldValid(key, data);
+		validateData[key] = this.validateField(key, data);
 			
 		this.setState({enteredIngredient: ingredient, validateData: validateData});
 	}

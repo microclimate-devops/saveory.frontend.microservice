@@ -7,7 +7,6 @@ class AddIngredientForm extends Component{
 	constructor(props){
 		super(props);
 		this.inputChange = this.inputChange.bind(this);
-		this.dropdownChange = this.dropdownChange.bind(this);
 	}
 
 	static PropTypes = {

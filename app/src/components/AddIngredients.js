@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import {Modal} from 'carbon-components';
+import {Modal} from 'carbon-components';
 import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
@@ -102,7 +102,7 @@ class AddIngredients extends Component{
 
 }
 
-/*AddIngredients.bindAddIngredientModal = function(ele, options){
+AddIngredients.bindAddIngredientModal = function(ele, options){
 	AddIngredients.addIngredientModal = new Modal(ele, options);
 }
 
@@ -112,7 +112,7 @@ AddIngredients.hideAddIngredientModal = function(){
 	}else{
 		console.log("Please setup (bind) the modal before trying to close it");
 	}
-}*/
+}
 
 
 

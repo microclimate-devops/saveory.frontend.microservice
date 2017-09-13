@@ -16,6 +16,7 @@ class AddIngredients extends Component{
 	static PropTypes = {
 		ingredientFields: PropTypes.array.isRequired,
 		ingredientFieldTypes: PropTypes.array.isRequired,
+		ingredientFieldOptions: PropTypes.object.isRequired,
 		onAddIngredient: PropTypes.func.isRequired,
 		msg: PropTypes.string.isRequired,
 		showMsg: PropTypes.bool.isRequired,
@@ -75,7 +76,7 @@ class AddIngredients extends Component{
 					<h1>Add Ingredient</h1>
 				</div>
 				<div className="add-ingredient-modal-content-container">
-					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientFields={this.props.ingredientFields} ingredientFieldTypes={this.props.ingredientFieldTypes} validateData={this.state.validateData}/>
+					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientFields={this.props.ingredientFields} ingredientFieldTypes={this.props.ingredientFieldTypes} ingredientFieldOptions={this.props.ingredientFieldOptions} validateData={this.state.validateData}/>
 				</div>
 				<div className="add-ingredient-modal-footer-container">
 					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isDataInvalid()}/>

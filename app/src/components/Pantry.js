@@ -16,6 +16,7 @@ class Pantry extends Component {
 			pantry: [],
 			ingredientFields: [],
 			ingredientFieldTypes: [],
+			ingredientFieldOptions: {},
 			notification: {
 				type: "",
 				title: "",
@@ -57,9 +58,7 @@ class Pantry extends Component {
 	handlePantryResponse(resp){
 		//Handle different response codes
 		if(resp.code !== undefined){
-			console.log("Found message from backend");
-			console.log(resp);
-			switch(resp) {
+			switch(resp.code) {
 				case 200:
 					//Success!!
 					this.setNotification({title: "Success", subtitle:resp.msg, isGood:true});
@@ -89,10 +88,55 @@ class Pantry extends Component {
 		}
 	}
 
-	handlePantryError(e){
+	handlePantryError(e, msg){
 		console.log("caught pantry error");
 		console.log(e);
-		this.setNotification({title: "error", subtitle: "Got an error while trying to send request to pantry service", isGood:false});
+		this.setNotification({title: "Error", subtitle: msg, isGood:false});
+	}
+
+	retrieveIngredientFieldValidation(fieldTypes){
+		const ingredientFields = this.state.ingredientFields;
+		let pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/";
+		let fieldOptions = this.state.ingredientFieldOptions;
+		let currField = undefined;
+		for(var i = 0; i < fieldTypes.length; i++){
+			//If the field type is a more complicated object, go ahead and request validation data for it
+			if(typeof fieldTypes[i] === "object"){
+				currField = ingredientFields[i];
+				pantryRequestURL += currField;
+				//Request validation data and update state
+				Client.request(pantryRequestURL, "GET", 
+					(resp) => {
+						fieldOptions[currField] = resp;
+						this.setState({ingredientFieldOptions: fieldOptions});
+					}
+				);
+			}
+		}
+	}
+
+	retrieveIngredientFieldTypes(){
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET", 
+			(resp) => {
+				//Check to see if additional validate info is needed for a field
+				this.retrieveIngredientFieldValidation(resp);
+				this.setState({ingredientFieldTypes: resp});
+			}, 
+		);	
+	}
+
+	retrieveIngredientFields(){
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET", 
+			(resp) => {
+				//Now get field types
+				this.retrieveIngredientFieldTypes();
+				this.setState({ingredientFields: resp});
+			}, 
+		);	
 	}
 
 	retrievePantry(){
@@ -100,70 +144,25 @@ class Pantry extends Component {
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {this.handlePantryResponse(resp)}, 
-			(e) => {this.handlePantryError(e)}
+			(e) => {this.handlePantryError(e, "Could not access your pantry")}
 		);
-	}
-
-	retrieveIngredientFields(){
-		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
-		// eslint-disable-next-line
-		Client.request(pantryRequestURL, "GET", 
-			(resp) => {console.log("Ingredient field data"); console.log(resp); this.setState({ingredientFields: resp});}, 
-		);	
-	}
-
-	retrieveIngredientFieldTypes(){
-		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
-		// eslint-disable-next-line
-		Client.request(pantryRequestURL, "GET", 
-			(resp) => {console.log("Ingredient field type data"); console.log(resp); this.setState({ingredientFieldTypes: resp});}, 
-		);	
 	}
 
 	componentDidMount(){
 		this.retrievePantry();
 		this.retrieveIngredientFields();
-		this.retrieveIngredientFieldTypes();
-	}
-
-	findIngredientInPantry(ingredient){
-		console.log("ingredient: "+ingredient);
-		let itemIndex = undefined;
-		let userPantry = this.state.pantry;
-		//Go through the pantry until the ingredient with the correct name is found
-		for(let i = 0; i < userPantry.length && itemIndex === undefined; i++){
-			if(userPantry[i].item === ingredient){
-				itemIndex = i;
-			}
-		}
-		return itemIndex;
 	}
 
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient/" + ingredient.item, "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)});
-	}
-
-	ingredientIsValid(ingredient){
-		let isValid = false;
-		console.log("pantry: "+JSON.stringify(this.state.pantry));
-		//check if it's already in pantry
-		console.log("in pantry result: "+this.findIngredientInPantry(ingredient));
-		if(this.findIngredientInPantry(ingredient.item) === undefined){
-			//Make sure no fields are empty
-			if(ingredient.item.length !== 0 && ingredient.qty !== 0 && ingredient.qtyUnit.length !== 0 && ingredient.expDate.length !== 0){
-				isValid = true;
-			}
-		}
-
-		return isValid;
+		Client.request(pantryRequestURL + "/ingredient/" + ingredient[this.state.ingredientFields[0]], "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
 	}
 
 	addIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e)}, ingredient);
+		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.")}, ingredient);
 	}
 
 	showNotification(){
@@ -181,7 +180,7 @@ class Pantry extends Component {
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>
 				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} onRowDelete={this.deleteIngredient} tableDataIdSelector="item"/>
-				<AddIngredients ingredientFields={this.state.ingredientFields} ingredientFieldTypes={this.state.ingredientFieldTypes} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
+				<AddIngredients ingredientFields={this.state.ingredientFields} ingredientFieldTypes={this.state.ingredientFieldTypes} ingredientFieldOptions={this.state.ingredientFieldOptions} onAddIngredient={this.addIngredient} msg={this.state.actionMsg} showMsg={this.state.showActionMsg} msgIsError={this.state.actionMsgIsError}/>
 				{this.showNotification()}
 			</div>
 		);

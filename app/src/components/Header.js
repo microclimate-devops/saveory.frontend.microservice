@@ -11,6 +11,7 @@ class Header extends Component{
 	}
 
 	static propTypes = {
+		user: PropTypes.string.isRequired,
 		isAuth: PropTypes.bool.isRequired,
 		logoutHandler: PropTypes.func.isRequired
 	};

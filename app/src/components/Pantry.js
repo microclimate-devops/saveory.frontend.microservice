@@ -57,6 +57,8 @@ class Pantry extends Component {
 	handlePantryResponse(resp){
 		//Handle different response codes
 		if(resp.code !== undefined){
+			console.log("Found message from backend");
+			console.log(resp);
 			switch(resp) {
 				case 200:
 					//Success!!
@@ -76,6 +78,8 @@ class Pantry extends Component {
 					break;
 			}
 		}else if(resp.pantry != undefined){ //The response is the pantry itself
+			console.log("Below is supposed to be a pantry");
+			console.log(resp);
 			this.setState({pantry: resp.pantry});
 		}else{ //Unknown Condition
 			console.log("The response from the pantry service does not make sense: ");
@@ -86,7 +90,7 @@ class Pantry extends Component {
 	}
 
 	handlePantryError(e){
-		console.log("caught error");
+		console.log("caught pantry error");
 		console.log(e);
 		this.setNotification({title: "error", subtitle: "Got an error while trying to send request to pantry service", isGood:false});
 	}
@@ -104,7 +108,7 @@ class Pantry extends Component {
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
-			(resp) => {this.setState({ingredientFields: resp})}, 
+			(resp) => {console.log("Ingredient field data"); console.log(resp); this.setState({ingredientFields: resp});}, 
 		);	
 	}
 
@@ -112,7 +116,7 @@ class Pantry extends Component {
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
-			(resp) => {this.setState({ingredientFieldTypes: resp})}, 
+			(resp) => {console.log("Ingredient field type data"); console.log(resp); this.setState({ingredientFieldTypes: resp});}, 
 		);	
 	}
 

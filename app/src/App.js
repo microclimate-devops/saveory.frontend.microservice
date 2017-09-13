@@ -55,7 +55,7 @@ class App extends Component {
 	<Route path="/callback" component={Callback}/>*/
     return (
       <div className="App">
-		<Header user={this.state.user} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
+		<Header user={this.state.username} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
 		{this.accessHome()}
       </div>
     );

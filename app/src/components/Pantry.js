@@ -121,6 +121,7 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {
 				//Check to see if additional validate info is needed for a field
+				console.log("Response for field types: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.retrieveIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});
 			}, 
@@ -132,6 +133,7 @@ class Pantry extends Component {
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {
+				console.log("Response for editable fields: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.setState({ingredientFieldEditable: resp});
 			}, 
 		);	
@@ -143,6 +145,7 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL, "GET", 
 			(resp) => {
 				//Now get field types
+				console.log("Response for fields: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.retrieveIngredientFieldTypes();
 				this.setState({ingredientFields: resp});
 			}, 

@@ -173,9 +173,11 @@ class Pantry extends Component {
 		);
 	}
 
+	//Request and store all needed data from the Pantry backend service
 	componentDidMount(){
 		this.retrievePantry();
 		this.retrieveIngredientFields();
+		this.retrieveIngredientEditableFields();
 	}
 
 	addIngredient(ingredient){

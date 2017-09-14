@@ -109,6 +109,9 @@ class Pantry extends Component {
 					(resp) => {
 						fieldOptions[currField] = resp;
 						this.setState({ingredientFieldOptions: fieldOptions});
+					},
+					(e) => {
+						this.handlePantryError(e, "Could not get option info for ingredient field");	
 					}
 				);
 			}
@@ -125,6 +128,9 @@ class Pantry extends Component {
 				this.retrieveIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});
 			}, 
+			(e) => {
+				this.handlePantryError(e, "Could not get ingredient field types");	
+			}
 		);	
 	}
 
@@ -136,6 +142,9 @@ class Pantry extends Component {
 				console.log("Response for editable fields: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.setState({ingredientFieldEditable: resp});
 			}, 
+			(e) => {
+				this.handlePantryError(e, "Could not get ingredient field editable info");	
+			}
 		);	
 	}
 
@@ -149,6 +158,9 @@ class Pantry extends Component {
 				this.retrieveIngredientFieldTypes();
 				this.setState({ingredientFields: resp});
 			}, 
+			(e) => {
+				this.handlePantryError(e, "Could not get ingredient fields");	
+			}
 		);	
 	}
 

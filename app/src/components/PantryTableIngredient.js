@@ -99,7 +99,7 @@ class PantryTableIngredient extends Component{
 
 	render(){
 		return (
-				<TableRow header={false} className="pantry-table-body-row" even={this.props.isEven}>
+				<TableRow header={false} className={"pantry-table-body-row " + (this.state.isEditing ? "ingredient-editing" : "")} even={this.props.isEven}>
 						{this.showRow()}
 				</TableRow>
 		);

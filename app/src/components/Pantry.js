@@ -189,13 +189,13 @@ class Pantry extends Component {
 	updateIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient/" + ingredient[this.state.ingredientFields[0]], "PUT", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not update the ingredient. Please make sure all fields are properly formatted.")}, ingredient);
+		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "PUT", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not update the ingredient. Please make sure all fields are properly formatted.")}, ingredient);
 	}
 
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient/" + ingredient[this.state.ingredientFields[0]], "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
+		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
 	}
 
 	showNotification(){

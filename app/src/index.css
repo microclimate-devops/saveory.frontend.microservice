@@ -224,6 +224,10 @@ button {
 /*Recipes Stuff*/ 
 /*Recipe Search stuff*/
 /* Search 1 - bg change*/
+.recipes-wrap{
+	margin-top: 50px;
+}
+
 .recipe-search-container{
   vertical-align: middle;
   white-space: nowrap;

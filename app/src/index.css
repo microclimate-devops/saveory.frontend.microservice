@@ -69,7 +69,7 @@ button {
 }
 
 .header-app-name-container{
-	margin-left: 90px;
+	margin-left: 40px;
 	padding-top: 8px;
 	color: #F0F4F4;
 }
@@ -201,6 +201,11 @@ button {
 
 .pantry-table-body-row{
 	border-bottom: 1px solid gray;
+	height: 3rem;
+}
+
+.pantry-table-ingredient{
+	font-size: .975rem;
 }
 
 .tabs{
@@ -217,15 +222,12 @@ button {
 	padding-left: 30px;
 }
 
-.tabs__labels li:first-child{
-	padding-left: 90px;
-}
-
 /*Recipes Stuff*/ 
 /*Recipe Search stuff*/
 /* Search 1 - bg change*/
 .recipes-wrap{
 	margin-top: 50px;
+	margin-left: 20px;
 }
 
 .recipe-search-container{

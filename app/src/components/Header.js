@@ -22,13 +22,16 @@ class Header extends Component{
 
 	render(){
 		//{this.showLoginLogoutButton()}
-		return (
-			<div className="App-header">
+		/*
 			  {this.props.isAuth && <div className="header-menu-container">
 				<CarbonButton onClick={this.activateMenu} text="">
 					<Icon name="menu" />
 				</CarbonButton>
 			  </div>}
+
+		*/
+		return (
+			<div className="App-header">
 			  <div className="header-app-name-container">
 				<h1>Saveory</h1>
 			  </div>

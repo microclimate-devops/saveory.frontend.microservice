@@ -16,7 +16,7 @@ class RecipeDisplay extends Component{
 
 	createIngredientElement(ingr){
 		return (
-			<li key={ingr.name}>{ingr.quantity} {ingr.name}</li>
+			<li key={ingr.name}>{ingr.quantity} {ingr.unit} {ingr.name}</li>
 		);
 	}
 

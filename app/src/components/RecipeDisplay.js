@@ -53,7 +53,7 @@ class RecipeDisplay extends Component{
 				</div>
 				<div className="recipe-display-content">
 					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(this.props.recipe.ingredients)}</ul></div>
-					<div className="recipe-display-instructions">{this.showInstructions(this.props.recipe.instruction)}</div>	
+					<div className="recipe-display-instructions">{this.showInstructions(this.props.recipe.instructions)}</div>	
 				</div>
 			</div>
 		);

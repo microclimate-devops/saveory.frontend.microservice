@@ -6,27 +6,45 @@ class RecipeDisplay extends Component{
 		recipe: PropTypes.object.isRequired
 	};
 
+	showIngredientElement(ingr){
+		return (
+			<li key={ingr.name}>{ingr.quantity} {ingr.unit} {ingr.name}</li>
+		);
+	}
+	
 	createIngredientList(ingredients){
 		let ingredList = [];
 		if(Array.isArray(ingredients)){
-			ingredList = ingredients.map(this.createIngredientElement);
+			ingredList = ingredients.map(this.showIngredientElement);
 		}
 		return ingredList;
 	}
 
-	createIngredientElement(ingr){
+	showInstructionPiece(instPiece, i){
 		return (
-			<li key={ingr.name}>{ingr.quantity} {ingr.unit} {ingr.name}</li>
+			<p key={i} className="recipe-instruction-piece">{instPiece}</p>
 		);
+	}
+
+	showInstructions(instructions){
+		//seperate instructions on <br/> tag
+		const instructionList = instructions.split("<br/>");
+	
+		//Give each element in the array it's own section
+		return instructionList.map((instPiece, i) => {return this.showInstructionPiece(instPiece, i)});
 	}
 
 	render(){
 		return (
 			<div className="recipe-display-container">
-				<h3>{this.props.recipe.name}</h3>
-				<p className="recipe-display-description">{this.props.recipe.description}</p>
-				<ul>{this.createIngredientList(this.props.recipe.ingredients)}</ul>
-				<p className="recipe-display-instructions">{this.props.recipe.instructions}</p>	
+				<div className="recipe-display-header">
+					<p className="recipe-display-title">{this.props.recipe.name}</p>
+					<p className="recipe-display-description">{this.props.recipe.description}</p>
+				</div>
+				<div className="recipe-display-content">
+					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(this.props.recipe.ingredients)}</ul></div>
+					<div className="recipe-display-instructions">{this.showInstructions(this.props.recipe.instructions)}</div>	
+				</div>
 			</div>
 		);
 	}

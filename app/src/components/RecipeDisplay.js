@@ -36,23 +36,29 @@ class RecipeDisplay extends Component{
 		}
 	}
 
-	render(){
+	showRecipeContents(recipe){
 		//Only render if there is a recipe selected to show
-		const recipe = this.props.recipe;
 		if(Object.keys(recipe).length > 0){
 			return (
-				<div className="recipe-display-container">
-					<div className="recipe-display-header">
-						<p className="recipe-display-title">{recipe.name}</p>
-						<p className="recipe-display-description">{recipe.description}</p>
-					</div>
-					<div className="recipe-display-content">
-						<div className="recipe-display-ingredients"><ul>{this.createIngredientList(recipe.ingredients)}</ul></div>
-						<div className="recipe-display-instructions">{this.showInstructions(recipe.instructions)}</div>	
-					</div>
+				<div className="recipe-display-content">
+					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(recipe.ingredients)}</ul></div>
+					<div className="recipe-display-instructions">{this.showInstructions(recipe.instructions)}</div>	
 				</div>
 			);
 		}
+	}
+
+	render(){
+		const recipe = this.props.recipe;
+		return (
+			<div className="recipe-display-container">
+				<div className="recipe-display-header">
+					<p className="recipe-display-title">{recipe.name}</p>
+					<p className="recipe-display-description">{recipe.description}</p>
+				</div>
+				{this.showRecipeContents()}
+			</div>
+		);
 	}
 
 }

@@ -35,6 +35,9 @@ class RecipeDisplay extends Component{
 	}
 
 	render(){
+
+		console.log("Recipe");
+		console.log(this.props.recipe);
 		return (
 			<div className="recipe-display-container">
 				<div className="recipe-display-header">
@@ -43,7 +46,7 @@ class RecipeDisplay extends Component{
 				</div>
 				<div className="recipe-display-content">
 					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(this.props.recipe.ingredients)}</ul></div>
-					<div className="recipe-display-instructions">{this.showInstructions(this.props.recipe.instructions)}</div>	
+					<div className="recipe-display-instructions">{this.showInstructions(this.props.recipe.instruction)}</div>	
 				</div>
 			</div>
 		);

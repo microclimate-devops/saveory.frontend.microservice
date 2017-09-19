@@ -263,6 +263,39 @@ button {
 	background-color: #DFE6EB;
 }
 
+.recipe-display-header{
+	text-align:center;
+	margin-bottom: 20px;
+}
+
+.recipe-display-title{
+	font-size: 2.1rem;
+}
+
+.recipe-display-description{
+	font-weight: bold;
+	color: #9753E1;
+}
+
+.recipe-display-title{
+	font-size: 2.1rem;
+}
+
+.recipe-display-ingredients{
+	margin-bottom: 15px;
+	font-size: 1.2rem;
+	color: #535A5A;
+	border-top: 0.1rem solid #1D364D;
+	border-bottom: 0.1rem solid #1D364D;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.recipe-display-instructions p{
+	margin-bottom:5px;
+	font-size: 1.1rem;
+}
+
 /*table {
   table-layout: fixed;
   width: 100%;

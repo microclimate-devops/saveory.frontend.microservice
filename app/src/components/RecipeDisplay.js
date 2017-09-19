@@ -6,6 +6,11 @@ class RecipeDisplay extends Component{
 		recipe: PropTypes.object.isRequired
 	};
 
+	//Update only if the recipe prop is not empty
+	shouldComponentUpdate(nextProps, nextState){
+		return Object.keys(nextProps.recipe).length !== 0;
+	}
+
 	showIngredientElement(ingr){
 		return (
 			<li key={ingr.name}>{ingr.quantity} {ingr.unit} {ingr.name}</li>

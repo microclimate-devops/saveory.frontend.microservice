@@ -38,7 +38,7 @@ class RecipeDisplay extends Component{
 
 	showRecipeContents(recipe){
 		//Only render if there is a recipe selected to show
-		if(Object.keys(recipe).length > 0){
+		if(typeof recipe === "object" && Object.keys(recipe).length > 0){
 			return (
 				<div className="recipe-display-content">
 					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(recipe.ingredients)}</ul></div>

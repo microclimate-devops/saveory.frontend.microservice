@@ -6,11 +6,6 @@ class RecipeDisplay extends Component{
 		recipe: PropTypes.object.isRequired
 	};
 
-	//Update only if the recipe prop is not empty
-	shouldComponentUpdate(nextProps, nextState){
-		return Object.keys(nextProps.recipe).length !== 0;
-	}
-
 	showIngredientElement(ingr){
 		return (
 			<li key={ingr.name}>{ingr.quantity} {ingr.unit} {ingr.name}</li>
@@ -42,21 +37,22 @@ class RecipeDisplay extends Component{
 	}
 
 	render(){
-
-		console.log("Recipe");
-		console.log(this.props.recipe);
-		return (
-			<div className="recipe-display-container">
-				<div className="recipe-display-header">
-					<p className="recipe-display-title">{this.props.recipe.name}</p>
-					<p className="recipe-display-description">{this.props.recipe.description}</p>
+		//Only render if there is a recipe selected to show
+		const recipe = this.props.recipe;
+		if(Object.keys(recipe).length > 0){
+			return (
+				<div className="recipe-display-container">
+					<div className="recipe-display-header">
+						<p className="recipe-display-title">{recipe.name}</p>
+						<p className="recipe-display-description">{recipe.description}</p>
+					</div>
+					<div className="recipe-display-content">
+						<div className="recipe-display-ingredients"><ul>{this.createIngredientList(recipe.ingredients)}</ul></div>
+						<div className="recipe-display-instructions">{this.showInstructions(recipe.instructions)}</div>	
+					</div>
 				</div>
-				<div className="recipe-display-content">
-					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(this.props.recipe.ingredients)}</ul></div>
-					<div className="recipe-display-instructions">{this.showInstructions(this.props.recipe.instructions)}</div>	
-				</div>
-			</div>
-		);
+			);
+		}
 	}
 
 }

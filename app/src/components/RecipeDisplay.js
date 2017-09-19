@@ -56,7 +56,7 @@ class RecipeDisplay extends Component{
 					<p className="recipe-display-title">{recipe.name}</p>
 					<p className="recipe-display-description">{recipe.description}</p>
 				</div>
-				{this.showRecipeContents()}
+				{this.showRecipeContents(recipe)}
 			</div>
 		);
 	}

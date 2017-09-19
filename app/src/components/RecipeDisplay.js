@@ -32,11 +32,13 @@ class RecipeDisplay extends Component{
 	}
 
 	showInstructions(instructions){
-		//seperate instructions on <br/> tag
-		const instructionList = instructions.split("<br/>");
-	
-		//Give each element in the array it's own section
-		return instructionList.map((instPiece, i) => {return this.showInstructionPiece(instPiece, i)});
+		if(typeof instructions === "string"){
+			//seperate instructions on <br/> tag
+			const instructionList = instructions.split("<br/>");
+		
+			//Give each element in the array it's own section
+			return instructionList.map((instPiece, i) => {return this.showInstructionPiece(instPiece, i)});
+		}
 	}
 
 	render(){

@@ -7,8 +7,6 @@ class SignupForm extends Component{
 	constructor(props){
 		super(props);
 		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleUsernameChange = this.handleUsernameChange.bind(this);
-		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.sendSignupAttempt = this.sendSignupAttempt.bind(this);
 		this.state = {
 			signupData: {
@@ -35,34 +33,17 @@ class SignupForm extends Component{
 		let validate = this.state.validate;
 
 		//set validity for selector
-		validate[selector] = data.length !== 0;
+		if(selector === "validatePassword"){ //verify the validate password entry equals entered password
+			validate[selector] = data === this.state.signupData.password;	
+		}else{
+			validate[selector] = data.length !== 0;
+		}
 
 		//set new data
 		signupData[selector] = data;
 
 		//update
 		this.setState({signupData: signupData, validate: validate});
-	}
-
-	handleUsernameChange(target){
-		//validate
-
-		//update
-		this.setState({username: target.value});
-	}
-	
-	handlePasswordChange(target){
-		//validate
-
-		//update
-		this.setState({password: target.value});
-	}
-
-	handlePasswordVerifyChange(target){
-		//validate
-
-		//update
-		this.setState({password: target.value});
 	}
 
 	sendSignupAttempt(){

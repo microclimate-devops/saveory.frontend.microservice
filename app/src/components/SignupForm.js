@@ -9,7 +9,7 @@ class SignupForm extends Component{
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleUsernameChange = this.handleUsernameChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
-		this.sendLoginAttempt = this.sendLoginAttempt.bind(this);
+		this.sendSignupAttempt = this.sendSignupAttempt.bind(this);
 		this.state = {
 			signupData: {
 				name: "", 

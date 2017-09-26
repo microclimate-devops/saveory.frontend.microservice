@@ -23,6 +23,7 @@ class SignupForm extends Component{
 
 	static PropTypes = {
 		processSignup: PropTypes.func.isRequired,
+		onAccessToggle: PropTypes.func.isRequired,
 		signupInvalid: PropTypes.bool.isRequired
 	};
 
@@ -87,6 +88,7 @@ class SignupForm extends Component{
 				<CarbonFormInput inputText={this.state.signupData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange} invalidText="Username or password is incorrect" isInvalid={this.props.signupInvalid}/>
 				<CarbonFormInput inputText={this.state.signupData.verifyPassword} inputType="password" inputID="verifyPassword" inputLabel="Verify Password" onChange={this.handleInputChange} invalidText="Username or password is incorrect" isInvalid={this.props.signupInvalid}/>
 				<CarbonButton text="Submit" onClick={this.sendSignupAttempt} isInForm={true} isDisabled={!this.isValid()}/>
+				<CarbonButton text="Login Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 			</div>	
 		);
 	}

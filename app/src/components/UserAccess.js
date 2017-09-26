@@ -69,25 +69,13 @@ class UserAccess extends Component{
 	}
 
 	showAccessForm(){
-		let form = <LoginForm processLogin={this.requestLogin} didRequestFail={this.state.didRequestFail}/>;
+		let form = <LoginForm processLogin={this.requestLogin} didRequestFail={this.state.didRequestFail} onAccessToggle={this.toggleNeedsSignup}/>;
 
 		if(this.state.needsSignup){
-			form = <SignupForm processSignup={this.requestSignup} signupInvalid={this.state.didRequestFail}/>;
+			form = <SignupForm processSignup={this.requestSignup} signupInvalid={this.state.didRequestFail} onAccessToggle={this.toggleNeedsSignup}/>;
 		}
 
 		return form;
-	}
-
-	showAccessSwitcher(){
-		//Determine what to show the user based on the current state of showing login or signup
-		let switcherText = "Signup Here";
-		if(this.state.needsSignup){
-			switcherText = "Login Here";
-		}
-
-		return (
-			<CarbonButton text={switcherText} onClick={this.toggleNeedsSignup} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
-		);
 	}
 
 	render(){

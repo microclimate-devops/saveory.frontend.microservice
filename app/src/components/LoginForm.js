@@ -14,6 +14,7 @@ class LoginForm extends Component{
 
 	static PropTypes = {
 		processLogin: PropTypes.func.isRequired,
+		onAccessToggle: PropTypes.func.isRequired,
 		loginInvalid: PropTypes.bool.isRequired
 	};
 
@@ -40,6 +41,7 @@ class LoginForm extends Component{
 				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleUsernameChange}/>
 				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handlePasswordChange} invalidText="Username or password is incorrect" isInvalid={this.props.loginInvalid}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>
+				<CarbonButton text="Signup Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 			</div>	
 		);
 	}

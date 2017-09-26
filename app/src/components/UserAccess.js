@@ -86,7 +86,7 @@ class UserAccess extends Component{
 		}
 
 		return (
-			<CarbonButton text={switcherText} onClick={this.toggleNeedsSignup} className="user-access-switcher-button" isInForm={true}/>
+			<CarbonButton text={switcherText} onClick={this.toggleNeedsSignup} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 		);
 	}
 

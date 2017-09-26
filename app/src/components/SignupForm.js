@@ -67,6 +67,17 @@ class SignupForm extends Component{
 	sendSignupAttempt(){
 		this.props.processSignup(this.state.signupData);
 	}
+
+	//check if all fields are valid
+	isValid(){
+		const validate = this.state.validate;
+		for(var field in validate){
+			if(validate[field] === false){
+				return false; //one of the fields is still invalid
+			}
+		}
+		return true; //all fields passed
+	}
 	
 	render(){
 		return(
@@ -75,7 +86,7 @@ class SignupForm extends Component{
 				<CarbonFormInput inputText={this.state.signupData.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange}/>
 				<CarbonFormInput inputText={this.state.signupData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange} invalidText="Username or password is incorrect" isInvalid={this.props.signupInvalid}/>
 				<CarbonFormInput inputText={this.state.signupData.verifyPassword} inputType="password" inputID="verifyPassword" inputLabel="Verify Password" onChange={this.handleInputChange} invalidText="Username or password is incorrect" isInvalid={this.props.signupInvalid}/>
-				<CarbonButton text="Submit" onClick={this.sendSignupAttempt} isInForm={true}/>
+				<CarbonButton text="Submit" onClick={this.sendSignupAttempt} isInForm={true} isDisabled={!this.isValid()}/>
 			</div>	
 		);
 	}

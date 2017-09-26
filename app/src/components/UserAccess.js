@@ -65,7 +65,7 @@ class UserAccess extends Component{
 	toggleNeedsSignup(e){
 		//Invert variable to initiate switch between login and signup form
 		const needsSignup = this.state.needsSignup;
-		this.setState({needsSignup: needsSignup});
+		this.setState({needsSignup: !needsSignup});
 	}
 
 	showAccessForm(){

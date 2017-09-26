@@ -10,6 +10,7 @@ class UserAccess extends Component{
 	constructor(props){
 		super(props);
 		this.requestLogin = this.requestLogin.bind(this);
+		this.requestSignup = this.requestSignup.bind(this);
 		this.requestCallback = this.requestCallback.bind(this);
 		this.requestErrorHandler = this.requestErrorHandler.bind(this);
 		this.toggleNeedsSignup = this.toggleNeedsSignup.bind(this);

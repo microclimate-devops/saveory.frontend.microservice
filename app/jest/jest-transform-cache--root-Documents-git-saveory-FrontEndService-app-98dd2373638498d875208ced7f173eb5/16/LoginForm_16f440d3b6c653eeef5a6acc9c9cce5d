@@ -1,0 +1,50 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/LoginForm.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_CarbonFormInput = require('./carbon/CarbonFormInput.js'); /* istanbul ignore next */var _CarbonFormInput2 = _interopRequireDefault(_CarbonFormInput);
+var /* istanbul ignore next */_CarbonButton = require('./carbon/CarbonButton.js'); /* istanbul ignore next */var _CarbonButton2 = _interopRequireDefault(_CarbonButton);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+LoginForm = function (_Component) {_inherits(LoginForm, _Component);
+	function /* istanbul ignore next */LoginForm(props) {/* istanbul ignore next */_classCallCheck(this, LoginForm);var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleUsernameChange = /* istanbul ignore next */_this.handleUsernameChange.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.handlePasswordChange = /* istanbul ignore next */_this.handlePasswordChange.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.sendLoginAttempt = /* istanbul ignore next */_this.sendLoginAttempt.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.state = { username: "", password: "" }; /* istanbul ignore next */return _this;
+	}_createClass(LoginForm, [{ key: 'handleUsernameChange', value: function handleUsernameChange(
+
+
+
+
+
+
+
+		target) {
+			this.setState({ username: target.value });
+		} }, { key: 'handlePasswordChange', value: function handlePasswordChange(
+
+		target) {
+			this.setState({ password: target.value });
+		} }, { key: 'sendLoginAttempt', value: function sendLoginAttempt()
+
+		{
+			var loginData = {
+				username: this.state.username,
+				password: this.state.password };
+
+
+			this.props.processLogin(loginData);
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'user-access-container login-form-container', __source: { fileName: _jsxFileName, lineNumber: 40 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonFormInput2.default, /* istanbul ignore next */{ inputText: this.state.username, inputType: 'text', inputID: 'username-input', inputLabel: 'Username', onChange: this.handleUsernameChange, __source: { fileName: _jsxFileName, lineNumber: 41 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonFormInput2.default, /* istanbul ignore next */{ inputText: this.state.password, inputType: 'password', inputID: 'password-input', inputLabel: 'Password', onChange: this.handlePasswordChange, invalidText: 'Username or password is incorrect', isInvalid: this.props.loginInvalid, __source: { fileName: _jsxFileName, lineNumber: 42 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonButton2.default, /* istanbul ignore next */{ text: 'Submit', onClick: this.sendLoginAttempt, isInForm: true, __source: { fileName: _jsxFileName, lineNumber: 43 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonButton2.default, /* istanbul ignore next */{ text: 'Signup Here', onClick: this.props.onAccessToggle, className: 'user-access-switcher-button', isInForm: true, isSecondary: true, isGhost: true, isSmall: true, __source: { fileName: _jsxFileName, lineNumber: 44 }, __self: this })));
+
+
+		} }]);return LoginForm;}(_react.Component); /* istanbul ignore next */LoginForm.PropTypes = { processLogin: /* istanbul ignore next */_propTypes2.default.func.isRequired, onAccessToggle: /* istanbul ignore next */_propTypes2.default.func.isRequired, loginInvalid: /* istanbul ignore next */_propTypes2.default.bool.isRequired }; /* istanbul ignore next */exports.default =
+
+
+LoginForm;

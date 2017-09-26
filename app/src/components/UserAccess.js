@@ -81,9 +81,7 @@ class UserAccess extends Component{
 
 	render(){
 		//Show the login form
-		return (
-				{this.showAccessForm()}
-		);
+		return this.showAccessForm();
 	}
 }
 

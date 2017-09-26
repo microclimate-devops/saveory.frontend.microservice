@@ -1,0 +1,223 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/Pantry.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_carbonComponentsReact = require('carbon-components-react');
+var /* istanbul ignore next */_Client = require('./Client.js'); /* istanbul ignore next */var _Client2 = _interopRequireDefault(_Client);
+var /* istanbul ignore next */_PantryTable = require('./PantryTable.js'); /* istanbul ignore next */var _PantryTable2 = _interopRequireDefault(_PantryTable);
+
+var /* istanbul ignore next */_https = require('https'); /* istanbul ignore next */var _https2 = _interopRequireDefault(_https);
+var /* istanbul ignore next */_AddIngredients = require('./AddIngredients.js'); /* istanbul ignore next */var _AddIngredients2 = _interopRequireDefault(_AddIngredients);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;} //import axios from 'axios';
+var
+
+Pantry = function (_Component) {_inherits(Pantry, _Component);
+	function /* istanbul ignore next */Pantry(props) {/* istanbul ignore next */_classCallCheck(this, Pantry);var _this = _possibleConstructorReturn(this, (Pantry.__proto__ || Object.getPrototypeOf(Pantry)).call(this,
+		props));
+		/* istanbul ignore next */_this.state = {
+			pantryServiceURL: "/api/pantry/",
+			pantry: [],
+			ingredientFields: [],
+			ingredientFieldTypes: [],
+			ingredientFieldEditable: [],
+			ingredientFieldOptions: {},
+			notification: {
+				type: "",
+				title: "",
+				subtitle: "",
+				show: false } };
+
+
+		/* istanbul ignore next */_this.addIngredient = /* istanbul ignore next */_this.addIngredient.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.updateIngredient = /* istanbul ignore next */_this.updateIngredient.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.deleteIngredient = /* istanbul ignore next */_this.deleteIngredient.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.setPantry = /* istanbul ignore next */_this.setPantry.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(Pantry, [{ key: 'setNotification', value: function setNotification(
+
+
+
+
+
+
+		opts) {/* istanbul ignore next */
+			//Set values from passed options, apply defaults if necessary 
+			var _title$subtitle$isGoo = { title: opts.title || "No Title", subtitle: opts.subtitle || "No Message", isGood: opts.isGood || false },title = _title$subtitle$isGoo.title,subtitle = _title$subtitle$isGoo.subtitle,isGood = _title$subtitle$isGoo.isGood;
+			this.setState({ actionMsgType: isGood ? "success" : "error", actionMsgTitle: title, actionMsgSubtitle: subtitle, showActionMsg: true });
+
+		} }, { key: 'setPantry', value: function setPantry(
+
+		resp) {
+			console.log(resp);
+			//If the response sent back an internal server error code, set an error notification 
+			if (resp.code !== undefined && resp.code === 500) {
+				this.setNotification({ title: "Error", subtitle: "Internal application error, there was a problem retrieving the user's pantry from the backend", type: "error" });
+			} else {
+				this.setState({ pantry: resp.pantry });
+			}
+		} }, { key: 'handlePantryResponse', value: function handlePantryResponse(
+
+
+
+		resp) {
+			//Handle different response codes
+			if (resp.code !== undefined) {
+				switch (resp.code) {
+					case 200:
+						//Success!!
+						this.setNotification({ title: "Success", subtitle: resp.msg, isGood: true });
+						//Need to refresh the pantry
+						this.retrievePantry();
+						break;
+
+					case 204: //The user's pantry was not found
+						this.setNotification({ title: "Empty Pantry", subtitle: "Please add your first ingredient", isGood: true });
+						break;
+					case 500:
+						this.setNotification({ title: "Error", subtitle: resp.msg, isGood: false });
+						break;
+					default:
+						this.setNotification({ title: "Unknown Response", subtitle: resp.msg, isGood: false });
+						break;}
+
+			} else if (resp.pantry != undefined) {//The response is the pantry itself
+				console.log("Below is supposed to be a pantry");
+				console.log(resp);
+				this.setState({ pantry: resp.pantry });
+			} else {//Unknown Condition
+				console.log("The response from the pantry service does not make sense: ");
+				console.log(resp);
+				this.setNotification({ title: "Error", subtitle: "Unable to access user's pantry", isGood: false });
+
+			}
+		} }, { key: 'handlePantryError', value: function handlePantryError(
+
+		e, msg) {
+			console.log("caught pantry error");
+			console.log(e);
+			this.setNotification({ title: "Error", subtitle: msg, isGood: false });
+		} }, { key: 'retrieveIngredientFieldValidation', value: function retrieveIngredientFieldValidation(
+
+		fieldTypes) {/* istanbul ignore next */var _this2 = this;
+			var ingredientFields = this.state.ingredientFields;
+			var pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/";
+			var fieldOptions = this.state.ingredientFieldOptions;
+			var currField = undefined;
+			for (var i = 0; i < fieldTypes.length; i++) {
+				//If the field type is a more complicated object, go ahead and request validation data for it
+				if (typeof fieldTypes[i] === "object") {
+					currField = ingredientFields[i];
+					pantryRequestURL += currField;
+					//Request validation data and update state
+					/* istanbul ignore next */_Client2.default.request(pantryRequestURL, "GET",
+					function (resp) {
+						fieldOptions[currField] = resp;
+						/* istanbul ignore next */_this2.setState({ ingredientFieldOptions: fieldOptions });
+					},
+					function (e) {
+						/* istanbul ignore next */_this2.handlePantryError(e, "Could not get option info for ingredient field");
+					});
+
+				}
+			}
+		} }, { key: 'retrieveIngredientFieldTypes', value: function retrieveIngredientFieldTypes()
+
+		{/* istanbul ignore next */var _this3 = this;
+			var pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
+			// eslint-disable-next-line
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL, "GET",
+			function (resp) {
+				//Check to see if additional validate info is needed for a field
+				console.log("Response for field types: " + JSON.stringify(resp) + ", type: " + typeof resp);
+				/* istanbul ignore next */_this3.retrieveIngredientFieldValidation(resp);
+				/* istanbul ignore next */_this3.setState({ ingredientFieldTypes: resp });
+			},
+			function (e) {
+				/* istanbul ignore next */_this3.handlePantryError(e, "Could not get ingredient field types");
+			});
+
+		} }, { key: 'retrieveIngredientEditableFields', value: function retrieveIngredientEditableFields()
+
+		{/* istanbul ignore next */var _this4 = this;
+			var pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/edits";
+			// eslint-disable-next-line
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL, "GET",
+			function (resp) {
+				console.log("Response for editable fields: " + JSON.stringify(resp) + ", type: " + typeof resp);
+				/* istanbul ignore next */_this4.setState({ ingredientFieldEditable: resp });
+			},
+			function (e) {
+				/* istanbul ignore next */_this4.handlePantryError(e, "Could not get ingredient field editable info");
+			});
+
+		} }, { key: 'retrieveIngredientFields', value: function retrieveIngredientFields()
+
+		{/* istanbul ignore next */var _this5 = this;
+			var pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
+			// eslint-disable-next-line
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL, "GET",
+			function (resp) {
+				//Now get field types
+				console.log("Response for fields: " + JSON.stringify(resp) + ", type: " + typeof resp);
+				/* istanbul ignore next */_this5.retrieveIngredientFieldTypes();
+				/* istanbul ignore next */_this5.setState({ ingredientFields: resp });
+			},
+			function (e) {
+				/* istanbul ignore next */_this5.handlePantryError(e, "Could not get ingredient fields");
+			});
+
+		} }, { key: 'retrievePantry', value: function retrievePantry()
+
+		{/* istanbul ignore next */var _this6 = this;
+			var pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
+			// eslint-disable-next-line
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL, "GET",
+			function (resp) {/* istanbul ignore next */_this6.handlePantryResponse(resp);},
+			function (e) {/* istanbul ignore next */_this6.handlePantryError(e, "Could not access your pantry");});
+
+		}
+
+		//Request and store all needed data from the Pantry backend service
+	}, { key: 'componentDidMount', value: function componentDidMount() {
+			this.retrievePantry();
+			this.retrieveIngredientFields();
+			this.retrieveIngredientEditableFields();
+		} }, { key: 'addIngredient', value: function addIngredient(
+
+		ingredient) {/* istanbul ignore next */var _this7 = this;
+			//send a request to add the ingredient
+			var pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL + "/ingredient", "POST", function (resp) {/* istanbul ignore next */_this7.handlePantryResponse(resp);}, function (e) {/* istanbul ignore next */_this7.handlePantryError(e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.");}, ingredient);
+		} }, { key: 'updateIngredient', value: function updateIngredient(
+
+		ingredient) {/* istanbul ignore next */var _this8 = this;
+			//send a request to add the ingredient
+			var pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "PUT", function (resp) {/* istanbul ignore next */_this8.handlePantryResponse(resp);}, function (e) {/* istanbul ignore next */_this8.handlePantryError(e, "Could not update the ingredient. Please make sure all fields are properly formatted.");}, ingredient);
+		} }, { key: 'deleteIngredient', value: function deleteIngredient(
+
+		ingredient) {/* istanbul ignore next */var _this9 = this;
+			//send request to delete the ingredient
+			var pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
+			/* istanbul ignore next */_Client2.default.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "DELETE", function (resp) {/* istanbul ignore next */_this9.handlePantryResponse(resp);}, function (e) {/* istanbul ignore next */_this9.handlePantryError(e, "Problem deleting the ingredient");});
+		} }, { key: 'showNotification', value: function showNotification()
+
+		{
+			var notification = null;
+			if (this.state.showActionMsg) {
+				notification = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.InlineNotification, /* istanbul ignore next */{ kind: this.state.actionMsgType, title: this.state.actionMsgTitle, subtitle: this.state.actionMsgSubtitle, role: 'alert', __source: { fileName: _jsxFileName, lineNumber: 204 }, __self: this });
+			}
+			return notification;
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ id: 'pantry', __source: { fileName: _jsxFileName, lineNumber: 211 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'pantry-table-description-container', __source: { fileName: _jsxFileName, lineNumber: 212 }, __self: this },
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h3', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 213 }, __self: this }, this.props.user, /* istanbul ignore next */'\'s Pantry')),
+
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_PantryTable2.default, /* istanbul ignore next */{ header: this.state.ingredientFields, data: this.state.pantry, fieldEditable: this.state.ingredientFieldEditable, onRowDelete: this.deleteIngredient, onRowEdit: this.updateIngredient, tableDataIdSelector: 'item', __source: { fileName: _jsxFileName, lineNumber: 215 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_AddIngredients2.default, /* istanbul ignore next */{ ingredientFields: this.state.ingredientFields, ingredientFieldTypes: this.state.ingredientFieldTypes, ingredientFieldOptions: this.state.ingredientFieldOptions, onAddIngredient: this.addIngredient, msg: this.state.actionMsg, showMsg: this.state.showActionMsg, msgIsError: this.state.actionMsgIsError, __source: { fileName: _jsxFileName, lineNumber: 216 }, __self: this }),
+					this.showNotification()));
+
+
+		} }]);return Pantry;}(_react.Component); /* istanbul ignore next */Pantry.propTypes = { userToken: /* istanbul ignore next */_propTypes2.default.string.isRequired, user: /* istanbul ignore next */_propTypes2.default.string.isRequired }; /* istanbul ignore next */exports.default =
+
+
+Pantry;

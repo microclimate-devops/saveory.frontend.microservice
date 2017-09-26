@@ -1,0 +1,119 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/AddIngredients.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_carbonComponents = require('carbon-components');
+var /* istanbul ignore next */_CarbonModal = require('./carbon/CarbonModal.js'); /* istanbul ignore next */var _CarbonModal2 = _interopRequireDefault(_CarbonModal);
+var /* istanbul ignore next */_CarbonButton = require('./carbon/CarbonButton.js'); /* istanbul ignore next */var _CarbonButton2 = _interopRequireDefault(_CarbonButton);
+var /* istanbul ignore next */_AddIngredientForm = require('./AddIngredientForm.js'); /* istanbul ignore next */var _AddIngredientForm2 = _interopRequireDefault(_AddIngredientForm);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+AddIngredients = function (_Component) {_inherits(AddIngredients, _Component);
+	function /* istanbul ignore next */AddIngredients(props) {/* istanbul ignore next */_classCallCheck(this, AddIngredients);var _this = _possibleConstructorReturn(this, (AddIngredients.__proto__ || Object.getPrototypeOf(AddIngredients)).call(this,
+		props));
+		/* istanbul ignore next */_this.state = { enteredIngredient: {}, validateData: {}, modalTarget: "#add-ingredient-modal" };
+		/* istanbul ignore next */_this.handleAddSubmit = /* istanbul ignore next */_this.handleAddSubmit.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.handleIngredientChange = /* istanbul ignore next */_this.handleIngredientChange.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(AddIngredients, [{ key: 'handleAddSubmit', value: function handleAddSubmit(
+
+
+
+
+
+
+
+
+
+
+
+		e) {
+			this.props.onAddIngredient(this.state.enteredIngredient);
+			//Hide modal
+			AddIngredients.hideAddIngredientModal();
+		} }, { key: 'validateField', value: function validateField(
+
+		key, data) {
+			var fieldOptions = this.props.ingredientFieldOptions[key];
+			var isValid = true;
+			var invalidMsg = "";
+
+			//Check for empty data
+			if (typeof data === "string" && data.length === 0 || typeof data === "number" && data < 0) {
+				isValid = false;
+				invalidMsg = "Required";
+			}
+			//If valid options were defined for this field, make sure the data matches an option
+			else if (Array.isArray(fieldOptions) && !fieldOptions.includes(data)) {
+					console.log("The input of " + data + " is not in the valid options array: " + JSON.stringify(fieldOptions));
+					isValid = false;
+					invalidMsg = "Please enter one of these values: " + fieldOptions.toString();
+				}
+			return { valid: isValid, msg: invalidMsg };
+		} }, { key: 'handleIngredientChange', value: function handleIngredientChange(
+
+		key, data) {
+			var ingredient = this.state.enteredIngredient;
+			var validateData = this.state.validateData;
+
+			//Add new ingredient info
+			ingredient[key] = data;
+			validateData[key] = this.validateField(key, data);
+
+			this.setState({ enteredIngredient: ingredient, validateData: validateData });
+		} }, { key: 'isAnyDataInvalid', value: function isAnyDataInvalid()
+
+		{
+			var dataIsInvalid = false;
+			var validateData = this.state.validateData;
+
+			//if there are not enough entries to satisfy all fields, data is invalid
+			if (Object.keys(validateData).length !== this.props.ingredientFields.length) {
+				dataIsInvalid = true;
+			} else {
+				//Check for occurence of validation being false
+				for (var key in validateData) {
+					console.log("checking data valid: " + validateData[key]);
+					if (validateData[key] === false) {
+						dataIsInvalid = true;
+						break;
+					}
+				}
+			}
+
+			return dataIsInvalid;
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'add-ingredient-container', __source: { fileName: _jsxFileName, lineNumber: 85 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonButton2.default, /* istanbul ignore next */{ text: 'Add Ingredient', addedClass: 'add-ingredient-button', isModalControl: true, modalTarget: this.state.modalTarget, onClick: function /* istanbul ignore next */onClick() {}, __source: { fileName: _jsxFileName, lineNumber: 86 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonModal2.default, /* istanbul ignore next */{ id: 'add-ingredient-modal', bindModal: AddIngredients.bindAddIngredientModal, __source: { fileName: _jsxFileName, lineNumber: 87 }, __self: this },
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'add-ingredient-modal-header-container', __source: { fileName: _jsxFileName, lineNumber: 88 }, __self: this },
+							/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h1', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 89 }, __self: this }, /* istanbul ignore next */'Add Ingredient')),
+
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'add-ingredient-modal-content-container', __source: { fileName: _jsxFileName, lineNumber: 91 }, __self: this },
+							/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_AddIngredientForm2.default, /* istanbul ignore next */{ onChange: this.handleIngredientChange, ingredient: this.state.enteredIngredient, ingredientFields: this.props.ingredientFields, ingredientFieldTypes: this.props.ingredientFieldTypes, validateData: this.state.validateData, __source: { fileName: _jsxFileName, lineNumber: 92 }, __self: this })),
+
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'add-ingredient-modal-footer-container', __source: { fileName: _jsxFileName, lineNumber: 94 }, __self: this },
+							/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonButton2.default, /* istanbul ignore next */{ text: 'Add', onClick: this.handleAddSubmit, isDisabled: this.isAnyDataInvalid(), __source: { fileName: _jsxFileName, lineNumber: 95 }, __self: this })))));
+
+
+
+
+		} }]);return AddIngredients;}(_react.Component); /* istanbul ignore next */AddIngredients.PropTypes = { ingredientFields: /* istanbul ignore next */_propTypes2.default.array.isRequired, ingredientFieldTypes: /* istanbul ignore next */_propTypes2.default.array.isRequired, ingredientFieldOptions: /* istanbul ignore next */_propTypes2.default.object.isRequired, onAddIngredient: /* istanbul ignore next */_propTypes2.default.func.isRequired, msg: /* istanbul ignore next */_propTypes2.default.string.isRequired, showMsg: /* istanbul ignore next */_propTypes2.default.bool.isRequired, msgIsError: /* istanbul ignore next */_propTypes2.default.bool.isRequired };
+
+
+
+
+AddIngredients.bindAddIngredientModal = function (ele, options) {
+	AddIngredients.addIngredientModal = new /* istanbul ignore next */_carbonComponents.Modal(ele, options);
+};
+
+AddIngredients.hideAddIngredientModal = function () {
+	if (AddIngredients.addIngredientModal !== undefined) {
+		AddIngredients.addIngredientModal.hide();
+	} else {
+		console.log("Please setup (bind) the modal before trying to close it");
+	}
+}; /* istanbul ignore next */exports.default =
+
+
+
+AddIngredients;

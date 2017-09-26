@@ -1,0 +1,220 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/Recipes.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+
+
+
+var /* istanbul ignore next */_Client = require('./Client.js'); /* istanbul ignore next */var _Client2 = _interopRequireDefault(_Client);
+var /* istanbul ignore next */_RecipeSearch = require('./RecipeSearch.js'); /* istanbul ignore next */var _RecipeSearch2 = _interopRequireDefault(_RecipeSearch);
+var /* istanbul ignore next */_RecipeSearchResults = require('./RecipeSearchResults.js'); /* istanbul ignore next */var _RecipeSearchResults2 = _interopRequireDefault(_RecipeSearchResults);
+var /* istanbul ignore next */_RecipeDisplay = require('./RecipeDisplay.js'); /* istanbul ignore next */var _RecipeDisplay2 = _interopRequireDefault(_RecipeDisplay);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;} //import {Dropdown} from 'carbon-components-react';
+//import Https from 'https';
+//import axios from 'axios';
+var Recipes = function (_Component) {_inherits(Recipes, _Component);function /* istanbul ignore next */Recipes(props) {/* istanbul ignore next */_classCallCheck(this, Recipes);var _this = _possibleConstructorReturn(this, (Recipes.__proto__ || Object.getPrototypeOf(Recipes)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleSearchSubmit = /* istanbul ignore next */_this.handleSearchSubmit.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.handleRecipeSelected = /* istanbul ignore next */_this.handleRecipeSelected.bind( /* istanbul ignore next */_this);
+		//this.handleRecipeResponse = this.handleRecipeResponse(this);
+		/* istanbul ignore next */_this.state = {
+			//recipeServiceURL: "https://dps-ubuntu-cfcmaster.rtp.raleigh.ibm.com:8443/kubernetes/api/v1/proxy/namespaces/default/services/recipeservice-service:9080/RecipeService/",
+			recipeServiceURL: "api/recipes/",
+			recipeQuery: "",
+			recipesDB: [
+			{
+				name: "Chocolate Chip Cookies",
+				id: "06gvd",
+				description: "This is such an easy chocolate chip cookie. No special equipment, no creaming -- a perfect cookie to do with kids. We love how versatile this dough is, too. It makes an awesome rocky road bar cookie.",
+				instructions: "Evenly position 2 racks in the middle of the oven and preheat to 375 degrees F. (on convection setting if you have it.) Line 2 baking sheets with parchment paper or silicone sheets. (If you only have 1 baking sheet, let it cool completely between batches.)\n\nPut the butter in a microwave safe bowl, cover and microwave on medium power until melted. (Alternatively melt in a small saucepan.) Cool slightly. Whisk the sugars, eggs, butter and vanilla in a large bowl until smooth.\n\nWhisk the flour, baking soda and salt in another bowl. Stir the dry ingredients into the wet ingredients with a wooden spoon; take care not to over mix. Stir in the chocolate chips or chunks.\n\nScoop heaping tablespoons of the dough onto the prepared pans. Wet hands slightly and roll the dough into balls. Space the cookies about 2-inches apart on the pans. Bake, until golden, but still soft in the center, 12 to 16 minutes, depending on how chewy or crunchy you like your cookies. Transfer hot cookies with a spatula to a rack to cool. Serve.\n\nStore cookies in a tightly sealed container for up to 5 days.",
+				ingredients: [
+				{
+					name: "unsalted butter",
+					id: "90f9f",
+					quantity: "1/2 cup",
+					notes: "" },
+
+				{
+					name: "dark brown sugar",
+					id: "90f9f",
+					quantity: "3/4 cup",
+					notes: "" },
+
+				{
+					name: "sugar",
+					id: "90f9f",
+					quantity: "3/4 cup",
+					notes: "" },
+
+				{
+					name: "eggs",
+					id: "90f9f",
+					quantity: "2",
+					notes: "" },
+
+				{
+					name: "vanilla extract",
+					id: "90f9f",
+					quantity: "1 tsp",
+					notes: "" },
+
+				{
+					name: "semisweet chocolate chips",
+					id: "90f9f",
+					quantity: "1 (12-ounce) bag",
+					notes: "" },
+
+				{
+					name: "baking soda",
+					id: "90f9f",
+					quantity: "3/4 tsp",
+					notes: "" },
+
+				{
+					name: "salt",
+					id: "90f9f",
+					quantity: "1 tsp",
+					notes: "" }],
+
+
+				tag: ["gluten", "dairy"] },
+
+			{
+				name: "Choc Chip Cookiesssssssss ssssssssss ssssssssssss ssssssss ssssssssssss",
+				id: "06gvde",
+				description: "This is such an easy chocolate chip cookie. No special equipment, no creaming -- a perfect cookie to do with kids. We love how versatile this dough is, too. It makes an awesome rocky road bar cookie.",
+				instructions: "Evenly position 2 racks in the middle of the oven and preheat to 375 degrees F. (on convection setting if you have it.) Line 2 baking sheets with parchment paper or silicone sheets. (If you only have 1 baking sheet, let it cool completely between batches.)\n\nPut the butter in a microwave safe bowl, cover and microwave on medium power until melted. (Alternatively melt in a small saucepan.) Cool slightly. Whisk the sugars, eggs, butter and vanilla in a large bowl until smooth.\n\nWhisk the flour, baking soda and salt in another bowl. Stir the dry ingredients into the wet ingredients with a wooden spoon; take care not to over mix. Stir in the chocolate chips or chunks.\n\nScoop heaping tablespoons of the dough onto the prepared pans. Wet hands slightly and roll the dough into balls. Space the cookies about 2-inches apart on the pans. Bake, until golden, but still soft in the center, 12 to 16 minutes, depending on how chewy or crunchy you like your cookies. Transfer hot cookies with a spatula to a rack to cool. Serve.\n\nStore cookies in a tightly sealed container for up to 5 days.",
+				ingredients: [
+				{
+					name: "unsalted butter",
+					id: "90f9f",
+					quantity: "1/2 cup",
+					notes: "" },
+
+				{
+					name: "dark brown sugar",
+					id: "90f9f",
+					quantity: "3/4 cup",
+					notes: "" },
+
+				{
+					name: "sugar",
+					id: "90f9f",
+					quantity: "3/4 cup",
+					notes: "" },
+
+				{
+					name: "eggs",
+					id: "90f9f",
+					quantity: "2",
+					notes: "" },
+
+				{
+					name: "vanilla extract",
+					id: "90f9f",
+					quantity: "1 tsp",
+					notes: "" },
+
+				{
+					name: "semisweet chocolate chips",
+					id: "90f9f",
+					quantity: "1 (12-ounce) bag",
+					notes: "" },
+
+				{
+					name: "baking soda",
+					id: "90f9f",
+					quantity: "3/4 tsp",
+					notes: "" },
+
+				{
+					name: "salt",
+					id: "90f9f",
+					quantity: "1 tsp",
+					notes: "" }],
+
+
+				tag: ["gluten", "dairy"] }],
+
+
+
+			recipes: [],
+			recipeSelected: {} }; /* istanbul ignore next */return _this;
+
+
+	}_createClass(Recipes, [{ key: 'componentDidMount', value: function componentDidMount()
+
+
+
+
+
+		{
+			this.retrieveRecipes();
+		} }, { key: 'handleRecipeResponse', value: function handleRecipeResponse(
+
+		response) {
+			this.setState({ recipesDB: response });
+		} }, { key: 'handleRecipeError', value: function handleRecipeError(
+
+		e) {
+			console.log("Error accessing recipes from backend");
+		} }, { key: 'retrieveRecipes', value: function retrieveRecipes()
+
+		{/* istanbul ignore next */var _this2 = this;
+			//retrieve the user's pantry from the backend	
+			//Client.request(this.state.recipeServiceURL, "GET", (response) => {this.setState({recipesDB: response})});
+			/* istanbul ignore next */_Client2.default.request(this.state.recipeServiceURL, "GET", function (response) {/* istanbul ignore next */_this2.handleRecipeResponse(response);}, function (e) {/* istanbul ignore next */_this2.handleRecipeResponse(e);});
+		} }, { key: 'isQueryMatch', value: function isQueryMatch(
+
+		query, target) {
+			var matchResult = -1;
+			//make sure query is not an empty string
+			if (query.length !== 0) {
+				var queryLowercase = query.toLowerCase();
+				var targetLowercase = target.toLowerCase();
+				var querySplit = queryLowercase.split(" ");
+
+
+				//go through words in query to see if any substrings match in target
+				for (var i = 0; i < querySplit.length && matchResult === -1; i++) {
+					matchResult = targetLowercase.indexOf(querySplit[i]);
+				}
+			}
+			return matchResult !== -1;
+
+		} }, { key: 'handleSearchSubmit', value: function handleSearchSubmit(
+
+		query) {
+			console.log("search submitted: " + query);
+			var recipesDB = this.state.recipesDB;
+			var recipeMatches = [];
+			//find recipes in db that match
+			for (var recipeIndex in recipesDB) {
+				var recipe = recipesDB[recipeIndex];
+				//check if query matches recipe name
+				if (this.isQueryMatch(query, recipe.name)) {
+					//add index to recipe
+					recipe.index = recipeMatches.length;
+					recipeMatches.push(recipe);
+				}
+			}
+			//Update state to represent new search
+			this.setState({ recipeQuery: query, recipes: recipeMatches, recipeSelected: {} });
+		} }, { key: 'handleRecipeSelected', value: function handleRecipeSelected(
+
+		i) {
+			this.setState({ recipeSelected: this.state.recipes[i] });
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'recipes-wrap', __source: { fileName: _jsxFileName, lineNumber: 208 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'recipes-container', __source: { fileName: _jsxFileName, lineNumber: 209 }, __self: this },
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_RecipeSearch2.default, /* istanbul ignore next */{ handleSearch: this.handleSearchSubmit, __source: { fileName: _jsxFileName, lineNumber: 210 }, __self: this }),
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_RecipeSearchResults2.default, /* istanbul ignore next */{ recipes: this.state.recipes, onResultSelected: this.handleRecipeSelected, __source: { fileName: _jsxFileName, lineNumber: 211 }, __self: this }),
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_RecipeDisplay2.default, /* istanbul ignore next */{ recipe: this.state.recipeSelected, __source: { fileName: _jsxFileName, lineNumber: 212 }, __self: this })),
+
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'spacer', __source: { fileName: _jsxFileName, lineNumber: 214 }, __self: this })));
+
+
+		} }]);return Recipes;}(_react.Component); /* istanbul ignore next */Recipes.propTypes = { userToken: /* istanbul ignore next */_propTypes2.default.string.isRequired }; /* istanbul ignore next */exports.default =
+
+
+Recipes;

@@ -1,0 +1,65 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/App.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+
+var /* istanbul ignore next */_Header = require('./components/Header.js'); /* istanbul ignore next */var _Header2 = _interopRequireDefault(_Header);
+var /* istanbul ignore next */_Home = require('./components/Home.js'); /* istanbul ignore next */var _Home2 = _interopRequireDefault(_Home);
+var /* istanbul ignore next */_UserAccess = require('./components/UserAccess.js'); /* istanbul ignore next */var _UserAccess2 = _interopRequireDefault(_UserAccess);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;} //import {Route} from 'react-router-dom';
+//import auth components
+/*import SecureRoute from './components/auth/SecureRoute.js';
+import UserAccess from './components/auth/UserAccess.js';
+import Callback from './components/auth/Callback.js';
+import OktaWrapHeader from './components/auth/OktaWrapHeader.js';
+import OktaWrapHome from './components/auth/OktaWrapHome.js';*/var
+
+App = function (_Component) {_inherits(App, _Component);
+	function /* istanbul ignore next */App(props) {/* istanbul ignore next */_classCallCheck(this, App);var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this,
+		props));
+		/* istanbul ignore next */_this.state = {
+			isAuth: false,
+			username: undefined,
+			userID: undefined,
+			userToken: undefined };
+
+		/* istanbul ignore next */_this.login = /* istanbul ignore next */_this.login.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.logout = /* istanbul ignore next */_this.logout.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(App, [{ key: 'login', value: function login(
+
+		userData) {
+			console.log("logging in user with token: " + userData.token);
+			this.setState({ isAuth: true, userID: userData.username, username: userData.name, userToken: userData.token });
+		} }, { key: 'logout', value: function logout()
+
+		{
+			this.setState({ isAuth: false });
+		} }, { key: 'controlAccess', value: function controlAccess()
+
+		{
+			//TEST DESIGN (DO NOT LEAVE FOR PROD)
+			//const content = <Home userToken={1} user={this.state.user}/>;
+
+
+			//REAL
+			var content = null;
+			if (this.state.isAuth) {
+				content = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_Home2.default, /* istanbul ignore next */{ userToken: this.state.userToken, user: this.state.username, __source: { fileName: _jsxFileName, lineNumber: 43 }, __self: this });
+			} else {
+				content = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_UserAccess2.default, /* istanbul ignore next */{ loginHandler: this.login, __source: { fileName: _jsxFileName, lineNumber: 45 }, __self: this });
+			}
+			return content;
+
+		} }, { key: 'render', value: function render()
+
+		{
+			/*<Route component={OktaWrapHeader} />
+   <SecureRoute exact={true} path="/" component={OktaWrapHome}/>
+   <Route path="/login" component={UserAccess}/>
+   <Route path="/callback" component={Callback}/>*/
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'App', __source: { fileName: _jsxFileName, lineNumber: 57 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_Header2.default, /* istanbul ignore next */{ user: this.state.username, isAuth: this.state.isAuth, logoutHandler: this.logout, __source: { fileName: _jsxFileName, lineNumber: 58 }, __self: this }),
+					this.controlAccess()));
+
+
+		} }]);return App;}(_react.Component); /* istanbul ignore next */exports.default =
+
+
+App;

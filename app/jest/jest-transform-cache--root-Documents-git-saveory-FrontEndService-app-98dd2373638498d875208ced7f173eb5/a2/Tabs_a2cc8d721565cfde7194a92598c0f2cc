@@ -1,0 +1,64 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/open/Tabs.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var Tabs = /* istanbul ignore next */_react2.default.createClass({
+  displayName: 'Tabs',
+  propTypes: {
+    selected: /* istanbul ignore next */_react2.default.PropTypes.number,
+    children: /* istanbul ignore next */_react2.default.PropTypes.oneOfType([
+    /* istanbul ignore next */_react2.default.PropTypes.array,
+    /* istanbul ignore next */_react2.default.PropTypes.element]).
+    isRequired },
+
+  getDefaultProps() {
+    return {
+      selected: 0 };
+
+  },
+  getInitialState() {
+    return {
+      selected: this.props.selected };
+
+  },
+  handleClick(index, event) {
+    event.preventDefault();
+    this.setState({
+      selected: index });
+
+  },
+  _renderTitles() {
+    function labels(child, index) {
+      var activeClass = this.state.selected === index ? 'active' : '';
+      return (
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'li', /* istanbul ignore next */{ key: index, __source: { fileName: _jsxFileName, lineNumber: 32 }, __self: this },
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'a', /* istanbul ignore next */{ href: '#',
+              className: activeClass,
+              onClick: this.handleClick.bind(this, index), __source: { fileName: _jsxFileName, lineNumber: 33 }, __self: this },
+            child.props.label)));
+
+
+
+    }
+    return (
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'ul', /* istanbul ignore next */{ className: 'tabs__labels', __source: { fileName: _jsxFileName, lineNumber: 42 }, __self: this },
+        this.props.children.map(labels.bind(this))));
+
+
+  },
+  _renderContent() {
+    return (
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'tabs__content', __source: { fileName: _jsxFileName, lineNumber: 49 }, __self: this },
+        this.props.children[this.state.selected]));
+
+
+  },
+  render() {
+    return (
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'tabs', __source: { fileName: _jsxFileName, lineNumber: 56 }, __self: this },
+        this._renderTitles(),
+        this._renderContent()));
+
+
+  } }); /* istanbul ignore next */exports.default =
+
+
+Tabs;

@@ -1,0 +1,43 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/carbon/CarbonModal.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}
+
+/********************************************/
+//Expects three children: header, content, and footer
+/********************************************/var
+CarbonModal = function (_Component) {_inherits(CarbonModal, _Component);function CarbonModal() {_classCallCheck(this, CarbonModal);return _possibleConstructorReturn(this, (CarbonModal.__proto__ || Object.getPrototypeOf(CarbonModal)).apply(this, arguments));}_createClass(CarbonModal, [{ key: 'componentDidMount', value: function componentDidMount()
+
+
+
+
+
+		{
+			//bind the modal
+			this.props.bindModal(this.refs.modal, undefined);
+
+			//Set custom attributes
+			this.refs.modal.setAttribute("data-modal", "true");
+			this.refs.modal.setAttribute("tab-index", "-1");
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ ref: 'modal', id: this.props.id, className: 'bx--modal carbon-modal-container', __source: { fileName: _jsxFileName, lineNumber: 24 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'bx--modal-container', __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: this },
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'bx--modal-header', __source: { fileName: _jsxFileName, lineNumber: 26 }, __self: this },
+							this.props.children[0]),
+
+
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'bx--modal-content', __source: { fileName: _jsxFileName, lineNumber: 30 }, __self: this },
+							this.props.children[1]),
+
+
+						/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'bx--modal-footer', __source: { fileName: _jsxFileName, lineNumber: 34 }, __self: this },
+							this.props.children[2]))));
+
+
+
+
+		} }]);return CarbonModal;}(_react.Component); /* istanbul ignore next */CarbonModal.PropTypes = { id: /* istanbul ignore next */_propTypes2.default.string.isRequired, bindModal: /* istanbul ignore next */_propTypes2.default.func.isRequired }; /* istanbul ignore next */exports.default =
+
+
+CarbonModal;

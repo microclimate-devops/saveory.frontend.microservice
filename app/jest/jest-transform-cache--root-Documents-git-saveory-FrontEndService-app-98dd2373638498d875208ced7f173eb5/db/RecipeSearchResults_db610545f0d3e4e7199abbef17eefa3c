@@ -1,0 +1,83 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/RecipeSearchResults.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}
+//import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+//import JsonTable from 'react-json-table';
+var
+RecipeSearchResults = function (_Component) {_inherits(RecipeSearchResults, _Component);
+	function /* istanbul ignore next */RecipeSearchResults(props) {/* istanbul ignore next */_classCallCheck(this, RecipeSearchResults);var _this = _possibleConstructorReturn(this, (RecipeSearchResults.__proto__ || Object.getPrototypeOf(RecipeSearchResults)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleResultSelect = /* istanbul ignore next */_this.handleResultSelect.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.state = {
+			resultTableOptions: {
+				//sort
+				defaultSortName: 'item',
+				defaultSortOrder: 'desc',
+
+				//select
+				mode: 'radio',
+				bgColor: 'green',
+				hideSelectColumn: true,
+				clickToSelect: true,
+
+				//row click
+				onRowSelect: /* istanbul ignore next */_this.handleResultSelect },
+
+			resultItemTitleSelector: "name" }; /* istanbul ignore next */return _this;
+
+	}_createClass(RecipeSearchResults, [{ key: 'handleResultSelect', value: function handleResultSelect(
+
+
+
+
+
+		e) {
+			var elementIndex = Number(e.target.getAttribute('id'));
+			console.log("row selected: " + elementIndex);
+			this.props.onResultSelected(elementIndex);
+		} }, { key: 'showResultItem', value: function showResultItem(
+
+		item, i) {
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'li', /* istanbul ignore next */{ key: i, id: i.toString(), className: 'recipe-search-results-item', onClick: this.handleResultSelect, __source: { fileName: _jsxFileName, lineNumber: 41 }, __self: this },
+					item[this.state.resultItemTitleSelector]));
+
+
+		} }, { key: 'showResultItems', value: function showResultItems()
+
+		{/* istanbul ignore next */var _this2 = this;
+			return this.props.recipes.map(function (item, i) {return (/* istanbul ignore next */_this2.showResultItem(item, i));});
+		} }, { key: 'render', value: function render()
+
+		{
+			//const columns = [{key: 'name', label: 'Results'}];
+			/*const resultTableOptions = {
+   		//sort
+   		defaultSortName: 'item',
+   		defaultSortOrder: 'desc',
+   			//select
+   		mode: 'radio',
+   		bgColor: 'green',
+   		hideSelectColumn: true,
+   		clickToSelect: true,
+   			//row click
+   		onRowSelect: this.handleResultSelect
+   	};*/
+
+
+			/*
+         		<BootstrapTable data={this.props.recipes} options={resultTableOptions} hover={true}>
+         		      <TableHeaderColumn isKey={true} dataField='name' datasort={true}>Results</TableHeaderColumn>
+         		  </BootstrapTable>
+         */
+			//<JsonTable rows={this.props.recipes} columns={columns} onClickRow={this.handleResultSelect}/>
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'recipe-search-results-container', __source: { fileName: _jsxFileName, lineNumber: 74 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'ul', /* istanbul ignore next */{ className: 'recipe-search-results-list', __source: { fileName: _jsxFileName, lineNumber: 75 }, __self: this },
+						this.showResultItems())));
+
+
+
+		} }]);return RecipeSearchResults;}(_react.Component); /* istanbul ignore next */RecipeSearchResults.PropTypes = { recipes: /* istanbul ignore next */_propTypes2.default.array.isRequired, onResultSelected: /* istanbul ignore next */_propTypes2.default.func.isRequired }; /* istanbul ignore next */exports.default =
+
+
+RecipeSearchResults;

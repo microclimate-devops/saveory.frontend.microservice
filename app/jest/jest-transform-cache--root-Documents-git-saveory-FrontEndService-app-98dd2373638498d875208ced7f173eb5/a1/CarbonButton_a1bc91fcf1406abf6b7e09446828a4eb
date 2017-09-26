@@ -1,0 +1,109 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/carbon/CarbonButton.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+CarbonButton = function (_Component) {_inherits(CarbonButton, _Component);
+	function /* istanbul ignore next */CarbonButton(props) {/* istanbul ignore next */_classCallCheck(this, CarbonButton);var _this = _possibleConstructorReturn(this, (CarbonButton.__proto__ || Object.getPrototypeOf(CarbonButton)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleClick = /* istanbul ignore next */_this.handleClick.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(CarbonButton, [{ key: 'determineHtmlClass',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//The button could be either primary or secondary so apply the correct class
+		value: function determineHtmlClass() {
+			var className = "";
+
+			//determine if ghost
+			if (this.props.isGhost) {
+				className = "bx--btn--ghost";
+			} else {
+				//determine primary or secondary
+				if (this.props.isSecondary) {
+					className = "bx--btn bx--btn--secondary";
+				} else {
+					className = "bx--btn bx--btn--primary";
+				}
+			}
+
+			//determine if small or not
+			if (this.props.isSmall) {
+				className += " bx--btn--sm";
+			}
+
+			//Add additonal user specified classes
+			className += " " + this.props.addedClass;
+			return className;
+		} }, { key: 'handleClick', value: function handleClick(
+
+		e) {
+			//Add props.target as param if specified
+			if (this.props.target !== undefined) {
+				this.props.onClick(this.props.target);
+			} else {
+				this.props.onClick();
+			}
+		} }, { key: 'showButton', value: function showButton()
+
+		{
+			var className = this.determineHtmlClass();
+			var button = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'button', /* istanbul ignore next */{ ref: 'button', type: 'button', onClick: this.handleClick, className: className, __source: { fileName: _jsxFileName, lineNumber: 73 }, __self: this }, this.props.text, /* istanbul ignore next */' ', this.props.children);
+
+			//Put in form div if it's being rendered in a form
+			if (this.props.isInForm) {
+				button = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'bx--form-item carbon-form-submit-container', __source: { fileName: _jsxFileName, lineNumber: 77 }, __self: this }, button);
+			}
+
+			return button;
+		} }, { key: 'componentDidUpdate', value: function componentDidUpdate()
+
+		{
+			//disable or enable if prop specifies it should be
+			if (this.props.isDisabled) {
+				this.refs.button.setAttribute("disabled", "true");
+			} else {
+				this.refs.button.removeAttribute("disabled");
+			}
+		} }, { key: 'componentDidMount', value: function componentDidMount()
+
+		{
+			//Setup modal link if needed
+			if (this.props.isModalControl) {
+				this.refs.button.setAttribute("data-modal-target", this.props.modalTarget);
+			}
+
+			//disable if prop specifies it should be
+			if (this.props.isDisabled) {
+				this.refs.button.setAttribute("disabled", "true");
+			}
+		} }, { key: 'render', value: function render()
+
+		{
+			return this.showButton();
+		} }]);return CarbonButton;}(_react.Component); /* istanbul ignore next */CarbonButton.propTypes = { text: /* istanbul ignore next */_propTypes2.default.string.isRequired, onClick: /* istanbul ignore next */_propTypes2.default.func.isRequired, target: /* istanbul ignore next */_propTypes2.default.object, isSecondary: /* istanbul ignore next */_propTypes2.default.bool, isGhost: /* istanbul ignore next */_propTypes2.default.bool, isSmall: /* istanbul ignore next */_propTypes2.default.bool, isInForm: /* istanbul ignore next */_propTypes2.default.bool, isDisabled: /* istanbul ignore next */_propTypes2.default.bool, isModalControl: /* istanbul ignore next */_propTypes2.default.bool, modalTarget: /* istanbul ignore next */_propTypes2.default.string, addedClass: /* istanbul ignore next */_propTypes2.default.string }; /* istanbul ignore next */CarbonButton.defaultProps = { target: undefined, isSecondary: false, isGhost: false, isSmall: false, isInForm: false, isDisabled: false, isModalControl: false, modalTarget: "", addedClass: "" }; /* istanbul ignore next */exports.default =
+
+
+CarbonButton;

@@ -1,0 +1,109 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/PantryTableIngredient.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_carbonComponentsReact = require('carbon-components-react'); /* istanbul ignore next */function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+PantryTableIngredient = function (_Component) {_inherits(PantryTableIngredient, _Component);
+	function /* istanbul ignore next */PantryTableIngredient(props) {/* istanbul ignore next */_classCallCheck(this, PantryTableIngredient);var _this = _possibleConstructorReturn(this, (PantryTableIngredient.__proto__ || Object.getPrototypeOf(PantryTableIngredient)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleDelete = /* istanbul ignore next */_this.handleDelete.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.handleEdit = /* istanbul ignore next */_this.handleEdit.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.fieldChanged = /* istanbul ignore next */_this.fieldChanged.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.state = { isEditing: false }; /* istanbul ignore next */return _this;
+	}_createClass(PantryTableIngredient, [{ key: 'handleDelete', value: function handleDelete(
+
+
+
+
+
+
+
+
+
+
+
+		e) {
+			this.props.onDelete(this.props.data);
+		} }, { key: 'setRowEditable', value: function setRowEditable(
+
+		isEditable) {
+			console.log("editable fields: " + JSON.stringify(this.props.fieldEditable));
+			console.log("available refs: " + JSON.stringify(this.refs));
+			var dataAccessors = this.props.dataAccessors;
+			//Mark each editable field to the desired edit state
+			for (var i = 0; i < dataAccessors.length; i++) {
+				if (this.props.fieldEditable[i]) {
+					this.refs[dataAccessors[i]].contentEditable = isEditable;
+				}
+			}
+		} }, { key: 'sendEdit', value: function sendEdit()
+
+		{
+			var editedIngredient = {}; /* istanbul ignore next */var _iteratorNormalCompletion = true;var _didIteratorError = false;var _iteratorError = undefined;try {
+				for ( /* istanbul ignore next */var _iterator = this.props.dataAccessors[Symbol.iterator](), _step; /* istanbul ignore next */!(_iteratorNormalCompletion = (_step = _iterator.next()).done); /* istanbul ignore next */_iteratorNormalCompletion = true) {/* istanbul ignore next */var accessor = _step.value;
+					//Get all the current field values
+					editedIngredient[accessor] = this.refs[accessor].innerHTML;
+				}} catch (err) {_didIteratorError = true;_iteratorError = err;} finally {try {if (!_iteratorNormalCompletion && _iterator.return) {_iterator.return();}} finally {if (_didIteratorError) {throw _iteratorError;}}}
+
+			console.log("Sending ingredient to be edited: " + JSON.stringify(editedIngredient));
+			//Send to handler
+			this.props.onEdit(editedIngredient);
+		} }, { key: 'handleEdit', value: function handleEdit(
+
+		e) {
+			var isEditing = this.state.isEditing;
+			//If the state is currently in edit mode, then the user clicked the save button and we should send the edits
+			if (isEditing) {
+				this.sendEdit();
+			}
+
+			//Invert the status
+			this.setState({ isEditing: !isEditing });
+
+		} }, { key: 'fieldChanged', value: function fieldChanged(
+
+		e) {
+			console.log("A field changed: " + e.target.getAttribute('id'));
+		} }, { key: 'showRow', value: function showRow()
+
+		{
+			var dataAccessors = this.props.dataAccessors;
+			var row = [];
+			var editable = undefined;
+			var accessor = undefined;
+
+			//Add expander
+			//row.push(<TableData key="expander" expanded={this.props.isExpanded === undefined ? false : this.props.isExpanded} onClick={this.handleExpander}></TableData>);
+			row.push( /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableData, /* istanbul ignore next */{ key: 'expander', __source: { fileName: _jsxFileName, lineNumber: 76 }, __self: this }));
+			//use the data accesssors prop to create the row with data in the correct order
+			for (var i = 0; i < dataAccessors.length; i++) {
+				accessor = dataAccessors[i];
+
+				//Determine if the current field is allowed to be edited
+				if (!this.props.fieldEditable[i]) {
+					editable = false;
+				} else {
+					editable = this.state.isEditing;
+				}
+
+				row.push( /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableData, /* istanbul ignore next */Object.assign({ 'contentEditable': editable.toString() }, { onChange: this.fieldChanged, id: accessor, key: accessor, className: 'pantry-table-ingredient', __source: { fileName: _jsxFileName, lineNumber: 88 }, __self: this }), this.props.data[accessor]));
+			}
+
+			//Add row actions
+			row.push( /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableData, /* istanbul ignore next */{ key: 'actions', className: 'pantry-table-row-actions', __source: { fileName: _jsxFileName, lineNumber: 92 }, __self: this },
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.Icon, /* istanbul ignore next */{ className: 'delete-ingredient-icon', name: 'delete', height: '24', width: '24', onClick: this.handleDelete, __source: { fileName: _jsxFileName, lineNumber: 93 }, __self: this }),
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.Icon, /* istanbul ignore next */{ className: 'delete-ingredient-icon', name: this.state.isEditing ? "checkmark--outline" : "edit", height: '24', width: '24', onClick: this.handleEdit, __source: { fileName: _jsxFileName, lineNumber: 94 }, __self: this })));
+
+
+			return row;
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableRow, /* istanbul ignore next */{ header: false, className: "pantry-table-body-row " + (this.state.isEditing ? "ingredient-editing" : ""), even: this.props.isEven, __source: { fileName: _jsxFileName, lineNumber: 102 }, __self: this },
+					this.showRow()));
+
+
+		} }]);return PantryTableIngredient;}(_react.Component); /* istanbul ignore next */PantryTableIngredient.PropTypes = { dataAccessors: /* istanbul ignore next */_propTypes2.default.array.isRequired, data: /* istanbul ignore next */_propTypes2.default.object.isRequired, fieldEditable: /* istanbul ignore next */_propTypes2.default.array.isRequired, onDelete: /* istanbul ignore next */_propTypes2.default.func.isRequired, onEdit: /* istanbul ignore next */_propTypes2.default.func.isRequired, isEven: /* istanbul ignore next */_propTypes2.default.bool.isRequired }; /* istanbul ignore next */exports.default =
+
+
+PantryTableIngredient;

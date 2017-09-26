@@ -1,0 +1,62 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/carbon/CarbonFormInput.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+CarbonFormInput = function (_Component) {_inherits(CarbonFormInput, _Component);
+	function /* istanbul ignore next */CarbonFormInput(props) {/* istanbul ignore next */_classCallCheck(this, CarbonFormInput);var _this = _possibleConstructorReturn(this, (CarbonFormInput.__proto__ || Object.getPrototypeOf(CarbonFormInput)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleChange = /* istanbul ignore next */_this.handleChange.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(CarbonFormInput, [{ key: 'handleChange', value: function handleChange(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		e) {
+			this.props.onChange(e.target);
+		} }, { key: 'showIfInvalid', value: function showIfInvalid()
+
+		{
+			//Update the input if it's data is invalid
+			if (this.props.inputLabel === "Ingredient Name") {
+				console.log("ingredient is invalid: " + this.props.isInvalid);
+			}
+
+			if (this.props.isInvalid) {
+				this.refs.carboninput.setAttribute('data-invalid', 'true');
+			} else {
+				this.refs.carboninput.removeAttribute('data-invalid');
+			}
+		} }, { key: 'componentDidUpdate', value: function componentDidUpdate()
+
+		{
+			//Show if the component is invalid after update
+			this.showIfInvalid();
+		} }, { key: 'render', value: function render()
+
+
+		{
+			//{this.props.isInvalid && "data-invalid"} 
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: "bx--form-item carbon-form-input-container " + this.props.className, __source: { fileName: _jsxFileName, lineNumber: 51 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'label', /* istanbul ignore next */{ htmlFor: this.props.inputID, className: 'bx--label', __source: { fileName: _jsxFileName, lineNumber: 52 }, __self: this }, this.props.inputLabel),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ ref: 'carboninput', id: this.props.inputID, type: this.props.inputType, className: 'bx--text-input carbon-form-input-container-input', onChange: this.handleChange, value: this.props.inputData, __source: { fileName: _jsxFileName, lineNumber: 53 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'bx--form-requirement carbon-form-input-container-invalid', __source: { fileName: _jsxFileName, lineNumber: 54 }, __self: this },
+						this.props.invalidText)));
+
+
+
+		} }]);return CarbonFormInput;}(_react.Component); /* istanbul ignore next */CarbonFormInput.PropTypes = { inputData: /* istanbul ignore next */_propTypes2.default.string.isRequired, inputType: /* istanbul ignore next */_propTypes2.default.string.isRequired, inputID: /* istanbul ignore next */_propTypes2.default.string.isRequired, inputLabel: /* istanbul ignore next */_propTypes2.default.string.isRequired, onChange: /* istanbul ignore next */_propTypes2.default.func.isRequired, invalidText: /* istanbul ignore next */_propTypes2.default.string.isRequired, isInvalid: /* istanbul ignore next */_propTypes2.default.bool.isRequired, className: /* istanbul ignore next */_propTypes2.default.string }; /* istanbul ignore next */CarbonFormInput.defaultProps = { className: "" }; /* istanbul ignore next */exports.default =
+
+
+CarbonFormInput;

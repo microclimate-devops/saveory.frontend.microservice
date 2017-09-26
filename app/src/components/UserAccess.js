@@ -68,6 +68,7 @@ class UserAccess extends Component{
 		this.setState({needsSignup: !needsSignup});
 	}
 
+	//Choose to show either login or signup form depending on the toggle switch button
 	showAccessForm(){
 		let form = <LoginForm processLogin={this.requestLogin} didRequestFail={this.state.didRequestFail} onAccessToggle={this.toggleNeedsSignup}/>;
 
@@ -81,10 +82,7 @@ class UserAccess extends Component{
 	render(){
 		//Show the login form
 		return (
-			<div className="user-access-container">
 				{this.showAccessForm()}
-				{this.showAccessSwitcher()}
-			</div>
 		);
 	}
 }

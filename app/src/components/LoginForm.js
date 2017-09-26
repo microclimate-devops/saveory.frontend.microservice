@@ -37,7 +37,7 @@ class LoginForm extends Component{
 	
 	render(){
 		return(
-			<div className="login-form-container">
+			<div className="user-access-container login-form-container">
 				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleUsernameChange}/>
 				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handlePasswordChange} invalidText="Username or password is incorrect" isInvalid={this.props.loginInvalid}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>

@@ -82,7 +82,7 @@ class SignupForm extends Component{
 	
 	render(){
 		return(
-			<div className="login-form-container">
+			<div className="user-access-container signup-form-container">
 				<CarbonFormInput inputText={this.state.signupData.name} inputType="text" inputID="name" inputLabel="Name" onChange={this.handleInputChange}/>
 				<CarbonFormInput inputText={this.state.signupData.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange}/>
 				<CarbonFormInput inputText={this.state.signupData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange} invalidText="Username or password is incorrect" isInvalid={this.props.signupInvalid}/>

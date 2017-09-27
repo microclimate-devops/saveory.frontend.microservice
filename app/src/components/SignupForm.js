@@ -32,6 +32,8 @@ class SignupForm extends Component{
 		let signupData = this.state.signupData;
 		let validate = this.state.validate;
 
+		console.log("selector: "+selector);
+
 		//set validity for selector
 		if(selector === "validatePassword"){ //verify the validate password entry equals entered password
 			console.log("Checking if passwords are the same: "+data+" === "+this.state.signupData.password);

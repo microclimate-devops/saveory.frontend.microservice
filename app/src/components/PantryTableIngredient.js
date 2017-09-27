@@ -85,7 +85,7 @@ class PantryTableIngredient extends Component{
 				editable = this.state.isEditing;
 			}
 
-			row.push(<TableData {...{'contentEditable': editable.toString()}} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
+			row.push(<TableData {...{'contentEditable': editable.toString(), 'ref':accessor}} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
 		}
 
 		//Add row actions

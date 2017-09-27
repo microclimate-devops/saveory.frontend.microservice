@@ -24,7 +24,9 @@ class UserAccess extends Component{
 	//Handle a successfull response from a login or signup attempt
 	requestCallback(resp){
 		let didRequestFail = true;
-		
+	
+		console.log("Response from user mgmt");
+\		console.log(resp);	
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
 			this.props.loginHandler(resp);

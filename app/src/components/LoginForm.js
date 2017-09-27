@@ -6,42 +6,52 @@ import CarbonButton from './carbon/CarbonButton.js';
 class LoginForm extends Component{
 	constructor(props){
 		super(props);
-		this.handleUsernameChange = this.handleUsernameChange.bind(this);
-		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 		this.sendLoginAttempt = this.sendLoginAttempt.bind(this);
-		this.state = {username: "", password: ""};	
+		this.state = {
+			loginData: {
+				username: "", 
+				password: ""
+			}
+		};	
 	}
 
 	static PropTypes = {
 		processLogin: PropTypes.func.isRequired,
 		onAccessToggle: PropTypes.func.isRequired,
-		loginInvalid: PropTypes.bool.isRequired
+		requestStatus: PropTypes.bool.isRequired
 	};
 
-	handleUsernameChange(target){
-		this.setState({username: target.value});
-	}
-	
-	handlePasswordChange(target){
-		this.setState({password: target.value});
+	handleInputChange(target){
+		const data = target.value;
+		const selector = target.getAttribute('id');
+		let loginData = this.state.loginData;
+		
+		//update state to reflect new input text
+		loginData[selector] = data;
+		this.setState({loginData: loginData});
 	}
 
 	sendLoginAttempt(){
-		const loginData = {
-			username: this.state.username,
-			password: this.state.password
-		};
-	
-		this.props.processLogin(loginData);
+		this.props.processLogin(this.state.loginData);
 	}
+
+	showError(){
+		const requestStatus = this.props.requestStatus;
+		if(requestStatus.failed){
+			return <InlineNotification kind="error" title="Invalid Login" subtitle={requestStatus.msg} role="alert"/>;
+		}
+	}
+	
 	
 	render(){
 		return(
 			<div className="user-access-container login-form-container">
-				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleUsernameChange}/>
-				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handlePasswordChange} invalidText="Username or password is incorrect" isInvalid={this.props.loginInvalid}/>
+				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleInputChange}/>
+				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handleInputChange}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>
 				<CarbonButton text="Signup Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
+				{this.showError}
 			</div>	
 		);
 	}

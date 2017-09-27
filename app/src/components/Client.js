@@ -31,7 +31,7 @@ function request(path, method, cb, eh, body) {
 	.then(checkStatus)
 	.then(parseJSON)
 	.then(cb)
-	.catch((e) => {console.log(e); eh(e);});
+	.catch((e) => {eh(e)});
 }
 
 function checkStatus(response) {

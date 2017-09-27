@@ -1,0 +1,87 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/SignupForm.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_CarbonFormInput = require('./carbon/CarbonFormInput.js'); /* istanbul ignore next */var _CarbonFormInput2 = _interopRequireDefault(_CarbonFormInput);
+var /* istanbul ignore next */_CarbonButton = require('./carbon/CarbonButton.js'); /* istanbul ignore next */var _CarbonButton2 = _interopRequireDefault(_CarbonButton);
+var /* istanbul ignore next */_carbonComponentsReact = require('carbon-components-react'); /* istanbul ignore next */function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+SignupForm = function (_Component) {_inherits(SignupForm, _Component);
+	function /* istanbul ignore next */SignupForm(props) {/* istanbul ignore next */_classCallCheck(this, SignupForm);var _this = _possibleConstructorReturn(this, (SignupForm.__proto__ || Object.getPrototypeOf(SignupForm)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleInputChange = /* istanbul ignore next */_this.handleInputChange.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.sendSignupAttempt = /* istanbul ignore next */_this.sendSignupAttempt.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.state = {
+			signupData: {
+				name: "",
+				username: "",
+				password: "",
+				verifyPassword: "" },
+
+			validate: { name: false, username: false, password: false, verifyPassword: false } }; /* istanbul ignore next */return _this;
+
+	}_createClass(SignupForm, [{ key: 'handleInputChange', value: function handleInputChange(
+
+
+
+
+
+
+
+		target) {
+			//validate
+			var data = target.value;
+			var selector = target.getAttribute('id');
+			var signupData = this.state.signupData;
+			var validate = this.state.validate;
+
+			//set validity for selector
+			if (selector === "verifyPassword") {//verify the validate password entry equals entered password
+				validate[selector] = data === this.state.signupData.password;
+			} else {
+				validate[selector] = data.length !== 0;
+			}
+
+			//set new data
+			signupData[selector] = data;
+
+			//update
+			this.setState({ signupData: signupData, validate: validate });
+		} }, { key: 'sendSignupAttempt', value: function sendSignupAttempt()
+
+		{
+			this.props.processSignup(this.state.signupData);
+		}
+
+		//check if all fields are valid
+	}, { key: 'isValid', value: function isValid() {
+			var validate = this.state.validate;
+			for (var field in validate) {
+				if (validate[field] === false) {
+					return false; //one of the fields is still invalid
+				}
+			}
+			return true; //all fields passed
+		} }, { key: 'showError', value: function showError()
+
+		{
+			var requestStatus = this.props.requestStatus;
+			if (requestStatus.failed) {
+				return (/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.InlineNotification, /* istanbul ignore next */{ kind: 'error', title: 'Invalid Signup', subtitle: requestStatus.msg, role: 'alert', __source: { fileName: _jsxFileName, lineNumber: 68 }, __self: this }));
+			}
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'user-access-container signup-form-container', __source: { fileName: _jsxFileName, lineNumber: 74 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonFormInput2.default, /* istanbul ignore next */{ inputText: this.state.signupData.name, inputType: 'text', inputID: 'name', inputLabel: 'Name', onChange: this.handleInputChange, invalidText: 'Required', isInvalid: !this.state.validate.name, __source: { fileName: _jsxFileName, lineNumber: 75 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonFormInput2.default, /* istanbul ignore next */{ inputText: this.state.signupData.username, inputType: 'text', inputID: 'username', inputLabel: 'Username', onChange: this.handleInputChange, invalidText: 'Required', isInvalid: !this.state.validate.username, __source: { fileName: _jsxFileName, lineNumber: 76 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonFormInput2.default, /* istanbul ignore next */{ inputText: this.state.signupData.password, inputType: 'password', inputID: 'password', inputLabel: 'Password', onChange: this.handleInputChange, invalidText: 'Required', isInvalid: !this.state.validate.password, __source: { fileName: _jsxFileName, lineNumber: 77 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonFormInput2.default, /* istanbul ignore next */{ inputText: this.state.signupData.verifyPassword, inputType: 'password', inputID: 'verifyPassword', inputLabel: 'Verify Password', onChange: this.handleInputChange, invalidText: 'Passwords Must Match', isInvalid: !this.state.validate.verifyPassword, __source: { fileName: _jsxFileName, lineNumber: 78 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonButton2.default, /* istanbul ignore next */{ text: 'Submit', onClick: this.sendSignupAttempt, isInForm: true, isDisabled: !this.isValid(), __source: { fileName: _jsxFileName, lineNumber: 79 }, __self: this }),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CarbonButton2.default, /* istanbul ignore next */{ text: 'Login Here', onClick: this.props.onAccessToggle, className: 'user-access-switcher-button', isInForm: true, isSecondary: true, isGhost: true, isSmall: true, __source: { fileName: _jsxFileName, lineNumber: 80 }, __self: this }),
+					this.showError()));
+
+
+		} }]);return SignupForm;}(_react.Component); /* istanbul ignore next */SignupForm.PropTypes = { processSignup: /* istanbul ignore next */_propTypes2.default.func.isRequired, onAccessToggle: /* istanbul ignore next */_propTypes2.default.func.isRequired, requestStatus: /* istanbul ignore next */_propTypes2.default.object.isRequired }; /* istanbul ignore next */exports.default =
+
+
+SignupForm;

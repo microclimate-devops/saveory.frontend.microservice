@@ -14,7 +14,12 @@ class UserAccess extends Component{
 		this.requestCallback = this.requestCallback.bind(this);
 		this.requestErrorHandler = this.requestErrorHandler.bind(this);
 		this.toggleNeedsSignup = this.toggleNeedsSignup.bind(this);
-		this.state = { userMgmtResourceURL: "api/users/", users: {"test": "pass"}, didRequestFail: false, needsSignup: false};
+		this.state = { 
+			userMgmtResourceURL: "api/users/", 
+			users: {"test": "pass"}, 
+			requestStatus: {msg: "", failed: false}, 
+			needsSignup: false
+		};
 	}
 
 	static PropTypes = {
@@ -23,24 +28,27 @@ class UserAccess extends Component{
 
 	//Handle a successfull response from a login or signup attempt
 	requestCallback(resp){
-		let didRequestFail = true;
-	
-		console.log("Response from user mgmt");
-		console.log(resp);	
+		let requestStatus = this.state.requestStatus;
+		requestStatus.msg = "Success";
+		requestStatus.failed = false;
+		
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
 			this.props.loginHandler(resp);
-			didRequestFail = false;
+			requestStatus = false;
 		}
 
-		this.setState({didRequestFail: didRequestFail});
+		this.setState({requestStatus: requestStatus});
 	}
 
 	requestErrorHandler(e){
+		let requestStatus = this.state.requestStatus;
+		requestStatus.msg = e.message;
+		requestStatus.failed = true;
 		//Show error message
 		console.log("Error: ");
-		console.log(e);
-		this.setState({didRequestFail: true});
+		console.log(e.message);
+		this.setState({requestStatus: requestStatus});
 	}
 
 	requestLogin(loginData){
@@ -53,16 +61,20 @@ class UserAccess extends Component{
 	}
 
 	requestLogin_old(loginData){
-		let didRequestFail = true;
+		let requestStatus = this.state.requestStatus;
+		requestStatus.msg="Login Failed"
+		requestStatis.failed = true;
+		
 
 		//Check that password for user equals entered password
 		if(this.state.users[loginData.username] === loginData.password){
-			didRequestFail = false;
+			requestStatus.msg="Login Success"
+			requestStatis.failed = false;
 			this.props.loginHandler(loginData.username);
 		}
 	
-		console.log("password invalid: " +didRequestFail);	
-		this.setState({didRequestFail: didRequestFail});
+		console.log("password invalid: " +requestStatus);	
+		this.setState({requestStatus: requestStatus});
 	}
 
 	toggleNeedsSignup(e){
@@ -73,10 +85,10 @@ class UserAccess extends Component{
 
 	//Choose to show either login or signup form depending on the toggle switch button
 	showAccessForm(){
-		let form = <LoginForm processLogin={this.requestLogin} didRequestFail={this.state.didRequestFail} onAccessToggle={this.toggleNeedsSignup}/>;
+		let form = <LoginForm processLogin={this.requestLogin} requestStatus={this.state.requestStatus} onAccessToggle={this.toggleNeedsSignup}/>;
 
 		if(this.state.needsSignup){
-			form = <SignupForm processSignup={this.requestSignup} signupInvalid={this.state.didRequestFail} onAccessToggle={this.toggleNeedsSignup}/>;
+			form = <SignupForm processSignup={this.requestSignup} requestStatus={this.state.requestStatus} onAccessToggle={this.toggleNeedsSignup}/>;
 		}
 
 		return form;

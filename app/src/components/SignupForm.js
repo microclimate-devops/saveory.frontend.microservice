@@ -13,10 +13,11 @@ class SignupForm extends Component{
 			signupData: {
 				name: "", 
 				username: "", 
+				email: "",
 				password: "",
 				verifyPassword: "",
 			},
-			validate: {name: false, username: false, password: false, verifyPassword: false}
+			validate: {name: false, username: false, email: false, password: false, verifyPassword: false}
 		};	
 	}
 
@@ -75,6 +76,7 @@ class SignupForm extends Component{
 		return(
 			<div className="user-access-container signup-form-container">
 				<CarbonFormInput inputText={this.state.signupData.name} inputType="text" inputID="name" inputLabel="Name" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.name}/>
+				<CarbonFormInput inputText={this.state.signupData.email} inputType="text" inputID="email" inputLabel="Email" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.email}/>
 				<CarbonFormInput inputText={this.state.signupData.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.username}/>
 				<CarbonFormInput inputText={this.state.signupData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.password}/>
 				<CarbonFormInput inputText={this.state.signupData.verifyPassword} inputType="password" inputID="verifyPassword" inputLabel="Verify Password" onChange={this.handleInputChange} invalidText="Passwords Must Match" isInvalid={!this.state.validate.verifyPassword}/>

@@ -23,7 +23,7 @@ class SignupForm extends Component{
 	static PropTypes = {
 		processSignup: PropTypes.func.isRequired,
 		onAccessToggle: PropTypes.func.isRequired,
-		requestStatus: PropTypes.object.isRequired
+		requestFailed: PropTypes.object.isRequired
 	};
 
 	handleInputChange(target){
@@ -63,9 +63,9 @@ class SignupForm extends Component{
 	}
 
 	showError(){
-		const requestStatus = this.props.requestStatus;
-		if(requestStatus.failed){
-			return <InlineNotification kind="error" title="Invalid Signup" subtitle={requestStatus.msg} role="alert"/>;
+		const requestFailed = this.props.requestFailed;
+		if(requestFailed){
+			return <InlineNotification kind="error" title="Invalid Signup" subtitle="That username is not available" role="alert"/>;
 		}
 	}
 	

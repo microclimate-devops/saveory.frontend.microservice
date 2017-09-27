@@ -20,7 +20,7 @@ class LoginForm extends Component{
 	static PropTypes = {
 		processLogin: PropTypes.func.isRequired,
 		onAccessToggle: PropTypes.func.isRequired,
-		requestStatus: PropTypes.bool.isRequired
+		requestFailed: PropTypes.bool.isRequired
 	};
 
 	handleInputChange(target){
@@ -38,9 +38,9 @@ class LoginForm extends Component{
 	}
 
 	showError(){
-		const requestStatus = this.props.requestStatus;
-		if(requestStatus.failed){
-			return <InlineNotification kind="error" title="Invalid Login" subtitle={requestStatus.msg} role="alert"/>;
+		const requestFailed = this.props.requestFailed;
+		if(requestFailed){
+			return <InlineNotification kind="error" title="Invalid Login" subtitle="The username or password was entered incorrectly" role="alert"/>;
 		}
 	}
 	

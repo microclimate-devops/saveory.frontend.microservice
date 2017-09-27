@@ -16,7 +16,7 @@ class UserAccess extends Component{
 		this.state = { 
 			userMgmtResourceURL: "api/users/", 
 			users: {"test": "pass"}, 
-			requestStatus: {msg: "", failed: false}, 
+			requestFailed: false, 
 			needsSignup: false
 		};
 	}
@@ -27,27 +27,22 @@ class UserAccess extends Component{
 
 	//Handle a successfull response from a login or signup attempt
 	requestCallback(resp){
-		let requestStatus = this.state.requestStatus;
-		requestStatus.msg = "Success";
-		requestStatus.failed = false;
+		let requestFailed = true;
 		
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
 			this.props.loginHandler(resp);
-			requestStatus = false;
+			requestFailed = false;
 		}
 
-		this.setState({requestStatus: requestStatus});
+		this.setState({requestFailed: requestFailed});
 	}
 
 	requestErrorHandler(e){
-		let requestStatus = this.state.requestStatus;
-		requestStatus.msg = e.message;
-		requestStatus.failed = true;
 		//Show error message
 		console.log("Error: ");
 		console.log(e.message);
-		this.setState({requestStatus: requestStatus});
+		this.setState({requestFailed: true});
 	}
 
 	requestLogin(loginData){
@@ -60,20 +55,17 @@ class UserAccess extends Component{
 	}
 
 	requestLogin_old(loginData){
-		let requestStatus = this.state.requestStatus;
-		requestStatus.msg="Login Failed"
-		requestStatus.failed = true;
+		let requestFailed = true;
 		
 
 		//Check that password for user equals entered password
 		if(this.state.users[loginData.username] === loginData.password){
-			requestStatus.msg="Login Success"
-			requestStatus.failed = false;
+			requestFailed = false;
 			this.props.loginHandler(loginData.username);
 		}
 	
-		console.log("password invalid: " +requestStatus);	
-		this.setState({requestStatus: requestStatus});
+		console.log("password invalid: " +requestFailed);	
+		this.setState({requestFailed: requestFailed});
 	}
 
 	toggleNeedsSignup(e){
@@ -84,10 +76,10 @@ class UserAccess extends Component{
 
 	//Choose to show either login or signup form depending on the toggle switch button
 	showAccessForm(){
-		let form = <LoginForm processLogin={this.requestLogin} requestStatus={this.state.requestStatus} onAccessToggle={this.toggleNeedsSignup}/>;
+		let form = <LoginForm processLogin={this.requestLogin} requestFailed={this.state.requestFailed} onAccessToggle={this.toggleNeedsSignup}/>;
 
 		if(this.state.needsSignup){
-			form = <SignupForm processSignup={this.requestSignup} requestStatus={this.state.requestStatus} onAccessToggle={this.toggleNeedsSignup}/>;
+			form = <SignupForm processSignup={this.requestSignup} requestFailed={this.state.requestFailed} onAccessToggle={this.toggleNeedsSignup}/>;
 		}
 
 		return form;

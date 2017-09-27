@@ -1,0 +1,94 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/UserAccess.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_LoginForm = require('./LoginForm.js'); /* istanbul ignore next */var _LoginForm2 = _interopRequireDefault(_LoginForm);
+var /* istanbul ignore next */_SignupForm = require('./SignupForm.js'); /* istanbul ignore next */var _SignupForm2 = _interopRequireDefault(_SignupForm);
+var /* istanbul ignore next */_Client = require('./Client.js'); /* istanbul ignore next */var _Client2 = _interopRequireDefault(_Client);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}
+//import { Form, Text } from 'react-form';
+var
+UserAccess = function (_Component) {_inherits(UserAccess, _Component);
+	function /* istanbul ignore next */UserAccess(props) {/* istanbul ignore next */_classCallCheck(this, UserAccess);var _this = _possibleConstructorReturn(this, (UserAccess.__proto__ || Object.getPrototypeOf(UserAccess)).call(this,
+		props));
+		/* istanbul ignore next */_this.requestLogin = /* istanbul ignore next */_this.requestLogin.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.requestSignup = /* istanbul ignore next */_this.requestSignup.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.requestCallback = /* istanbul ignore next */_this.requestCallback.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.requestErrorHandler = /* istanbul ignore next */_this.requestErrorHandler.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.toggleNeedsSignup = /* istanbul ignore next */_this.toggleNeedsSignup.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.state = {
+			userMgmtResourceURL: "api/users/",
+			users: { "test": "pass" },
+			requestFailed: false,
+			needsSignup: false }; /* istanbul ignore next */return _this;
+
+	}_createClass(UserAccess, [{ key: 'requestCallback',
+
+
+
+
+
+		//Handle a successfull response from a login or signup attempt
+		value: function requestCallback(resp) {
+			var requestFailed = true;
+
+			//If the token is present, send in handler defined through props
+			if (resp.token !== undefined) {
+				this.props.loginHandler(resp);
+				requestFailed = false;
+			}
+
+			this.setState({ requestFailed: requestFailed });
+		} }, { key: 'requestErrorHandler', value: function requestErrorHandler(
+
+		e) {
+			//Show error message
+			console.log("Error: ");
+			console.log(e.message);
+			this.setState({ requestFailed: true });
+		} }, { key: 'requestLogin', value: function requestLogin(
+
+		loginData) {
+			/* istanbul ignore next */_Client2.default.request(this.state.userMgmtResourceURL + "login", "POST", this.requestCallback, this.requestErrorHandler, loginData);
+
+		} }, { key: 'requestSignup', value: function requestSignup(
+
+		signupData) {
+			/* istanbul ignore next */_Client2.default.request(this.state.userMgmtResourceURL, "POST", this.requestCallback, this.requestErrorHandler, signupData);
+		} }, { key: 'requestLogin_old', value: function requestLogin_old(
+
+		loginData) {
+			var requestFailed = true;
+
+
+			//Check that password for user equals entered password
+			if (this.state.users[loginData.username] === loginData.password) {
+				requestFailed = false;
+				this.props.loginHandler(loginData.username);
+			}
+
+			console.log("password invalid: " + requestFailed);
+			this.setState({ requestFailed: requestFailed });
+		} }, { key: 'toggleNeedsSignup', value: function toggleNeedsSignup(
+
+		e) {
+			//Invert variable to initiate switch between login and signup form
+			var needsSignup = this.state.needsSignup;
+			this.setState({ needsSignup: !needsSignup });
+		}
+
+		//Choose to show either login or signup form depending on the toggle switch button
+	}, { key: 'showAccessForm', value: function showAccessForm() {
+			var form = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_LoginForm2.default, /* istanbul ignore next */{ processLogin: this.requestLogin, requestFailed: this.state.requestFailed, onAccessToggle: this.toggleNeedsSignup, __source: { fileName: _jsxFileName, lineNumber: 79 }, __self: this });
+
+			if (this.state.needsSignup) {
+				form = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_SignupForm2.default, /* istanbul ignore next */{ processSignup: this.requestSignup, requestFailed: this.state.requestFailed, onAccessToggle: this.toggleNeedsSignup, __source: { fileName: _jsxFileName, lineNumber: 82 }, __self: this });
+			}
+
+			return form;
+		} }, { key: 'render', value: function render()
+
+		{
+			//Show the login form
+			return this.showAccessForm();
+		} }]);return UserAccess;}(_react.Component); /* istanbul ignore next */UserAccess.PropTypes = { loginHandler: /* istanbul ignore next */_propTypes2.default.func.isRequired }; /* istanbul ignore next */exports.default =
+
+
+UserAccess;

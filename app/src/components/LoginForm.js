@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CarbonFormInput from './carbon/CarbonFormInput.js';
 import CarbonButton from './carbon/CarbonButton.js';
+import {InlineNotification} from 'carbon-components-react';
 
 class LoginForm extends Component{
 	constructor(props){
@@ -51,7 +52,7 @@ class LoginForm extends Component{
 				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handleInputChange}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>
 				<CarbonButton text="Signup Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
-				{this.showError}
+				{this.showError()}
 			</div>	
 		);
 	}

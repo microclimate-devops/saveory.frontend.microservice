@@ -48,6 +48,8 @@ class SignupForm extends Component{
 	}
 
 	sendSignupAttempt(){
+		console.log("sending signup");
+		console.log(this.state.signupData);
 		this.props.processSignup(this.state.signupData);
 	}
 

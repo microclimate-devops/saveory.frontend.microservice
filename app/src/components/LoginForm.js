@@ -48,8 +48,8 @@ class LoginForm extends Component{
 	render(){
 		return(
 			<div className="user-access-container login-form-container">
-				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username-input" inputLabel="Username" onChange={this.handleInputChange}/>
-				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password-input" inputLabel="Password" onChange={this.handleInputChange}/>
+				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange}/>
+				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>
 				<CarbonButton text="Signup Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 				{this.showError()}

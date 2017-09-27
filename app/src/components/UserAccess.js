@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CarbonButton from './carbon/CarbonButton.js';
 import LoginForm from './LoginForm.js';
 import SignupForm from './SignupForm.js';
 import Client from './Client.js';
@@ -63,13 +62,13 @@ class UserAccess extends Component{
 	requestLogin_old(loginData){
 		let requestStatus = this.state.requestStatus;
 		requestStatus.msg="Login Failed"
-		requestStatis.failed = true;
+		requestStatus.failed = true;
 		
 
 		//Check that password for user equals entered password
 		if(this.state.users[loginData.username] === loginData.password){
 			requestStatus.msg="Login Success"
-			requestStatis.failed = false;
+			requestStatus.failed = false;
 			this.props.loginHandler(loginData.username);
 		}
 	

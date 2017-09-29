@@ -9,7 +9,7 @@ class PantryTableIngredient extends Component{
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.fieldChanged = this.fieldChanged.bind(this);
-		this.state = {isEditing: false};
+		this.state = {isEditing: false, data: undefined};
 	}
 
 	static PropTypes = {
@@ -21,40 +21,25 @@ class PantryTableIngredient extends Component{
 		isEven: PropTypes.bool.isRequired
 	};
 
+	//gets the data sent via the props or state.data if it's defined
+	getData(){
+		let data = this.state.data
+		if(data === undefined){
+			data = this.props.data;
+		}
+		return data;
+	}
+
 
 	handleDelete(e){
-		this.props.onDelete(this.props.data);
-	}
-
-	setRowEditable(isEditable){
-		console.log("editable fields: "+JSON.stringify(this.props.fieldEditable));
-		console.log("available refs: "+JSON.stringify(this.refs));
-		const dataAccessors = this.props.dataAccessors;
-		//Mark each editable field to the desired edit state
-		for(var i = 0; i < dataAccessors.length; i++){
-			if(this.props.fieldEditable[i]){
-				this.refs[dataAccessors[i]].contentEditable = isEditable;
-			}
-		}
-	}
-
-	sendEdit(){
-		let editedIngredient = {};
-		for(var accessor of this.props.dataAccessors){
-			//Get all the current field values
-			editedIngredient[accessor] = this.refs[accessor].innerHTML;
-		}
-			
-		console.log("Sending ingredient to be edited: "+JSON.stringify(editedIngredient));
-		//Send to handler
-		this.props.onEdit(editedIngredient);
+		this.props.onDelete(this.getData());
 	}
 
 	handleEdit(e){
 		let isEditing = this.state.isEditing;
 		//If the state is currently in edit mode, then the user clicked the save button and we should send the edits
 		if(isEditing){
-			this.sendEdit();
+			this.props.onEdit(this.getData());
 		}
 
 		//Invert the status
@@ -62,8 +47,18 @@ class PantryTableIngredient extends Component{
 
 	}
 
-	fieldChanged(selector, data){
-		console.log(selector+" changed: "+data);
+	fieldChanged(target){
+		let data = this.state.data
+
+		//set to prop value if first time
+		if(data === undefined){
+			data = this.props.data;
+		}
+
+		//update the data
+		data[target.getAttribute('id')] = target.value;
+
+		this.setState({data: data});
 	}
 
 	showRow(){

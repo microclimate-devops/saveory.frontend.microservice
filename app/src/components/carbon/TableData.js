@@ -22,30 +22,25 @@ class TableData extends Component{
 
 	handleChange(e){
 		if(this.props.onChange !== undefined){
-			const id = e.target.getAttribute('id');
-			const data = e.target.value;
-			this.props.onChange(id, data);	
+			this.props.onChange(e.target);	
 		}
 	}
 
-	setDataEditable(editable){
-		const editableVal = this.props.editable ? "true" : "false";
-		console.log("editable val for "+this.props.id+": " +editableVal);
-		this.refs.data.contentEditable = editableVal;
-	}
+	showData(){
+		let content = this.props.children;
 
-	componentDidMount(){
-		this.setDataEditable();
-	}
+		//Change to input if it's currently editable
+		if(this.props.editable){
+			content = <input id={this.props.id} type="text" value={content} onChange={this.handleChange} className="pantry-table-editing-cell"/>
+		}
 
-	componentDidUpdate(prevProps, prevState){
-		this.setDataEditable();
+		return content;
 	}
 
 	render(){
 		return (
-			<td ref="data" className={this.props.className} onChange={this.handleChange} id={this.props.id}>
-				{this.props.children}
+			<td ref="data" className={this.props.className}>
+				{this.showData()}
 			</td>
 		);
 	}

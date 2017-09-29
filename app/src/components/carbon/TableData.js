@@ -28,10 +28,23 @@ class TableData extends Component{
 		}
 	}
 
-	render(){
+	setDataEditable(editable){
 		const editableVal = this.props.editable ? "true" : "false";
+		console.log("editable val for "+this.props.id+": " +editableVal);
+		this.refs.data.contentEditable = editableVal;
+	}
+
+	componentDidMount(){
+		this.setDataEditable();
+	}
+
+	componentDidUpdate(prevProps, prevState){
+		this.setDataEditable();
+	}
+
+	render(){
 		return (
-			<td {... {"content-editable": editableVal}} className={this.props.className} onChange={this.handleChange} id={this.props.id}>
+			<td ref="data" className={this.props.className} onChange={this.handleChange} id={this.props.id}>
 				{this.props.children}
 			</td>
 		);

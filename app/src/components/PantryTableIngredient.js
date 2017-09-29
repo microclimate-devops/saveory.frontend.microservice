@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {TableRow, TableData, Icon} from 'carbon-components-react'; 
+import {TableRow, Icon} from 'carbon-components-react'; 
+import TableData from './carbon/TableData.js';
 
 class PantryTableIngredient extends Component{
 	constructor(props){
@@ -61,8 +62,8 @@ class PantryTableIngredient extends Component{
 
 	}
 
-	fieldChanged(e){
-		console.log("A field changed: "+e.target.getAttribute('id'));
+	fieldChanged(selector, data){
+		console.log(selector+" changed: "+data);
 	}
 
 	showRow(){
@@ -85,7 +86,7 @@ class PantryTableIngredient extends Component{
 				editable = this.state.isEditing;
 			}
 
-			row.push(<TableData {...{'contentEditable': editable.toString(), 'ref':accessor}} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
+			row.push(<TableData editable={editable} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
 		}
 
 		//Add row actions

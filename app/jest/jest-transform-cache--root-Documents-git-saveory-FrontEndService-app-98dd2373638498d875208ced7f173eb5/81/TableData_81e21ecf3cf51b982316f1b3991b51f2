@@ -1,0 +1,38 @@
+/* istanbul ignore next */'use strict';var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/carbon/TableData.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+TableData = function (_Component) {_inherits(TableData, _Component);
+	function /* istanbul ignore next */TableData(props) {/* istanbul ignore next */_classCallCheck(this, TableData);var _this = _possibleConstructorReturn(this, (TableData.__proto__ || Object.getPrototypeOf(TableData)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleChange = /* istanbul ignore next */_this.handleChange.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(TableData, [{ key: 'handleChange', value: function handleChange(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		e) {
+			if (this.props.onChange !== undefined) {
+				var id = e.target.getAttribute('id');
+				var data = e.target.value;
+				this.props.onChange(id, data);
+			}
+		} }, { key: 'render', value: function render()
+
+		{
+			var editableVal = this.props.editable ? "true" : "false";
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'td', /* istanbul ignore next */Object.assign({ "content-editable": editableVal }, { className: this.props.className, onChange: this.handleChange, id: this.props.id, __source: { fileName: _jsxFileName, lineNumber: 34 }, __self: this }),
+					this.props.children));
+
+
+		} }]);return TableData;}(_react.Component); /* istanbul ignore next */TableData.PropTypes = { id: /* istanbul ignore next */_propTypes2.default.string.isRequired, editable: /* istanbul ignore next */_propTypes2.default.bool, onChange: /* istanbul ignore next */_propTypes2.default.func, className: /* istanbul ignore next */_propTypes2.default.string }; /* istanbul ignore next */TableData.defaultProps = { editable: false, onChange: undefined, className: "" };

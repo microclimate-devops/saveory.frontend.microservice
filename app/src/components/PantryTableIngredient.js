@@ -37,14 +37,13 @@ class PantryTableIngredient extends Component{
 
 	handleEdit(e){
 		let isEditing = this.state.isEditing;
-		//If the state is currently in edit mode, then the user clicked the save button and we should send the edits
-		if(isEditing){
-			this.props.onEdit(this.getData());
-		}
-
 		//Invert the status
 		this.setState({isEditing: !isEditing});
 
+		//If the state was in edit mode, then the user clicked the save button and we should send the edits
+		if(isEditing){
+			this.props.onEdit(this.getData());
+		}
 	}
 
 	fieldChanged(target){

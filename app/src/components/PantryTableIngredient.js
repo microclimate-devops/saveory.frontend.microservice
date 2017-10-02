@@ -21,11 +21,21 @@ class PantryTableIngredient extends Component{
 		isEven: PropTypes.bool.isRequired
 	};
 
+	componentWillReceiveProps(nextProps){
+		const data = nextProps.data;
+		this.setData(data);
+	}
+
+	setData(data){
+		this.setState({data: data});
+	}
+
 	//gets the data sent via the props or state.data if it's defined
 	getData(){
-		let data = this.state.data
-		if(data === undefined){
+		let data = this.state.data;
+		if(data == undefined){
 			data = this.props.data;
+			this.setData(data);
 		}
 		return data;
 	}

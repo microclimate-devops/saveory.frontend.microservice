@@ -55,7 +55,9 @@ class Pantry extends Component {
 
 	
 
-	handlePantryResponse(resp){
+	handlePantryResponse(resp, needPantryUpdate){
+		//default needPantryUpdate if not specified (or not specified as boolean)
+		needPantryUpdate = typeof needPantryUpdate === "boolean" ? needPantryUpdate : false;
 		//Handle different response codes
 		if(resp.code !== undefined){
 			switch(resp.code) {
@@ -63,7 +65,9 @@ class Pantry extends Component {
 					//Success!!
 					this.setNotification({title: "Success", subtitle:resp.msg, isGood:true});
 					//Need to refresh the pantry
-					//this.retrievePantry();
+					if(needPantryUpdate){
+						this.retrievePantry();
+					}
 					break;
 
 				case 204: //The user's pantry was not found
@@ -183,7 +187,7 @@ class Pantry extends Component {
 	addIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.")}, ingredient);
+		Client.request(pantryRequestURL + "/ingredient", "POST", (resp) => {this.handlePantryResponse(resp, true)}, (e) => {this.handlePantryError(e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.")}, ingredient);
 	}
 
 	updateIngredient(ingredient){

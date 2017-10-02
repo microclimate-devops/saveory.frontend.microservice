@@ -63,7 +63,7 @@ class Pantry extends Component {
 					//Success!!
 					this.setNotification({title: "Success", subtitle:resp.msg, isGood:true});
 					//Need to refresh the pantry
-					this.retrievePantry();
+					//this.retrievePantry();
 					break;
 
 				case 204: //The user's pantry was not found

@@ -27,11 +27,15 @@ function request(path, method, cb, eh, body) {
 	}
 
 	//perform fetch with defined options
-	return fetch(path, options)
-	.then(checkStatus)
-	.then(parseJSON)
-	.then(cb)
-	.catch((e) => {eh(e)});
+	try{
+		return fetch(path, options)
+		.then(checkStatus)
+		.then(parseJSON)
+		.then(cb)
+		.catch((e) => {eh(e)});
+	} catch(e){
+		console.log("Failed to fetch resource at path "+path+". The request was sent with these options: "+JSON.stringify(options)+". Message: "+e.message);
+	}
 }
 
 function checkStatus(response) {

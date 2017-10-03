@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {TableRow, Icon} from 'carbon-components-react'; 
 import TableData from './carbon/TableData.js';
+var moment = require('moment');
 
 class PantryTableIngredient extends Component{
 	constructor(props){
@@ -69,6 +70,33 @@ class PantryTableIngredient extends Component{
 
 		this.setState({data: data});
 	}
+	
+	//Show the text along with any icons specific to an accessor
+	showCell(text){
+		let shownData = text;
+		//Show an icon if the text is a valid date
+		if(moment(text, "YYYY-MM-DD", true).isValid()){
+			const now = moment();
+			const exp = moment(text);
+			let iconClass = "red"; //the item has expired
+			
+			//Check if still good
+			if(now.from(exp).endsWith("ago")){
+				let iconClass = "green";
+			}
+
+			shownData = (
+				<div className="pantry-table-ingredient-date">
+					<p>{shownData}</p>
+					<Icon className={"date-indicator icon-"+iconClass} name="pa" height="20" width="20"/>
+				</div>
+			);
+					
+		}
+
+		//Just show the text
+		return shownData;
+	}
 
 	showRow(){
 		const dataAccessors = this.props.dataAccessors;
@@ -90,13 +118,13 @@ class PantryTableIngredient extends Component{
 				editable = this.state.isEditing;
 			}
 
-			row.push(<TableData editable={editable} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.props.data[accessor]}</TableData>);
+			row.push(<TableData editable={editable} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.showRowText(accessor, this.props.data[accessor])}</TableData>);
 		}
 
 		//Add row actions
 		row.push(<TableData key="actions" className="pantry-table-row-actions">
-				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
 				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "checkmark--outline" : "edit"} height="24" width="24" onClick={this.handleEdit}/>
+				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
 			</TableData>);
 
 		return row;

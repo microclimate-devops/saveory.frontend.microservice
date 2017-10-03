@@ -1,0 +1,135 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/PantryTable.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);
+var /* istanbul ignore next */_carbonComponentsReact = require('carbon-components-react');
+var /* istanbul ignore next */_PantryTableIngredient = require('./PantryTableIngredient.js'); /* istanbul ignore next */var _PantryTableIngredient2 = _interopRequireDefault(_PantryTableIngredient);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}
+//import PantryTableIngredientExpand from './PantryTableIngredientExpand.js';
+var
+PantryTable = function (_Component) {_inherits(PantryTable, _Component);
+	function /* istanbul ignore next */PantryTable(props) {/* istanbul ignore next */_classCallCheck(this, PantryTable);var _this = _possibleConstructorReturn(this, (PantryTable.__proto__ || Object.getPrototypeOf(PantryTable)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleExpandingRow = /* istanbul ignore next */_this.handleExpandingRow.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.handleSortAction = /* istanbul ignore next */_this.handleSortAction.bind( /* istanbul ignore next */_this);
+		/* istanbul ignore next */_this.state = { areRowsExpanded: {}, currSort: undefined, isSortedDesc: undefined }; /* istanbul ignore next */return _this;
+	}_createClass(PantryTable, [{ key: 'handleExpandingRow', value: function handleExpandingRow(
+
+
+
+
+
+
+
+
+
+
+		ingredientId) {
+			var areRowsExpanded = this.state.areRowsExpanded;
+			//invert the value if present
+			if (areRowsExpanded[ingredientId]) {
+				areRowsExpanded[ingredientId] = !areRowsExpanded[ingredientId];
+			} else {//If not present, then it's the first time expanding
+				areRowsExpanded[ingredientId] = true;
+			}
+			this.setState({ areRowsExpanded: areRowsExpanded });
+		} }, { key: 'sortIngredients', value: function sortIngredients()
+
+		{
+			//don't alias the prop
+			var sortedIngredients = JSON.parse(JSON.stringify(this.props.data));
+			var sortSelector = this.state.currSort;
+			var sortIsDesc = this.state.isSortedDesc;
+
+			if (sortSelector !== undefined && sortIsDesc !== undefined) {
+				sortedIngredients.sort(
+				function (a, b) {
+					var aTargetData = a[sortSelector];
+					var bTargetData = b[sortSelector];
+					if (typeof aTargetData === "number") {
+						return sortIsDesc ?
+						bTargetData - aTargetData :
+						aTargetData - bTargetData;
+					} else {//standard string sort
+						//ignore case
+						aTargetData = aTargetData.toLowerCase();
+						bTargetData = bTargetData.toLowerCase();
+						return sortIsDesc ?
+						bTargetData > aTargetData :
+						aTargetData > bTargetData;
+					}
+				});
+
+			}
+
+			return sortedIngredients;
+		} }, { key: 'showIngredients', value: function showIngredients()
+
+		{/* istanbul ignore next */var _this2 = this;
+			if (Array.isArray(this.props.data)) {
+				//sort the ingredients according to current settings
+				var ingredients = this.sortIngredients();
+				//Create a list of JSX ingredient rows
+				//return ingredients.map((ingredient, i) => {return [<PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} onExpander={this.handleExpandingRow} isEven={false}/>, <PantryTableIngredientExpand key={"expand-"+i} data={ingredient} isExpanded={this.state.areRowsExpanded[ingredient.item]} isEven={false} onDelete={this.props.onRowDelete}/>]});
+				return ingredients.map(function (ingredient, i) {return (/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_PantryTableIngredient2.default, /* istanbul ignore next */{ key: "ingredient-" + i, dataAccessors: /* istanbul ignore next */_this2.props.header, data: ingredient, fieldEditable: /* istanbul ignore next */_this2.props.fieldEditable, onDelete: /* istanbul ignore next */_this2.props.onRowDelete, onEdit: /* istanbul ignore next */_this2.props.onRowEdit, isEven: false, __source: { fileName: _jsxFileName, lineNumber: 71 }, __self: _this2 }));});
+			}
+		} }, { key: 'handleSortAction', value: function handleSortAction(
+
+		e) {
+			var newSort = e.target.getAttribute('id');
+			var currSortDir = this.state.isSortedDesc;
+
+			/*console.log("sort clicked");
+                                              console.log(e.target);*/
+
+			//update state
+			this.setState({ isSortedDesc: !currSortDir, currSort: newSort });
+		} }, { key: 'determineHeaderSortDir', value: function determineHeaderSortDir(
+
+		selector) {
+			var sortDir = undefined;
+			if (this.state.currSort === selector) {
+				sortDir = this.state.isSortedDesc ? "DESC" : "ASC";
+			} else {
+				sortDir = "ASC";
+			}
+			return sortDir;
+		} }, { key: 'showIngredientHeader', value: function showIngredientHeader()
+
+		{/* istanbul ignore next */var _this3 = this;
+			if (Array.isArray(this.props.header)) {
+				//console.log("header data: "+ JSON.stringify(this.props.header));
+				return this.props.header.map(function (headerItem, i) {return (/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableHeader, /* istanbul ignore next */{ key: i, sortDir: /* istanbul ignore next */_this3.determineHeaderSortDir(headerItem), onClick: /* istanbul ignore next */_this3.handleSortAction, className: "table-header-sortable" + ( /* istanbul ignore next */_this3.state.currSort === headerItem ? " pantry-table-header-sort-selected" : ""), id: headerItem, __source: { fileName: _jsxFileName, lineNumber: 99 }, __self: _this3 }, headerItem));});
+			}
+		} }, { key: 'showHeader', value: function showHeader()
+
+		{
+			console.log("CHECK here for data");
+			console.log(this.props.data);
+			var headerRow = undefined;
+			//Show the header if there is data to show in the table
+			if (this.props.data.length > 0) {
+				headerRow =
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableRow, /* istanbul ignore next */{ className: 'pantry-table-header-row', header: true, even: true, __source: { fileName: _jsxFileName, lineNumber: 110 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableHeader, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 111 }, __self: this }),
+					this.showIngredientHeader(),
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableHeader, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 113 }, __self: this }, /* istanbul ignore next */'Actions'));
+
+
+			}
+			return headerRow;
+		} }, { key: 'render', value: function render()
+
+		{
+			//<TableHeader />
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.Table, /* istanbul ignore next */{ className: 'pantry-table', containerClassName: 'pantry-table-container', __source: { fileName: _jsxFileName, lineNumber: 123 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableHead, /* istanbul ignore next */{ className: 'pantry-table-head', __source: { fileName: _jsxFileName, lineNumber: 124 }, __self: this },
+						this.showHeader()),
+
+					/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_carbonComponentsReact.TableBody, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 127 }, __self: this },
+						this.showIngredients())));
+
+
+
+		} }]);return PantryTable;}(_react.Component); /* istanbul ignore next */PantryTable.PropTypes = { header: /* istanbul ignore next */_propTypes2.default.array.isRequired, data: /* istanbul ignore next */_propTypes2.default.array.isRequired, fieldEditable: /* istanbul ignore next */_propTypes2.default.array.isRequired, onRowDelete: /* istanbul ignore next */_propTypes2.default.func.isRequired, onRowEdit: /* istanbul ignore next */_propTypes2.default.func.isRequired, tableDataIdSelector: /* istanbul ignore next */_propTypes2.default.func.isRequired }; /* istanbul ignore next */exports.default =
+
+
+PantryTable;

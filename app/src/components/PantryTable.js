@@ -48,6 +48,9 @@ class PantryTable extends Component{
 							bTargetData - aTargetData :
 							aTargetData - bTargetData;
 					}else{ //standard string sort
+						//ignore case
+						aTargetData = aTargetData.toLowerCase();
+						bTargetData = bTargetData.toLowerCase();
 						return sortIsDesc ?
 							bTargetData > aTargetData :
 							aTargetData > bTargetData;

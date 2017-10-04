@@ -1,0 +1,66 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/root/Documents/git/saveory/FrontEndService/app/src/components/carbon/TableData.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_propTypes = require('prop-types'); /* istanbul ignore next */var _propTypes2 = _interopRequireDefault(_propTypes);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+TableData = function (_Component) {_inherits(TableData, _Component);
+	function /* istanbul ignore next */TableData(props) {/* istanbul ignore next */_classCallCheck(this, TableData);var _this = _possibleConstructorReturn(this, (TableData.__proto__ || Object.getPrototypeOf(TableData)).call(this,
+		props));
+		/* istanbul ignore next */_this.handleChange = /* istanbul ignore next */_this.handleChange.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+	}_createClass(TableData, [{ key: 'handleChange', value: function handleChange(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		e) {
+			if (this.props.onChange !== undefined) {
+				this.props.onChange(e.target);
+			}
+		} }, { key: 'showData', value: function showData()
+
+		{
+			var data = this.props.children;
+			var content = undefined;
+			var contentClass = this.props.className + "-content";
+			var iconData = this.props.iconData;
+
+			//Change to input if it's currently editable
+			if (this.props.editable) {
+				content = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ id: this.props.id, type: 'text', value: data, onChange: this.handleChange, className: contentClass, __source: { fileName: _jsxFileName, lineNumber: 39 }, __self: this });
+			} else {
+				content = /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'p', /* istanbul ignore next */{ className: contentClass, __source: { fileName: _jsxFileName, lineNumber: 41 }, __self: this }, data);
+			}
+
+			//Add icon if specified
+			if (typeof iconData === "object" && Object.keys(iconData).length > 0) {
+				content =
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: contentClass + "-wrap", __source: { fileName: _jsxFileName, lineNumber: 47 }, __self: this },
+					/* istanbul ignore next */_react2.default.createElement(Icon, /* istanbul ignore next */{ className: iconData.className, name: iconData.name, height: iconData.height, width: iconData.width, __source: { fileName: _jsxFileName, lineNumber: 48 }, __self: this }),
+					content);
+
+
+			}
+
+			return content;
+		} }, { key: 'render', value: function render()
+
+		{
+			return (
+				/* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'td', /* istanbul ignore next */{ className: this.props.className, __source: { fileName: _jsxFileName, lineNumber: 59 }, __self: this },
+					this.showData()));
+
+
+		} }]);return TableData;}(_react.Component); /* istanbul ignore next */TableData.PropTypes = { id: /* istanbul ignore next */_propTypes2.default.string.isRequired, editable: /* istanbul ignore next */_propTypes2.default.bool, onChange: /* istanbul ignore next */_propTypes2.default.func, className: /* istanbul ignore next */_propTypes2.default.string, iconData: /* istanbul ignore next */_propTypes2.default.obj }; /* istanbul ignore next */TableData.defaultProps = { editable: false, onChange: undefined, className: "", iconData: undefined }; /* istanbul ignore next */exports.default =
+
+
+TableData;

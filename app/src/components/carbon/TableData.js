@@ -11,13 +11,15 @@ class TableData extends Component{
 		id: PropTypes.string.isRequired,
 		editable: PropTypes.bool,
 		onChange: PropTypes.func,
-		className: PropTypes.string
+		className: PropTypes.string,
+		iconData: PropTypes.obj
 	};
 
 	static defaultProps = {
 		editable: false,
 		onChange: undefined,
-		className: ""
+		className: "",
+		iconData: undefined
 	};
 
 	handleChange(e){
@@ -27,11 +29,26 @@ class TableData extends Component{
 	}
 
 	showData(){
-		let content = this.props.children;
+		const data = this.props.children;
+		let content = undefined;
+		const contentClass = this.props.className+"-content";
+		const iconData = this.props.iconData;
 
 		//Change to input if it's currently editable
 		if(this.props.editable){
-			content = <input id={this.props.id} type="text" value={content} onChange={this.handleChange} className="pantry-table-editing-cell"/>
+			content = <input id={this.props.id} type="text" value={data} onChange={this.handleChange} className={contentClass}/>
+		}else{
+			content = <p className={contentClass}>{data}</p>;
+		}
+
+		//Add icon if specified
+		if(typeof iconData === "object" && Object.keys(iconData).length > 0){
+			content = (
+				<div className={contentClass+"-wrap"}>
+					<Icon className={iconData.className} name={iconData.name} height={iconData.height} width={iconData.width}/>
+					{content}
+				</div>
+			);	
 		}
 
 		return content;
@@ -39,7 +56,7 @@ class TableData extends Component{
 
 	render(){
 		return (
-			<td ref="data" className={this.props.className}>
+			<td className={this.props.className}>
 				{this.showData()}
 			</td>
 		);

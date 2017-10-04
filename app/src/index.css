@@ -208,6 +208,19 @@ button {
 	font-size: .975rem;
 }
 
+.pantry-table-ingredient-content{
+	margin-right: 5px;	
+	float: left;
+}
+
+.icon-red path{
+	fill: #E62325;
+}
+
+.icon-green path{
+	fill: #95D13C;
+}
+
 .tabs{
 	margin: 0;
 	border: none;

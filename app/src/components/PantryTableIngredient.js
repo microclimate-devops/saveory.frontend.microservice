@@ -70,11 +70,10 @@ class PantryTableIngredient extends Component{
 
 		this.setState({data: data});
 	}
-	
-	//Show the text along with any icons specific to an accessor
-	showCell(text){
-		let shownData = text;
-		//Show an icon if the text is a valid date
+
+	determineIcon(text){
+		let iconProp = undefined;
+		//If the text is a date, add a freshness indicator
 		if(moment(text, "YYYY-MM-DD", true).isValid()){
 			const now = moment();
 			const exp = moment(text);
@@ -82,27 +81,22 @@ class PantryTableIngredient extends Component{
 			
 			//Check if still good
 			if(now.from(exp).endsWith("ago")){
-				let iconClass = "green";
+				iconClass = "green";
 			}
 
-			shownData = (
-				<div className="pantry-table-ingredient-date">
-					<p>{shownData}</p>
-					<Icon className={"date-indicator icon-"+iconClass} name="pa" height="20" width="20"/>
-				</div>
-			);
-					
+			//setup icon
+			iconProp = {name: "pa", height:"20", width: "20", className: "date-indicator icon-"+iconClass};
 		}
 
-		//Just show the text
-		return shownData;
-	}
+		return iconProp;		
+	}	
 
 	showRow(){
 		const dataAccessors = this.props.dataAccessors;
 		let row = [];
 		let editable = undefined;
 		let accessor = undefined;
+		let data = undefined;
 		
 		//Add expander
 		//row.push(<TableData key="expander" expanded={this.props.isExpanded === undefined ? false : this.props.isExpanded} onClick={this.handleExpander}></TableData>);
@@ -110,6 +104,7 @@ class PantryTableIngredient extends Component{
 		//use the data accesssors prop to create the row with data in the correct order
 		for(var i = 0; i < dataAccessors.length; i++){
 			accessor = dataAccessors[i];
+			data = this.props.data[accessor];
 
 			//Determine if the current field is allowed to be edited
 			if(!this.props.fieldEditable[i]){
@@ -118,7 +113,7 @@ class PantryTableIngredient extends Component{
 				editable = this.state.isEditing;
 			}
 
-			row.push(<TableData editable={editable} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient">{this.showCell(this.props.data[accessor])}</TableData>);
+			row.push(<TableData editable={editable} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient" iconData={this.determineIcon(data)}>{data}</TableData>);
 		}
 
 		//Add row actions

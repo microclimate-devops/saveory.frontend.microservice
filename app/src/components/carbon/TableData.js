@@ -40,16 +40,15 @@ class TableData extends Component{
 			content = <input id={this.props.id} type="text" value={data} onChange={this.handleChange} className={contentClass}/>
 		}else{
 			content = <p className={contentClass}>{data}</p>;
-		}
-
-		//Add icon if specified
-		if(typeof iconData === "object" && Object.keys(iconData).length > 0){
-			content = (
-				<div className={contentClass+"-wrap"}>
-					<Icon className={iconData.className} name={iconData.name} height={iconData.height} width={iconData.width}/>
-					{content}
-				</div>
-			);	
+			//Add icon if specified
+			if(typeof iconData === "object" && Object.keys(iconData).length > 0){
+				content = (
+					<div className={contentClass+"-wrap"}>
+						<Icon className={iconData.className} name={iconData.name} height={iconData.height} width={iconData.width}/>
+						{content}
+					</div>
+				);	
+			}
 		}
 
 		return content;

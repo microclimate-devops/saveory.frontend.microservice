@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {TableRow, Icon} from 'carbon-components-react'; 
+import {TableRow, Icon, Toggle} from 'carbon-components-react'; 
 import TableData from './carbon/TableData.js';
 var moment = require('moment');
 
@@ -91,6 +91,16 @@ class PantryTableIngredient extends Component{
 		return iconProp;		
 	}	
 
+	addRowActions(row){
+		//Add edit and delete
+		row.push(<TableData key="actions" className="pantry-table-row-actions">
+				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "checkmark--outline" : "edit"} height="24" width="24" onClick={this.handleEdit}/>
+				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
+			</TableData>);
+
+		//Add 'filter recipe search' toggle
+	}
+
 	showRow(){
 		const dataAccessors = this.props.dataAccessors;
 		let row = [];
@@ -116,11 +126,7 @@ class PantryTableIngredient extends Component{
 			row.push(<TableData editable={editable} onChange={this.fieldChanged} id={accessor} key={accessor} className="pantry-table-ingredient" iconData={this.determineIcon(data)}>{data}</TableData>);
 		}
 
-		//Add row actions
-		row.push(<TableData key="actions" className="pantry-table-row-actions">
-				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "checkmark--outline" : "edit"} height="24" width="24" onClick={this.handleEdit}/>
-				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
-			</TableData>);
+		this.addRowActions(row);
 
 		return row;
 	}

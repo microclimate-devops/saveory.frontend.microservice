@@ -12,6 +12,8 @@ class Pantry extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			viewID: 0,
+			viewTotal: 2,
 			pantryServiceURL: "/api/pantry/",
 			pantry: [],
 			ingredientFields: [],
@@ -33,7 +35,8 @@ class Pantry extends Component {
 
 	static propTypes = {
 		userToken: PropTypes.string.isRequired,
-		user: PropTypes.string.isRequired
+		user: PropTypes.string.isRequired,
+		onRecipeFilterUpdate: PropTypes.func.isRequired
 	};
 
 	setNotification(opts){
@@ -54,7 +57,7 @@ class Pantry extends Component {
 	}
 
 	
-
+	
 	handlePantryResponse(resp, needPantryUpdate){
 		//default needPantryUpdate if not specified (or not specified as boolean)
 		needPantryUpdate = typeof needPantryUpdate === "boolean" ? needPantryUpdate : true

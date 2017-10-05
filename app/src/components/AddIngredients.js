@@ -5,6 +5,10 @@ import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
 
+/**
+ * A dynamically rendered form to add an ingredient
+ * @Stateful
+ */
 class AddIngredients extends Component{
 	constructor(props){
 		super(props);
@@ -13,74 +17,149 @@ class AddIngredients extends Component{
 		this.handleIngredientChange = this.handleIngredientChange.bind(this);
 	}
 
+	//*********************************************//
+	// STATIC DATA & METHODS
+	//**********************************************//
 	static PropTypes = {
-		ingredientFields: PropTypes.array.isRequired,
-		ingredientFieldTypes: PropTypes.array.isRequired,
-		ingredientFieldOptions: PropTypes.object.isRequired,
+		/**
+     * Called when the user submits a new ingredient entry
+		 * @param {object} ingredient - the ingredient object formed from user input
+     */
 		onAddIngredient: PropTypes.func.isRequired,
-		msg: PropTypes.string.isRequired,
-		showMsg: PropTypes.bool.isRequired,
-		msgIsError: PropTypes.bool.isRequired
+		/**
+		 * All the fields of the ingredient that need a corresponding inputs
+		 */
+		ingredientFields: PropTypes.array.isRequired,
+		/**
+		 * The data types of the above fields
+		 */
+		ingredientFieldTypes: PropTypes.array.isRequired,
+		/**
+		 * The allowed input values for any specified ingredient fields
+		 */
+		ingredientFieldOptions: PropTypes.object.isRequired
 	};
 
+	static addIngredientModal = undefined;
+
+	/**
+	 * Sets the addIngredientModal static variable to a @carbon-components components modal
+	 * @param {DOM Element} ele - The DOM element that represents the modal
+	 * @param {Object} options - Any options that need to be included for desired modal rendering
+	 * @calls {@carbon-components Modal}
+	 */
+	static bindAddIngredientModal(ele, options){
+		AddIngredients.addIngredientModal = new Modal(ele, options);
+	}
+
+	/**
+	 * Hides the @carbon-components components modal attached to addIngredientModal static variable
+	 * @calls {AddIngredients.addIngredientModal.hide}
+	 */
+	static hideAddIngredientModal(){
+		if(AddIngredients.addIngredientModal !== undefined){
+			AddIngredients.addIngredientModal.hide();
+		}else{
+			console.log("Please setup (bind) the modal before trying to close it");
+		}
+	}
+
+	//*********************************************//
+	// STATE CHANGERS
+	//**********************************************//
+
+	/**
+	 * Updates the state.enteredIngredient for a user edit
+	 * @param {string} key - The field ID of the changed data
+	 * @param {string} data - The inputed data
+	 * @stateUsed {enteredIngredient, validateData}
+	 * @calls {this.validateField, this.setState}
+	 */
+	handleIngredientChange(key, data){
+		let ingredient = this.state.enteredIngredient;
+		let validateData = this.state.validateData;
+
+		//Add new ingredient info
+		ingredient[key] = data;
+		validateData[key] = this.validateField(key, data);
+
+		this.setState({enteredIngredient: ingredient, validateData: validateData});
+	}
+
+	/**
+	 * Sends the entered ingredient through prop handler when user submits
+	 * @param {DOM event} e - The submit event
+	 * @calls {this.props.onAddIngredient, AddIngredients.hideAddIngredientModal}
+	 */
 	handleAddSubmit(e){
 		this.props.onAddIngredient(this.state.enteredIngredient);
 		//Hide modal
 		AddIngredients.hideAddIngredientModal();
 	}
 
+	//*********************************************//
+	// DATA PROCESSING
+	//**********************************************//
+
+	/**
+	 * Validates user input, doesn't allow empty strings or numbers less than 0
+	 * If there are a limited number of allowed inputs for a specific fields, it will validate with that standard
+	 * @param {string} key - The field ID of the changed data
+	 * @param {string} data - The inputed data
+ 	 * @propsUsed {ingredientFieldOptions}
+	 * @calls {Array}
+	 */
 	validateField(key, data){
 		const fieldOptions = this.props.ingredientFieldOptions[key];
 		let isValid = true;
 		let invalidMsg = "";
-		
+
 		//Check for empty data
 		if((typeof data === "string" && data.length === 0) || (typeof data === "number" && data < 0)){
 			isValid=false;
 			invalidMsg = "Required";
 		}
 		//If valid options were defined for this field, make sure the data matches an option
-		else if(Array.isArray(fieldOptions) && !fieldOptions.includes(data)){ 
-			console.log("The input of "+data+" is not in the valid options array: "+JSON.stringify(fieldOptions));
+		else if(Array.isArray(fieldOptions) && !fieldOptions.includes(data)){
 			isValid=false;
-			invalidMsg = "Please enter one of these values: "+fieldOptions.toString();
 		}
 		return {valid: isValid, msg: invalidMsg};
 	}
 
-	handleIngredientChange(key, data){
-		let ingredient = this.state.enteredIngredient;
-		let validateData = this.state.validateData
-
-		//Add new ingredient info
-		ingredient[key] = data;
-		validateData[key] = this.validateField(key, data);
-			
-		this.setState({enteredIngredient: ingredient, validateData: validateData});
-	}
-	
+	/**
+	 * Checks if any of the input fields have invalid data
+ 	 * @propsUsed {ingredientFields}
+	 * @stateUsed {validateData}
+	 * @calls {Object}
+	 */
 	isAnyDataInvalid(){
 		let dataIsInvalid = false;
 		const validateData = this.state.validateData;
-		
+		const ingredientFields = this.props.ingredientFields;
+
 		//if there are not enough entries to satisfy all fields, data is invalid
-		if(Object.keys(validateData).length !== this.props.ingredientFields.length){
+		if(Object.keys(validateData).length !== ingredientFields.length){
 			dataIsInvalid = true;
 		}else{
 			//Check for occurence of validation being false
 			for(var key in validateData){
-				console.log("checking data valid: "+validateData[key]);
 				if(validateData[key] === false){
 					dataIsInvalid = true;
 					break;
 				}
 			}
 		}
-		
+
 		return dataIsInvalid;
 	}
 
-	render(){	
+	/**
+	 * Shows the add ingredient @carbon-components modal that contains AddIngredientForm
+	 * @propsUsed {ingredientFields, ingredientFieldTypes}
+	 * @stateUsed {modalTarget, enteredIngredient, validateData}
+	 * @calls {this.isAnyDataInvalid}
+	 */
+	render(){
 		return (
 		<div className="add-ingredient-container">
 			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} onClick={function(){}}/>
@@ -98,23 +177,6 @@ class AddIngredients extends Component{
 		</div>
 		);
 	}
-
-
 }
-
-AddIngredients.bindAddIngredientModal = function(ele, options){
-	AddIngredients.addIngredientModal = new Modal(ele, options);
-}
-
-AddIngredients.hideAddIngredientModal = function(){
-	if(AddIngredients.addIngredientModal !== undefined){
-		AddIngredients.addIngredientModal.hide();
-	}else{
-		console.log("Please setup (bind) the modal before trying to close it");
-	}
-}
-
-
 
 export default AddIngredients;
-

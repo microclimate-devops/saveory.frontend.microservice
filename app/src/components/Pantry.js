@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import {InlineNotification} from 'carbon-components-react';
 import Client from './Client.js';
 import PantryTable from './PantryTable.js';
-//import axios from 'axios';
 import Https from 'https';
 import AddIngredients from "./AddIngredients.js";
 
 
+/**
+ * The main top-level component for all Pantry views
+ */
 class Pantry extends Component {
 	constructor(props){
 		super(props);
@@ -30,7 +32,6 @@ class Pantry extends Component {
 		this.addIngredient = this.addIngredient.bind(this);
 		this.updateIngredient = this.updateIngredient.bind(this);
 		this.deleteIngredient = this.deleteIngredient.bind(this);
-		this.setPantry = this.setPantry.bind(this);
 	}
 
 	static propTypes = {
@@ -39,6 +40,11 @@ class Pantry extends Component {
 		onRecipeFilterUpdate: PropTypes.func.isRequired
 	};
 
+	/**
+	 * Updates the current notification state with new options
+	 * @param {param_type} opts-
+	 * @calls {this.setState}
+	 */
 	setNotification(opts){
 		//Set values from passed options, apply defaults if necessary
 		let {title, subtitle, isGood} = {title: (opts.title || "No Title"), subtitle:(opts.subtitle || "No Message"), isGood:(opts.isGood || false)};
@@ -46,61 +52,72 @@ class Pantry extends Component {
 
 	}
 
-	setPantry(resp){
-		console.log(resp);
-		//If the response sent back an internal server error code, set an error notification
-		if(resp.code !== undefined && resp.code === 500){
-			this.setNotification({title: "Error", subtitle:"Internal application error, there was a problem retrieving the user's pantry from the backend", type:"error"});
-		}else{
-			this.setState({pantry: resp.pantry});
+	/**
+	 * Handles notifiying the user of the response status and initiating pantry update if necessary
+	 * @param {JSON http response} resp - The response object
+	 * @param {boolean} needPantryUpdate - Controls whether or not a pantry update is requested
+	 * @calls {switch, this.retrievePantry, this.setNotification}
+	 */
+	processRespCode(resp, needPantryUpdate){
+		switch(resp.code) {
+			case 200:
+				//Success!!
+				this.setNotification({title: "Success", subtitle:resp.msg, isGood:true});
+				//Need to refresh the pantry
+				if(needPantryUpdate){
+					this.retrievePantry();
+				}
+				break;
+			case 204: //The user's pantry was not found
+				this.setNotification({title: "Empty Pantry", subtitle:"Please add your first ingredient", isGood:true});
+				break;
+			case 500:
+				this.setNotification({title: "Error", subtitle:resp.msg, isGood:false});
+				break;
+			default:
+				this.setNotification({title: "Unknown Response", subtitle:resp.msg, isGood:false});
+				break;
 		}
 	}
 
-
-
+	/**
+	 * Processes the response of any of the requests going out and notifies the user of status
+	 * @param {JSON http response} resp - The response object
+   * @param {boolean} needPantryUpdate - Controls whether or not a pantry update is requested
+	 * @calls {this.processRespCode, this.setState, this.setNotification}
+	 */
 	handlePantryResponse(resp, needPantryUpdate){
 		//default needPantryUpdate if not specified (or not specified as boolean)
 		needPantryUpdate = typeof needPantryUpdate === "boolean" ? needPantryUpdate : true
 		//Handle different response codes
 		if(resp.code !== undefined){
-			switch(resp.code) {
-				case 200:
-					//Success!!
-					this.setNotification({title: "Success", subtitle:resp.msg, isGood:true});
-					//Need to refresh the pantry
-					if(needPantryUpdate){
-						this.retrievePantry();
-					}
-					break;
-
-				case 204: //The user's pantry was not found
-					this.setNotification({title: "Empty Pantry", subtitle:"Please add your first ingredient", isGood:true});
-					break;
-				case 500:
-					this.setNotification({title: "Error", subtitle:resp.msg, isGood:false});
-					break;
-				default:
-					this.setNotification({title: "Unknown Response", subtitle:resp.msg, isGood:false});
-					break;
-			}
+			this.processRespCode(resp, needPantryUpdate);
 		}else if(resp.pantry != undefined){ //The response is the pantry itself
-			console.log("Below is supposed to be a pantry");
-			console.log(resp);
 			this.setState({pantry: resp.pantry});
 		}else{ //Unknown Condition
-			console.log("The response from the pantry service does not make sense: ");
-			console.log(resp);
 			this.setNotification({title: "Error", subtitle:"Unable to access user's pantry", isGood:false});
 
 		}
 	}
 
+	/**
+	 * Notifies the user of an error from the request
+	 * @param {error} e - error object
+	 * @param {string} msg - message to show user
+	 * @calls {console.log, this.setNotification}
+	 */
 	handlePantryError(e, msg){
 		console.log("caught pantry error");
 		console.log(e);
 		this.setNotification({title: "Error", subtitle: msg, isGood:false});
 	}
 
+	/**
+	 * Gets the validation data for any ingredient field that requires it
+	 * @param {param_type} fieldTypes-The array of types that represent what type of data each field represents
+	 * @stateUsed {this.state.ingredientFields, this.state.pantryServiceURL, this.state.ingredientFieldOptions}
+	 * @calls {Client.request, this.setState, this.handlePantryError}
+	 */
 	retrieveIngredientFieldValidation(fieldTypes){
 		const ingredientFields = this.state.ingredientFields;
 		let pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/";
@@ -125,6 +142,11 @@ class Pantry extends Component {
 		}
 	}
 
+	/**
+	 * Gets the type of each field in an ingredient
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, console.log, JSON.stringify, this.retrieveIngredientFieldValidation, this.setState, this.handlePantryError}
+	 */
 	retrieveIngredientFieldTypes(){
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
 		// eslint-disable-next-line
@@ -141,6 +163,11 @@ class Pantry extends Component {
 		);
 	}
 
+	/**
+	 * Gets the editable field array which specifies for each field if it is editable or not
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, console.log, JSON.stringify, this.setState, this.handlePantryError}
+	 */
 	retrieveIngredientEditableFields(){
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/edits";
 		// eslint-disable-next-line
@@ -155,13 +182,17 @@ class Pantry extends Component {
 		);
 	}
 
+	/**
+	 * Gets the ingredient fields
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, JSON.stringify, this.retrieveIngredientFieldTypes, this.setState, this.handlePantryError}
+	 */
 	retrieveIngredientFields(){
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {
 				//Now get field types
-				console.log("Response for fields: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.retrieveIngredientFieldTypes();
 				this.setState({ingredientFields: resp});
 			},
@@ -171,6 +202,12 @@ class Pantry extends Component {
 		);
 	}
 
+	/**
+	 * Get the user's pantry
+	 * @propsUsed {this.props.userToken}
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, this.handlePantryResponse, this.handlePantryError}
+	 */
 	retrievePantry(){
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		// eslint-disable-next-line
@@ -180,13 +217,13 @@ class Pantry extends Component {
 		);
 	}
 
-	//Request and store all needed data from the Pantry backend service
-	componentDidMount(){
-		this.retrievePantry();
-		this.retrieveIngredientFields();
-		this.retrieveIngredientEditableFields();
-	}
-
+	/**
+	 * Sends a request to add an ingredient to the user's pantry
+	 * @param {object} ingredient - The ingredient object being added
+	 * @propsUsed {this.props.userToken}
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, this.handlePantryResponse, this.handlePantryError}
+	 */
 	addIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
@@ -198,18 +235,37 @@ class Pantry extends Component {
 			ingredient);
 	}
 
+	/**
+	 * Sends a request to update an ingredient in the user's pantry
+	 * @param {object} ingredient - The new ingredient data
+	 * @propsUsed {this.props.userToken}
+	 * @stateUsed {this.state.pantryServiceURL, this.state.ingredientFields}
+	 * @calls {Client.request, encodeURIComponent, this.handlePantryResponse, this.handlePantryError}
+	 */
 	updateIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "PUT", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not update the ingredient. Please make sure all fields are properly formatted.")}, ingredient);
 	}
 
+	/**
+	 * Sends a request to delete an ingredient in the user's pantry
+	 * @param {object} ingredient - the ingredient to delete
+	 * @propsUsed {this.props.userToken}
+	 * @stateUsed {this.state.pantryServiceURL, this.state.ingredientFields}
+	 * @calls {Client.request, encodeURIComponent, this.handlePantryResponse, this.handlePantryError}
+	 */
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
 		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
 	}
 
+	/**
+	 * Sets up a notification to be displayed for the user
+	 * @stateUsed {this.state.showActionMsg, this.state.actionMsgType, this.state.actionMsgTitle, this.state.actionMsgSubtitle}
+	 * @return {JSX} - The InlineNotification to be rendered
+	 */
 	showNotification(){
 		let notification = null;
 		if(this.state.showActionMsg){
@@ -218,6 +274,23 @@ class Pantry extends Component {
 		return notification;
 	}
 
+	/**
+	 * Request and store all needed data from the Pantry backend service
+	 * @calls {this.retrievePantry, this.retrieveIngredientFields, this.retrieveIngredientEditableFields}
+	 */
+	componentDidMount(){
+		this.retrievePantry();
+		this.retrieveIngredientFields();
+		this.retrieveIngredientEditableFields();
+	}
+
+	/**
+	 * Show the correct view of the user's pantry with the add ingredients option
+	 * @propsUsed {this.props.user}
+	 * @stateUsed {this.state.pantry, this.state.ingredientFieldEditable, this.state.ingredientFields, this.state.ingredientFieldTypes, this.state.ingredientFieldOptions}
+	 * @calls {this.showNotification}
+	 * @return {JSX}
+	 */
 	render(){
 		return (
 			<div id="pantry">

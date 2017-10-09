@@ -5,6 +5,9 @@ import Pane from './open/Pane.js';
 import Pantry from './Pantry.js';
 import Recipes from './Recipes.js';
 
+/**
+ * Shows the main top-level components of Saveory in an easy-to-navigate fashion: Pantry and Recipes.
+ */
 class Home extends Component{
 	constructor(props){
 		super(props);
@@ -16,9 +19,14 @@ class Home extends Component{
 		userToken: PropTypes.number.isRequired,
 		user: PropTypes.string.isRequired
 	};
-
-	//Allow filters to be added by subcomponents
-	updateRecipeFilters(type, filter){
+	/**
+	 * Allow filters to be added by subcomponents
+	 * @param {string} type - The identifying group the new filter belongs to
+	 * @param {object} filter - The new filter to add for recipe searches
+	 * @stateUsed {this.state.recipeFilters}
+	 * @calls {this.setState}
+	 */
+	 updateRecipeFilters(type, filter){
 		//if the filter type is not found in existing filter data, add it as an array
 		let recipeFilters = this.state.recipeFilters;
 		if(recipeFilters[type] === undefined){
@@ -32,6 +40,10 @@ class Home extends Component{
 		this.setState({recipeFilters: recipeFilters});
 	}
 
+	/**
+	 * @propsUsed {this.props.userToken, this.props.user
+	 * @return {JSX} - The Pantry and Recipes components seperated in controlled panels
+	 */
 	render(){
 		return (
 			<div className="content-wrap">

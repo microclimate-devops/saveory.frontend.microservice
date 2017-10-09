@@ -4,10 +4,12 @@ import { Icon } from 'carbon-components-react';
 import CarbonButton from './carbon/CarbonButton.js';
 import HeaderTool from './HeaderTool.js';
 
+/**
+ * Handles showing the app header with logo/identifier and universal actions
+ */
 class Header extends Component{
 	constructor(props){
 		super(props);
-		this.activateMenu = this.activateMenu.bind(this);
 	}
 
 	static propTypes = {
@@ -16,20 +18,11 @@ class Header extends Component{
 		logoutHandler: PropTypes.func.isRequired
 	};
 
-	activateMenu(){
-		console.log("Activate menu button clicked");
-	}
-
-	render(){
-		//{this.showLoginLogoutButton()}
-		/*
-			  {this.props.isAuth && <div className="header-menu-container">
-				<CarbonButton onClick={this.activateMenu} text="">
-					<Icon name="menu" />
-				</CarbonButton>
-			  </div>}
-
-		*/
+	/**
+	 * @propsUsed {this.props.isAuth, this.props.user, this.props.logoutHandler}
+	 * @return {JSX} - The header bar with actions displayed if the user is logged in
+	 */
+render(){
 		return (
 			<div className="App-header">
 			  <div className="header-app-name-container">

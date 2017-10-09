@@ -48,13 +48,13 @@ class AddIngredients extends Component{
 	 * @param {Object} options - Any options that need to be included for desired modal rendering
 	 * @calls {@carbon-components Modal}
 	 */
-	static bindAddIngredientModal(ele, options){
+	 static bindAddIngredientModal(ele, options){
 		AddIngredients.addIngredientModal = new Modal(ele, options);
 	}
 
 	/**
 	 * Hides the @carbon-components components modal attached to addIngredientModal static variable
-	 * @calls {AddIngredients.addIngredientModal.hide}
+	 * @calls {AddIngredients.addIngredientModal.hide, console}
 	 */
 	static hideAddIngredientModal(){
 		if(AddIngredients.addIngredientModal !== undefined){
@@ -89,6 +89,8 @@ class AddIngredients extends Component{
 	/**
 	 * Sends the entered ingredient through prop handler when user submits
 	 * @param {DOM event} e - The submit event
+	 * @propsUsed {onAddIngredient}
+	 * @stateUsed {enteredIngredient}
 	 * @calls {this.props.onAddIngredient, AddIngredients.hideAddIngredientModal}
 	 */
 	handleAddSubmit(e){
@@ -108,6 +110,7 @@ class AddIngredients extends Component{
 	 * @param {string} data - The inputed data
  	 * @propsUsed {ingredientFieldOptions}
 	 * @calls {Array}
+	 * @return {object} - the ingredient field validity object
 	 */
 	validateField(key, data){
 		const fieldOptions = this.props.ingredientFieldOptions[key];
@@ -131,6 +134,7 @@ class AddIngredients extends Component{
  	 * @propsUsed {ingredientFields}
 	 * @stateUsed {validateData}
 	 * @calls {Object}
+	 * @return {boolean} - indicates if there are any invalid fields
 	 */
 	isAnyDataInvalid(){
 		let dataIsInvalid = false;
@@ -158,6 +162,7 @@ class AddIngredients extends Component{
 	 * @propsUsed {ingredientFields, ingredientFieldTypes}
 	 * @stateUsed {modalTarget, enteredIngredient, validateData}
 	 * @calls {this.isAnyDataInvalid}
+	 * @return {JSX} - Add ingredient container with @carbon-components modal control
 	 */
 	render(){
 		return (

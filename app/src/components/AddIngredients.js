@@ -12,7 +12,11 @@ import AddIngredientForm from './AddIngredientForm.js';
 class AddIngredients extends Component{
 	constructor(props){
 		super(props);
-		this.state = {enteredIngredient: {}, validateData: {}, modalTarget: "#add-ingredient-modal"};
+		this.state = {
+			enteredIngredient: {},
+			validateData: {},
+			modalTarget: "#add-ingredient-modal"
+		};
 		this.handleAddSubmit = this.handleAddSubmit.bind(this);
 		this.handleIngredientChange = this.handleIngredientChange.bind(this);
 	}

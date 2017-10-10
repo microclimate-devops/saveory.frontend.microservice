@@ -4,6 +4,9 @@ import CarbonFormInput from './carbon/CarbonFormInput.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import {InlineNotification} from 'carbon-components-react';
 
+/**
+ * Manages the user signup form
+ */
 class SignupForm extends Component{
 	constructor(props){
 		super(props);
@@ -11,14 +14,14 @@ class SignupForm extends Component{
 		this.sendSignupAttempt = this.sendSignupAttempt.bind(this);
 		this.state = {
 			signupData: {
-				name: "", 
-				username: "", 
+				name: "",
+				username: "",
 				email: "",
 				password: "",
 				verifyPassword: "",
 			},
 			validate: {name: false, username: false, email: false, password: false, verifyPassword: false}
-		};	
+		};
 	}
 
 	static PropTypes = {
@@ -27,6 +30,12 @@ class SignupForm extends Component{
 		requestFailed: PropTypes.object.isRequired
 	};
 
+	/**
+	 * Validate and update the state when user input changes
+	 * @param {DOM event.target} target- the input that changed
+	 * @stateUsed {this.state.signupData, this.state.validate, this.state.signupData}
+	 * @calls {target.getAttribute, this.setState}
+	 */
 	handleInputChange(target){
 		//validate
 		const data = target.value;
@@ -36,7 +45,7 @@ class SignupForm extends Component{
 
 		//set validity for selector
 		if(selector === "verifyPassword"){ //verify the validate password entry equals entered password
-			validate[selector] = data === this.state.signupData.password;	
+			validate[selector] = data === this.state.signupData.password;
 		}else{
 			validate[selector] = data.length !== 0;
 		}
@@ -48,13 +57,22 @@ class SignupForm extends Component{
 		this.setState({signupData: signupData, validate: validate});
 	}
 
+	/**
+	 * Sends the signup data to prop handler
+	 * @propsUsed {this.props.processSignup}
+	 * @stateUsed {this.state.signupData, this.state.signupData}
+	 * @calls {this.props.processSignup}
+	 */
 	sendSignupAttempt(){
-		console.log("sending signup");
-		console.log(this.state.signupData);
 		this.props.processSignup(this.state.signupData);
 	}
 
-	//check if all fields are valid
+
+	/**
+	 * check if all fields are valid
+	 * @stateUsed {this.state.validate}
+	 * @return {boolean} - tell if all the user inputs are valid
+	 */
 	isValid(){
 		const validate = this.state.validate;
 		for(var field in validate){
@@ -65,13 +83,25 @@ class SignupForm extends Component{
 		return true; //all fields passed
 	}
 
+	/**
+	 * Show a notification if the signup request failed
+	 * @propsUsed {this.props.requestFailed}
+	 * @return {return_type} -
+	 */
 	showError(){
 		const requestFailed = this.props.requestFailed;
 		if(requestFailed){
 			return <InlineNotification kind="error" title="Invalid Signup" subtitle="That username is not available" role="alert"/>;
 		}
 	}
-	
+
+	/**
+	 * Show the signup form
+	 * @propsUsed {this.props.onAccessToggle}
+	 * @stateUsed {this.state.signupData, this.state.validate, this.state.signupData, this.state.validate, this.state.signupData, this.state.validate, this.state.signupData, this.state.validate, this.state.signupData, this.state.validate}
+	 * @calls {return, this.isValid, this.showError}
+	 * @return {JSX}
+	 */
 	render(){
 		return(
 			<div className="user-access-container signup-form-container">
@@ -83,11 +113,9 @@ class SignupForm extends Component{
 				<CarbonButton text="Submit" onClick={this.sendSignupAttempt} isInForm={true} isDisabled={!this.isValid()}/>
 				<CarbonButton text="Login Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 				{this.showError()}
-			</div>	
+			</div>
 		);
 	}
 }
 
 export default SignupForm;
-
-

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-//import JsonTable from 'react-json-table';
 
+/**
+ * Manages displaying a list of recipes in a search results container
+ */
 class RecipeSearchResults extends Component{
 	constructor(props){
 		super(props);
@@ -25,51 +26,55 @@ class RecipeSearchResults extends Component{
 			resultItemTitleSelector: "name"
 		};
 	}
+
 	static PropTypes = {
 		recipes: PropTypes.array.isRequired,
 		onResultSelected: PropTypes.func.isRequired
 	};
 
+	/**
+	 * When the user clicks a result, send that info through prop handler
+	 * @param {DOM event} e - the click event on the recipe result
+	 * @propsUsed {this.props.onResultSelected}
+	 * @calls {Number, e.target.getAttribute, this.props.onResultSelected}
+	 */
 	handleResultSelect(e){
 		const elementIndex = Number(e.target.getAttribute('id'));
-		console.log("row selected: "+elementIndex);
 		this.props.onResultSelected(elementIndex);
 	}
 
-	showResultItem(item, i){
+	/**
+	 * Creates a list item for the recipe results
+	 * @param {object} recipe - a recipe to show as
+	 * @param {int} i - the index of the recipe list item to show
+	 * @stateUsed {this.state.resultItemTitleSelector}
+	 * @calls {i.toString}
+	 * @return {JSX}
+	 */
+	showResultItem(recipe, i){
 		return (
 			<li key={i} id={i.toString()} className="recipe-search-results-item" onClick={this.handleResultSelect}>
-				{item[this.state.resultItemTitleSelector]}
+				{recipe[this.state.resultItemTitleSelector]}
 			</li>
 		);
 	}
 
+	/**
+	 * Creates a list to show all the recipe results
+	 * @propsUsed {this.props.recipes}
+	 * @calls {this.props.recipes.map, this.showResultItem}
+	 * @return {Array(JSX)}
+	 */
 	showResultItems(){
 		return this.props.recipes.map((item, i) => {return this.showResultItem(item, i)});
 	}
 
+	/**
+	 * Show the list of recipe results
+	 * @calls {this.showResultItems}
+	 * @return {JSX}
+	 */
 	render(){
-		//const columns = [{key: 'name', label: 'Results'}];
-		/*const resultTableOptions = {
-				//sort
-				defaultSortName: 'item',
-				defaultSortOrder: 'desc',
-
-				//select
-				mode: 'radio',
-				bgColor: 'green',
-				hideSelectColumn: true,
-				clickToSelect: true,
-
-				//row click
-				onRowSelect: this.handleResultSelect
-			};*/
-		/*
-				<BootstrapTable data={this.props.recipes} options={resultTableOptions} hover={true}>
-				      <TableHeaderColumn isKey={true} dataField='name' datasort={true}>Results</TableHeaderColumn>
-				  </BootstrapTable>
-		*/
-		//<JsonTable rows={this.props.recipes} columns={columns} onClickRow={this.handleResultSelect}/>
 		return (
 			<div className="recipe-search-results-container">
 				<ul className="recipe-search-results-list">
@@ -77,7 +82,7 @@ class RecipeSearchResults extends Component{
 				</ul>
 			</div>
 		);
-	}	
+	}
 }
 
 export default RecipeSearchResults;

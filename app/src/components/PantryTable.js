@@ -100,7 +100,7 @@ class PantryTable extends Component{
 	showIngredientHeader(){
 		const header = this.props.header;
 		if(Array.isArray(header)){
-			return header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem)} onClick={this.handleSortAction} className={"table-header-sortable" + (this.state.currSort === headerItem ? " pantry-table-header-sort-selected": "")} id={headerItem}>{headerItem}</TableHeader>});
+			return header.map((headerItem, i) => {return <TableHeader key={i} sortDir={this.determineHeaderSortDir(headerItem)} onClick={this.handleSortAction} className={"pantry-table-header-sortable" + (this.state.currSort === headerItem ? " pantry-table-header-sort-selected": "")} id={headerItem}>{headerItem}</TableHeader>});
 		}
 	}
 

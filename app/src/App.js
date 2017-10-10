@@ -3,44 +3,52 @@ import React, { Component } from 'react';
 import Header from './components/Header.js';
 import Home from './components/Home.js';
 import UserAccess from './components/UserAccess.js';
-//import auth components
-/*import SecureRoute from './components/auth/SecureRoute.js';
-import UserAccess from './components/auth/UserAccess.js';
-import Callback from './components/auth/Callback.js';
-import OktaWrapHeader from './components/auth/OktaWrapHeader.js';
-import OktaWrapHome from './components/auth/OktaWrapHome.js';*/
 
+/**
+ * The Main component from which all other component use flows
+ */
 class App extends Component {
   constructor(props){
 	super(props);
 	this.state = {
 		isAuth: false,
-		username: "",
-		userID: "",
-		userToken: "",
+    userData: {},
 	}
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
   }
 
+  /**
+   * Update the state to reflect a user login
+   * @param {object} userData-The data of the user that logged in
+   * @calls {this.setState}
+   */
   login(userData){
-	console.log("logging in user with token: "+userData.token);
-	this.setState({isAuth: true, userID: userData.username, username: userData.name, userToken: userData.token});
+	this.setState({isAuth: true, userData: userData});
   }
 
+  /**
+   * Update the state to indicate that the user has logged out
+   * @calls {this.setState}
+   */
   logout(){
-	this.setState({isAuth: false});	
+	this.setState({isAuth: false});
   }
 
+  /**
+   * If the user is logged in, shows Home page, otherwise directs user to gain access
+   * @stateUsed {this.state.user, this.state.isAuth, this.state.userData}
+   * @return {JSX}
+   */
   controlAccess(){
 	//TEST DESIGN (DO NOT LEAVE FOR PROD)
 	//const content = <Home userToken={1} user={this.state.user}/>;
-	
+
 
 	//REAL
 	let content = null;
 	if(this.state.isAuth){
-		content = <Home userToken={this.state.userToken} user={this.state.username}/>;
+		content = <Home userToken={this.state.userData.token} user={this.state.userData.name}/>;
 	}else{
 		content = <UserAccess loginHandler={this.login}/>;
 	}
@@ -48,15 +56,17 @@ class App extends Component {
 
   }
 
+  /**
+   * Shows the Header and an appropriate view based on user access
+   * @stateUsed {this.state.userData, this.state.isAuth}
+   * @calls {this.controlAccess}
+   * @return {JSX}
+   */
   render() {
-	/*<Route component={OktaWrapHeader} />
-	<SecureRoute exact={true} path="/" component={OktaWrapHome}/>
-	<Route path="/login" component={UserAccess}/>
-	<Route path="/callback" component={Callback}/>*/
     return (
       <div className="App">
-		<Header user={this.state.username} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
-		{this.controlAccess()}
+		    <Header user={this.state.userData.name} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
+		    {this.controlAccess()}
       </div>
     );
   }

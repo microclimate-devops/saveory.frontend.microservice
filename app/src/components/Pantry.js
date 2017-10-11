@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {InlineNotification} from 'carbon-components-react';
+import {InlineNotification, ContentSwitcher} from 'carbon-components-react';
 import Client from './Client.js';
 import PantryTable from './PantryTable.js';
 import Https from 'https';
@@ -14,8 +14,17 @@ class Pantry extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			viewID: 0,
-			viewTotal: 2,
+			viewIndex: 0,
+			viewMetadata: [
+				{
+					view: "table",
+					carbonIconName: "user"
+				},
+				{
+					view: "cards",
+					carbonIconName: "user"
+				}
+			],
 			pantryServiceURL: "/api/pantry/",
 			pantry: [],
 			ingredientFields: [],
@@ -110,6 +119,11 @@ class Pantry extends Component {
 		console.log("caught pantry error");
 		console.log(e);
 		this.setNotification({title: "Error", subtitle: msg, isGood:false});
+	}
+
+	handleViewSwitch(selectionData){
+		console.log("View selection data");
+		console.log(selectionData);
 	}
 
 	/**
@@ -262,6 +276,19 @@ class Pantry extends Component {
 	}
 
 	/**
+	 * Creates a list of icons to represent the different pantry view options
+	 * @stateUsed {this.state.viewMetadata}
+	 * @calls {this.state.viewMetadata.map}
+	 * @return {return_type} -
+	 */
+	showViewOptions(){
+		//return list of option icons created from state.viewMetadata
+		return this.state.viewMetadata.map( (vMeta, i) => {
+				return <Icon key={i} name={vMeta.carbonIconName} height={vMeta.carbonIconHeight} width={vMeta.carbonIconWidth}/>;
+		});
+	}
+
+	/**
 	 * Sets up a notification to be displayed for the user
 	 * @stateUsed {this.state.showActionMsg, this.state.actionMsgType, this.state.actionMsgTitle, this.state.actionMsgSubtitle}
 	 * @return {JSX} - The InlineNotification to be rendered
@@ -294,6 +321,9 @@ class Pantry extends Component {
 	render(){
 		return (
 			<div id="pantry">
+				<ContentSwitcher className="pantry-content-switcher" onChange={this.handleViewSwitch} selectedIndex={this.state.viewIndex}>
+					{this.showViewOptions()}
+				</ContentSwitcher>
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>

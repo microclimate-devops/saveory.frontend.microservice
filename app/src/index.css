@@ -1,3 +1,10 @@
+/* Fonts */
+@font-face {
+    font-family: "Francois One";
+    src: url("./fonts/FrancoisOne-Regular.ttf");
+}
+
+
 /* Bluemix Guidelines */
 body {
   margin: 0;
@@ -64,14 +71,18 @@ button {
 /*Header Stuff*/
 
 .App-header {
-  background-color: #1D364D;
-  height: 60px;
+  background-color: #F0F4F4;
+  height: 80px;
 }
 
 .header-app-name-container{
 	margin-left: 40px;
-	padding-top: 8px;
-	color: #F0F4F4;
+}
+
+.header-app-name-container h1{
+  font-family: 'Francois One', cursive;
+  font-size: 3.5rem;
+  color: #eb6e80;
 }
 
 .header-menu-container{
@@ -89,9 +100,8 @@ button {
 }
 
 .header-tool-container{
-	right: 15px;
 	float: right;
-	margin-top: -35px;
+	margin-top: -60px;
   	position: relative;
 }
 
@@ -99,12 +109,12 @@ button {
 	display: inline-block;
 	margin-right: 30px;
 	padding: 5px;
-  border: 1px solid;
+  border: 1px solid #f0f4f4;
 	cursor: pointer;
 }
 
 .header-tool-list li:hover{
-	border-bottom: 1px solid #FFFFFF;
+	border-bottom: 1px solid #1d364d;
 }
 
 .header-tool-list li svg{
@@ -112,7 +122,7 @@ button {
 }
 
 .header-tool-list li svg path{
-	fill: #FFFFFF;
+	fill: #1d364d;
 }
 
 .header-tool-list li p{
@@ -149,7 +159,7 @@ button {
   border-bottom: 2px solid #f5f5f5;
 }
 .tabs__labels li a.active {
-  border-bottom-color: #337ab7;
+  border-bottom-color: #eb6e80;
 }
 .tabs__content {
   padding: 25px;
@@ -174,8 +184,8 @@ button {
 
 #pantry{
 	margin: 0 auto;
-	width: 85%;
-	margin-top: 100px;
+	width: 95%;
+	margin-top: 50px;
 }
 
 .pantry-table{
@@ -233,11 +243,14 @@ button {
 
 .tabs__labels{
 	font-size: 20px;
-	background-color: #F0F4F4;
 }
 
 .tabs__labels li{
 	padding-left: 30px;
+}
+
+.tabs__labels li a.active{
+  border-bottom-color: #eb6e80;
 }
 
 /*Recipes Stuff*/

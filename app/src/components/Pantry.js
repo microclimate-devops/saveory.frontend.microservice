@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {InlineNotification, ContentSwitcher, Icon} from 'carbon-components-react';
+import CarbonButton from './carbon/CarbonButton.js';
 import Client from './Client.js';
 import PantryTable from './PantryTable.js';
 import AddIngredients from "./AddIngredients.js";
@@ -283,7 +284,7 @@ class Pantry extends Component {
 	showViewOptions(){
 		//return list of option icons created from state.viewMetadata
 		return this.state.viewMetadata.map( (vMeta, i) => {
-				return <Icon key={i} name={vMeta.carbonIconName} height={vMeta.carbonIconHeight} width={vMeta.carbonIconWidth}/>;
+				return <CarbonButton id={i} isGhost={true}><Icon key={i} name={vMeta.carbonIconName} height={vMeta.carbonIconHeight} width={vMeta.carbonIconWidth}/></CarbonButton>;
 		});
 	}
 

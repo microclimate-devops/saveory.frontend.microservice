@@ -5,11 +5,11 @@ class CarbonButton extends Component{
 	constructor(props){
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
-	}  
+	}
 
   	static propTypes = {
-		text: PropTypes.string.isRequired,
-		onClick: PropTypes.func.isRequired,
+		text: PropTypes.string,
+		onClick: PropTypes.func,
 		target: PropTypes.object,
 		isSecondary: PropTypes.bool,
 		isGhost: PropTypes.bool,
@@ -22,6 +22,8 @@ class CarbonButton extends Component{
 	};
 
 	static defaultProps = {
+		text: undefined,
+		onClick: undefined,
 		target: undefined,
 		isSecondary: false,
 		isGhost: false,
@@ -39,7 +41,7 @@ class CarbonButton extends Component{
 
 		//determine if ghost
 		if(this.props.isGhost){
-			className = "bx--btn--ghost"; 
+			className = "bx--btn--ghost";
 		}else{
 			//determine primary or secondary
 			if(this.props.isSecondary){
@@ -48,7 +50,7 @@ class CarbonButton extends Component{
 				className = "bx--btn bx--btn--primary";
 			}
 		}
-		
+
 		//determine if small or not
 		if(this.props.isSmall){
 			className += " bx--btn--sm";
@@ -60,11 +62,13 @@ class CarbonButton extends Component{
 	}
 
 	handleClick(e){
-		//Add props.target as param if specified
-		if(this.props.target !== undefined){
-			this.props.onClick(this.props.target);
-		}else{
-			this.props.onClick();
+		if(this.props.onClick){
+			//Add props.target as param if specified
+			if(this.props.target !== undefined){
+				this.props.onClick(this.props.target);
+			}else{
+				this.props.onClick();
+			}
 		}
 	}
 
@@ -107,4 +111,3 @@ class CarbonButton extends Component{
 }
 
 export  default CarbonButton;
-

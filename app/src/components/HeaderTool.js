@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'carbon-components-react';
-//import CarbonButton from './carbon/CarbonButton.js';
+
 /**
  * Handles universal user action operations in the header
  */
@@ -29,10 +29,6 @@ class HeaderTool extends Component{
 	 * @return {JSX} - The user actions list in the header
 	 */
 render(){
-		/*
-			<p className="header-tooltip-user">{this.props.user}</p>
-			<CarbonButton onClick={this.handleLogoutClick} text="Logout" isGhost={true} isSmall={true}/>
-		*/
 		return (
 		<div className="header-tool-container">
 			<ul className="header-tool-list">

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {InlineNotification, ContentSwitcher} from 'carbon-components-react';
+import {InlineNotification, ContentSwitcher, Icon} from 'carbon-components-react';
 import Client from './Client.js';
 import PantryTable from './PantryTable.js';
-import Https from 'https';
 import AddIngredients from "./AddIngredients.js";
 
 
@@ -101,7 +100,7 @@ class Pantry extends Component {
 		//Handle different response codes
 		if(resp.code !== undefined){
 			this.processRespCode(resp, needPantryUpdate);
-		}else if(resp.pantry != undefined){ //The response is the pantry itself
+		}else if(resp.pantry !== undefined){ //The response is the pantry itself
 			this.setState({pantry: resp.pantry});
 		}else{ //Unknown Condition
 			this.setNotification({title: "Error", subtitle:"Unable to access user's pantry", isGood:false});

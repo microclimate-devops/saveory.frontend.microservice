@@ -82,7 +82,7 @@ button {
 .header-app-name-container h1{
   font-family: 'Francois One', cursive;
   font-size: 3.5rem;
-  color: #eb6e80;
+  color: #c7485b;
 }
 
 .header-menu-container{
@@ -158,7 +158,7 @@ button {
   border-bottom: 2px solid #f5f5f5;
 }
 .tabs__labels li a.active {
-  border-bottom-color: #eb6e80;
+  border-bottom-color: #c7485b;
 }
 .tabs__content {
   padding: 25px;
@@ -257,7 +257,7 @@ button {
 /* Search 1 - bg change*/
 .recipes-wrap{
 	margin-top: 50px;
-	margin-left: 20px;
+	margin-left: 50px;
 }
 
 .recipe-search-container{

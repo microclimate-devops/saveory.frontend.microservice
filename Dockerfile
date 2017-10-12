@@ -4,6 +4,7 @@ FROM node:7.8.0
 
 # Override the base log level (info).
 ENV NPM_CONFIG_LOGLEVEL warn
+ENV NODE_ENV development
 
 # Setup express server
 COPY appServer .
@@ -23,4 +24,3 @@ COPY app app/
 RUN cd app && npm run build --production
 RUN mv app/build .
 #CMD ["npm", "start"]
-

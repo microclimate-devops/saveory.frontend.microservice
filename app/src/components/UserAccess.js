@@ -39,6 +39,8 @@ class UserAccess extends Component{
 
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
+			console.log("POST to "+this.state.userMgmtResourceURL+"login");
+			console.log(resp);
 			this.props.loginHandler(resp);
 			requestFailed = false;
 		}

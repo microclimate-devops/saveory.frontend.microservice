@@ -40,6 +40,8 @@ class Recipes extends Component{
 	 * @calls {this.setState}
 	 */
 	handleRecipeResponse(response){
+		console.log("GET to "+this.state.recipeServiceURL);
+		console.log(response);
 		this.setState({recipesDB: response});
 	}
 

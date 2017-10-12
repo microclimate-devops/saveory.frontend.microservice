@@ -9,7 +9,6 @@
  * @return {Promise} - The request response
  */
 function request(path, method, cb, eh, body) {
-	console.log("Path of request: "+path);
 	//default body to empty object
 	body = body === undefined ? {} : body;
 
@@ -55,7 +54,6 @@ function request(path, method, cb, eh, body) {
  * @return {HTTP responde} - The request response
  */
 function checkStatus(response) {
-  console.log("Response status: "+response.status);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

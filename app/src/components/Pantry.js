@@ -102,10 +102,11 @@ class Pantry extends Component {
 		if(resp.code !== undefined){
 			this.processRespCode(resp, needPantryUpdate);
 		}else if(resp.pantry !== undefined){ //The response is the pantry itself
+			console.log("GET to "+this.state.pantryServiceURL + this.props.userToken);
+			console.log(resp);
 			this.setState({pantry: resp.pantry});
 		}else{ //Unknown Condition
 			this.setNotification({title: "Error", subtitle:"Unable to access user's pantry", isGood:false});
-
 		}
 	}
 

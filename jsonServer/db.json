@@ -1,6 +1,0 @@
-{
-	"pantries": [
-		{"id": 1, "pantry":[{"ingredient":"banana", "qty":2, "qtyUnit":"item", "expDate":"8-10-2017"}]}
-	],
-	"users": [{"user":"test", "password": "test", "id":1}]
-}

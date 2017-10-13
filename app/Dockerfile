@@ -4,22 +4,17 @@ FROM node:7.8.0
 
 # Override the base log level (info).
 ENV NPM_CONFIG_LOGLEVEL warn
-
-# Setup express server
-COPY appServer .
-RUN npm install
-CMD node server.js
+ENV NODE_ENV development
 
 # Install all dependencies of the current project.
 RUN mkdir app
-COPY app/package.json app/package.json
-COPY app/npm-shrinkwrap.json app/npm-shrinkwrap.json
+COPY package.json app/package.json
+COPY npm-shrinkwrap.json app/npm-shrinkwrap.json
 RUN cd app && npm install
 
 # Copy all app files into the image.
-COPY app app/
+COPY . app/
 
-# Build for production.
-RUN cd app && npm run build --production
-RUN mv app/build .
-#CMD ["npm", "start"]
+# Build for development
+CMD cd app && npm start
+

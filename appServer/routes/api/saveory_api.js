@@ -59,7 +59,7 @@ var DEV_RESP = {
 
 //Return the correct dummy data
 function simPantryResource(url){
-	let dataKey = ""
+	var dataKey = "";
 	if(url.endsWith("/spec/ingredient")){
 		dataKey = "specIngredient";
 	}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Dropdown} from 'carbon-components-react';
 import CarbonFormInput from './carbon/CarbonFormInput.js';
 
 /**

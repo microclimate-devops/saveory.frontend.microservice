@@ -53,7 +53,7 @@ class PantryTableIngredient extends Component{
 	 */
 	getData(){
 		let data = this.state.data;
-		if(data == undefined){
+		if(data === undefined){
 			data = this.props.data;
 			this.setData(data);
 		}

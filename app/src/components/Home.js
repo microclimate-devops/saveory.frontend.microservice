@@ -16,7 +16,7 @@ class Home extends Component{
 	}
 
 	static propTypes = {
-		userToken: PropTypes.number.isRequired,
+		userToken: PropTypes.string.isRequired,
 		user: PropTypes.string.isRequired
 	};
 	/**

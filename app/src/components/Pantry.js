@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {InlineNotification, ContentSwitcher, Icon} from 'carbon-components-react';
-import CarbonButton from './carbon/CarbonButton.js';
+import {InlineNotification} from 'carbon-components-react';
 import Client from './Client.js';
+import PantryViewControl from './PantryViewControl.js';
 import PantryTable from './PantryTable.js';
 import AddIngredients from "./AddIngredients.js";
 
@@ -41,6 +41,7 @@ class Pantry extends Component {
 		this.addIngredient = this.addIngredient.bind(this);
 		this.updateIngredient = this.updateIngredient.bind(this);
 		this.deleteIngredient = this.deleteIngredient.bind(this);
+		this.handleViewSwitch = this.handleViewSwitch.bind(this);
 	}
 
 	static propTypes = {
@@ -122,9 +123,13 @@ class Pantry extends Component {
 		this.setNotification({title: "Error", subtitle: msg, isGood:false});
 	}
 
-	handleViewSwitch(selectionData){
-		console.log("View selection data");
-		console.log(selectionData);
+	/**
+	 * Update the selected view when the user changes controls
+	 * @param {int} index-The index of the selected view
+	 * @calls {this.setState}
+	 */
+	handleViewSwitch(index){
+		this.setState({viewIndex: index});
 	}
 
 	/**
@@ -277,19 +282,6 @@ class Pantry extends Component {
 	}
 
 	/**
-	 * Creates a list of icons to represent the different pantry view options
-	 * @stateUsed {this.state.viewMetadata}
-	 * @calls {this.state.viewMetadata.map}
-	 * @return {return_type} -
-	 */
-	showViewOptions(){
-		//return list of option icons created from state.viewMetadata
-		return this.state.viewMetadata.map( (vMeta, i) => {
-				return <CarbonButton id={i} isGhost={true}><Icon key={i} name={vMeta.carbonIconName} height={vMeta.carbonIconHeight} width={vMeta.carbonIconWidth}/></CarbonButton>;
-		});
-	}
-
-	/**
 	 * Sets up a notification to be displayed for the user
 	 * @stateUsed {this.state.showActionMsg, this.state.actionMsgType, this.state.actionMsgTitle, this.state.actionMsgSubtitle}
 	 * @return {JSX} - The InlineNotification to be rendered
@@ -322,9 +314,7 @@ class Pantry extends Component {
 	render(){
 		return (
 			<div id="pantry">
-				<ContentSwitcher className="pantry-content-switcher" onChange={this.handleViewSwitch} selectedIndex={this.state.viewIndex}>
-					{this.showViewOptions()}
-				</ContentSwitcher>
+				<PantryViewControl viewIndex={this.state.viewIndex} viewMetadata={this.state.viewMetadata} onSwitch={this.handleViewSwitch}/>
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>

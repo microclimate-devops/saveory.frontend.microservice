@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'carbon-components-react';
-import CarbonButton from './carbon/CarbonButton.js';
 import HeaderTool from './HeaderTool.js';
 
 /**
  * Handles showing the app header with logo/identifier and universal actions
  */
 class Header extends Component{
-	constructor(props){
-		super(props);
-	}
-
 	static propTypes = {
-		user: PropTypes.string.isRequired,
+		user: PropTypes.string,
 		isAuth: PropTypes.bool.isRequired,
 		logoutHandler: PropTypes.func.isRequired
+	};
+
+	static defaultProps = {
+		user: ""
 	};
 
 	/**

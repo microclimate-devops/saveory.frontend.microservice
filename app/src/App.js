@@ -48,6 +48,7 @@ class App extends Component {
 	//REAL
 	let content = null;
 	if(this.state.isAuth){
+    console.log("Authenticated");
 		content = <Home userToken={this.state.userData.token} user={this.state.userData.name}/>;
 	}else{
 		content = <UserAccess loginHandler={this.login}/>;

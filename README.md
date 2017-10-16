@@ -14,4 +14,7 @@
          npm install
          npm start
       ```
+### Run in IBM Cloud private
+1. Setup the Microservice Builder Pipeline with the GitHub organization you forked this repo to
+2. Check the Jenkins dashboard for build results
    

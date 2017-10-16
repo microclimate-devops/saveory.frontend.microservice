@@ -36,14 +36,16 @@ class UserAccess extends Component{
 	 * @calls {this.props.loginHandler, this.setState}
 	 */
 	requestCallback(resp){
+		let requestFailed = true;
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
 			console.log("POST to "+this.state.userMgmtResourceURL+"login");
 			console.log(resp);
 			this.props.loginHandler(resp);
-		}else{ //Otherwise indicate that the request failed
-			this.setState({requestFailed: true});
+			requestFailed = false;
 		}
+		//Update the request status
+		this.setState({requestFailed: true});
 	}
 
 	/**

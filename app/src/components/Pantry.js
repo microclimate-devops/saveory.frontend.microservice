@@ -312,9 +312,10 @@ class Pantry extends Component {
 	 * @return {JSX}
 	 */
 	render(){
+		//<PantryViewControl viewIndex={this.state.viewIndex} viewMetadata={this.state.viewMetadata} onSwitch={this.handleViewSwitch}/>
 		return (
 			<div id="pantry">
-				<PantryViewControl viewIndex={this.state.viewIndex} viewMetadata={this.state.viewMetadata} onSwitch={this.handleViewSwitch}/>
+
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user}'s Pantry</h3>
 				</div>

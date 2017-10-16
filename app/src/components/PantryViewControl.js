@@ -5,7 +5,7 @@ import CarbonButton from './carbon/CarbonButton.js';
 class PantryViewControl extends Component{
   constructor(props){
     super(props);
-    this.handleViewSwitch = this.handleViewSwitch.bind(this);
+    this.handleOptionClick = this.handleOptionClick.bind(this);
   }
 
   static PropTypes = {
@@ -37,7 +37,7 @@ class PantryViewControl extends Component{
 					optionClass += " pantry-view-selected";
 				}
 				//return <CarbonButton id={i} isSecondary={true}><Icon key={i} name={vMeta.carbonIconName} height={vMeta.carbonIconHeight} width={vMeta.carbonIconWidth}/></CarbonButton>;
-				return <CarbonButton addedClass={optionClass} id={i} key={i} isSecondary={true} onClick={this.handleViewSwitch}><p className="pantry-view-title">{vMeta.view}</p></CarbonButton>;
+				return <CarbonButton addedClass={optionClass} id={i} key={i} isSecondary={true} onClick={this.handleOptionClick}><p className="pantry-view-title">{vMeta.view}</p></CarbonButton>;
 		});
 	}
 

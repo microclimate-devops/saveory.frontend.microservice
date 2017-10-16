@@ -25,7 +25,8 @@ class UserAccess extends Component{
 	}
 
 	static PropTypes = {
-		loginHandler: PropTypes.func.isRequired
+		loginHandler: PropTypes.func.isRequired,
+		isAuth: PropTypes.bool.isRequired
 	};
 
 	/**
@@ -35,17 +36,14 @@ class UserAccess extends Component{
 	 * @calls {this.props.loginHandler, this.setState}
 	 */
 	requestCallback(resp){
-		let requestFailed = true;
-
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
 			console.log("POST to "+this.state.userMgmtResourceURL+"login");
 			console.log(resp);
 			this.props.loginHandler(resp);
-			requestFailed = false;
+		}else{ //Otherwise indicate that the request failed
+			this.setState({requestFailed: true});
 		}
-
-		this.setState({requestFailed: requestFailed});
 	}
 
 	/**
@@ -65,6 +63,7 @@ class UserAccess extends Component{
 	 * @calls {Client.request}
 	 */
 	requestLogin(loginData){
+		console.log("Login requested")
 		Client.request(this.state.userMgmtResourceURL+"login", "POST", this.requestCallback, this.requestErrorHandler, loginData);
 	}
 
@@ -97,9 +96,12 @@ class UserAccess extends Component{
 	 * @return {JSX} - Either the LoginForm or the SignupForm
 	 */
 	showAccessForm(){
-		let form = <LoginForm processLogin={this.requestLogin} requestFailed={this.state.requestFailed} onAccessToggle={this.toggleNeedsSignup}/>;
-		if(this.state.needsSignup){
-			form = <SignupForm processSignup={this.requestSignup} requestFailed={this.state.requestFailed} onAccessToggle={this.toggleNeedsSignup}/>;
+		let form = null;
+		if(!this.props.isAuth){
+			form = <LoginForm processLogin={this.requestLogin} requestFailed={this.state.requestFailed} onAccessToggle={this.toggleNeedsSignup}/>;
+			if(this.state.needsSignup){
+				form = <SignupForm processSignup={this.requestSignup} requestFailed={this.state.requestFailed} onAccessToggle={this.toggleNeedsSignup}/>;
+			}
 		}
 		return form;
 	}

@@ -15,9 +15,15 @@ class Home extends Component{
 		this.state = {recipeFilters: {}};
 	}
 
-	static propTypes = {
-		userToken: PropTypes.string.isRequired,
-		user: PropTypes.string.isRequired
+	static PropTypes = {
+		userToken: PropTypes.string,
+		user: PropTypes.string,
+		isAuth: PropTypes.bool.isRequired
+	};
+
+	static defaultProps = {
+			userToken: "",
+			user: ""
 	};
 	/**
 	 * Allow filters to be added by subcomponents
@@ -45,14 +51,18 @@ class Home extends Component{
 	 * @return {JSX} - The Pantry and Recipes components seperated in controlled panels
 	 */
 	render(){
-		return (
-			<div className="content-wrap">
-				<Tabs selected={0}>
-					<Pane label="Pantry"><Pantry userToken={this.props.userToken} user={this.props.user} onRecipeFilterUpdate={this.updateRecipeFilters}/></Pane>
-					<Pane label="Recipes"><Recipes userToken={this.props.userToken}/></Pane>
-				</Tabs>
-			</div>
-		);
+		let content = null;
+		if(this.props.isAuth){
+			content = (
+				<div className="content-wrap">
+					<Tabs selected={0}>
+						<Pane label="Pantry"><Pantry userToken={this.props.userToken} user={this.props.user} onRecipeFilterUpdate={this.updateRecipeFilters}/></Pane>
+						<Pane label="Recipes"><Recipes userToken={this.props.userToken}/></Pane>
+					</Tabs>
+				</div>
+			);
+		}
+		return content;
 	}
 }
 

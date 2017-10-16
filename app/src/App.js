@@ -50,8 +50,6 @@ class App extends Component {
 	if(this.state.isAuth){
     console.log("Authenticated");
 		content = <Home userToken={this.state.userData.token} user={this.state.userData.name}/>;
-	}else{
-		content = <UserAccess loginHandler={this.login}/>;
 	}
 	return content;
 
@@ -67,7 +65,8 @@ class App extends Component {
     return (
       <div className="App">
 		    <Header user={this.state.userData.name} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
-		    {this.controlAccess()}
+        <UserAccess isAuth={this.state.isAuth} loginHandler={this.login}/>
+        <Home isAuth={this.state.isAuth} userToken={this.state.userData.token} user={this.state.userData.name}/>
       </div>
     );
   }

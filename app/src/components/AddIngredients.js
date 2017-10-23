@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Modal} from 'carbon-components';
+import { Icon } from 'carbon-components-react';
 import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
@@ -171,9 +172,10 @@ class AddIngredients extends Component{
 	render(){
 		return (
 		<div className="add-ingredient-container">
-			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} onClick={function(){}}/>
+			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} />
 			<CarbonModal id="add-ingredient-modal" bindModal={AddIngredients.bindAddIngredientModal}>
 				<div className="add-ingredient-modal-header-container">
+					<CarbonButton onClick={AddIngredients.hideAddIngredientModal}><Icon name="close--outline" height="24" width="24"/></CarbonButton>
 					<h1>Add Ingredient</h1>
 				</div>
 				<div className="add-ingredient-modal-content-container">

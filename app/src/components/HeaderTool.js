@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'carbon-components-react';
+import {Icon} from 'carbon-components-react';
+import AccountSettingsModal from "./AccountSettingsModal";
 
 /**
  * Handles universal user action operations in the header
@@ -9,6 +10,9 @@ class HeaderTool extends Component{
 	constructor(props){
 		super(props);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
+		this.handleProfileClick = this.handleProfileClick.bind(this);
+		this.toggleShowSettings = this.toggleShowSettings.bind(this);
+		this.state = {showSettings: false};
 	}
 
 	static PropTypes = {
@@ -21,7 +25,17 @@ class HeaderTool extends Component{
 	}
 
 	handleProfileClick(){
-		console.log("Profile clicked");
+		this.toggleShowSettings();
+	}
+
+	/**
+	 *
+	 * @stateUsed {this.state.showSettings}
+	 * @calls {this.setState}
+	 */
+	toggleShowSettings(){
+		let showSettings = !this.state.showSettings;
+		this.setState({showSettings: showSettings});
 	}
 
 	/**
@@ -41,6 +55,7 @@ render(){
 						<p>Logout</p>
 				</li>
 			</ul>
+			<AccountSettingsModal open={this.state.showSettings} onClose={this.toggleShowSettings}/>
 		</div>
 		);
 	}

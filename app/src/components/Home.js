@@ -25,6 +25,7 @@ class Home extends Component{
 			userToken: "",
 			user: ""
 	};
+
 	/**
 	 * Allow filters to be added by subcomponents
 	 * @param {string} type - The identifying group the new filter belongs to

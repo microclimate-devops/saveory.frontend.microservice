@@ -287,11 +287,9 @@ class Pantry extends Component {
 	 * @return {JSX} - The InlineNotification to be rendered
 	 */
 	showNotification(){
-		let notification = null;
 		if(this.state.showActionMsg){
-				notification = <InlineNotification kind={this.state.actionMsgType} title={this.state.actionMsgTitle} subtitle={this.state.actionMsgSubtitle} role="alert"/>;
+				return <InlineNotification kind={this.state.actionMsgType} title={this.state.actionMsgTitle} subtitle={this.state.actionMsgSubtitle} role="alert"/>;
 		}
-		return notification;
 	}
 
 	/**

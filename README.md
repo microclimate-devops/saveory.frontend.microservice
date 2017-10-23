@@ -25,7 +25,7 @@ ut
 We want you to like your pantry. We want managing it to be fun. No more forgotten ingredients. The back of your fridge doesn't need to be a scary place. Saveory was made for that. It was made to be scalable, independent, and free. Our journey begins and ends with the platform. One that is elaborate and cutting-edge but also friendly and easy to pickup. This is a story about developing microservices in the cloud. The IBM cloud.
 
 	###Technology Pit Stop
-	Saveory is developed with IBM Microservice Builder. Utilizing JavaEE and NodeJS backends and a ReactJS frontend.
+	Saveory is developed with IBM Microservice Builder and NodeJS.
 	Saveory builds with Docker
 	Saveory deploys with the continuous integration IBM Microservice Builder Pipeline
 	Saveory runs on IBM Cloud Private. Welcome to Kubernetes

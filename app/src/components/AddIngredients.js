@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Modal} from 'carbon-components';
-import { Icon } from 'carbon-components-react';
-import CarbonModal from './carbon/CarbonModal.js';
+//import {Modal} from 'carbon-components';
+import { Icon, Modal } from 'carbon-components-react';
+//import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
 
@@ -16,10 +16,14 @@ class AddIngredients extends Component{
 		this.state = {
 			enteredIngredient: {},
 			validateData: {},
-			modalTarget: "#add-ingredient-modal"
+			showModal: false
+			//modalTarget: "#add-ingredient-modal"
 		};
 		this.handleAddSubmit = this.handleAddSubmit.bind(this);
 		this.handleIngredientChange = this.handleIngredientChange.bind(this);
+		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 	}
 
 	//*********************************************//
@@ -45,7 +49,7 @@ class AddIngredients extends Component{
 		ingredientFieldOptions: PropTypes.object.isRequired
 	};
 
-	static addIngredientModal = undefined;
+	//static addIngredientModal = undefined;
 
 	/**
 	 * Sets the addIngredientModal static variable to a @carbon-components components modal
@@ -53,25 +57,34 @@ class AddIngredients extends Component{
 	 * @param {Object} options - Any options that need to be included for desired modal rendering
 	 * @calls {@carbon-components Modal}
 	 */
-	 static bindAddIngredientModal(ele, options){
+	/* static bindAddIngredientModal(ele, options){
 		AddIngredients.addIngredientModal = new Modal(ele, options);
-	}
+	}*/
 
 	/**
 	 * Hides the @carbon-components components modal attached to addIngredientModal static variable
 	 * @calls {AddIngredients.addIngredientModal.hide, console}
 	 */
-	static hideAddIngredientModal(){
+	/*static hideAddIngredientModal(){
 		if(AddIngredients.addIngredientModal !== undefined){
 			AddIngredients.addIngredientModal.hide();
 		}else{
 			console.log("Please setup (bind) the modal before trying to close it");
 		}
-	}
+	}*/
 
 	//*********************************************//
 	// STATE CHANGERS
 	//**********************************************//
+
+	/**
+	 * Sets the showModal state to parameter value
+	 * @param {boolean} show
+	 * @calls {this.setState}
+	 */
+	setShowModal(show){
+		this.setState({showModal: show});
+	}
 
 	/**
 	 * Updates the state.enteredIngredient for a user edit
@@ -91,6 +104,41 @@ class AddIngredients extends Component{
 		this.setState({enteredIngredient: ingredient, validateData: validateData});
 	}
 
+	//*********************************************//
+	// ACTION HANDLERS
+	//**********************************************//
+
+
+	/**
+	 * Triggers opening the add ingredient form modal
+	 * @param {DOM event} e-
+	 * @calls {this.setShowModal}
+	 */
+	openModal(e){
+		this.setShowModal(true);
+	}
+
+	/**
+	 * Triggers closing the add ingredient form modal
+	 * @param {DOM event} e-
+	 * @calls {this.setShowModal}
+	 */
+	closeModal(e){
+		this.setShowModal(false);
+	}
+
+	/**
+	 * Triggered on key press, closes modal if 'esc' pressed
+	 * @param {DOM event} e-
+	 * @calls {this.closeModal}
+	 */
+	handleKeyDown(e){
+		//toggle modal if esc was pressed
+		if (e.which === 27) {
+			this.closeModal();
+		}
+	}
+
 	/**
 	 * Sends the entered ingredient through prop handler when user submits
 	 * @param {DOM event} e - The submit event
@@ -101,7 +149,7 @@ class AddIngredients extends Component{
 	handleAddSubmit(e){
 		this.props.onAddIngredient(this.state.enteredIngredient);
 		//Hide modal
-		AddIngredients.hideAddIngredientModal();
+		this.closeModal();
 	}
 
 	//*********************************************//
@@ -130,6 +178,7 @@ class AddIngredients extends Component{
 		//If valid options were defined for this field, make sure the data matches an option
 		else if(Array.isArray(fieldOptions) && !fieldOptions.includes(data)){
 			isValid=false;
+			invalidMsg = createInvalidMsg(fieldOptions);
 		}
 		return {valid: isValid, msg: invalidMsg};
 	}
@@ -172,19 +221,13 @@ class AddIngredients extends Component{
 	render(){
 		return (
 		<div className="add-ingredient-container">
-			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" isModalControl={true} modalTarget={this.state.modalTarget} />
-			<CarbonModal id="add-ingredient-modal" bindModal={AddIngredients.bindAddIngredientModal}>
-				<div className="add-ingredient-modal-header-container">
-					<CarbonButton onClick={AddIngredients.hideAddIngredientModal}><Icon name="close--outline" height="24" width="24"/></CarbonButton>
-					<h1>Add Ingredient</h1>
-				</div>
+			<CarbonButton text="Add Ingredient" addedClass="add-ingredient-button" onClick={this.openModal} />
+			<Modal onRequestClose={this.closeModal} modalLabel="Add an Ingredient" modalHeading="Enter Data Here"  secondaryButtonText="Close" primaryButtonText="Add"
+        open={this.state.showModal} onRequestSubmit={this.handleAddSubmit} onKeyDown={this.handleKeyDown} primaryButtonDisabled={this.isAnyDataInvalid()} onSecondarySubmit={this.closeModal}>
 				<div className="add-ingredient-modal-content-container">
 					<AddIngredientForm onChange={this.handleIngredientChange} ingredient={this.state.enteredIngredient} ingredientFields={this.props.ingredientFields} ingredientFieldTypes={this.props.ingredientFieldTypes} validateData={this.state.validateData}/>
 				</div>
-				<div className="add-ingredient-modal-footer-container">
-					<CarbonButton text="Add" onClick={this.handleAddSubmit} isDisabled={this.isAnyDataInvalid()}/>
-				</div>
-			</CarbonModal>
+			</Modal>
 		</div>
 		);
 	}

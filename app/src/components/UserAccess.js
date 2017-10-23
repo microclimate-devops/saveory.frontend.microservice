@@ -45,7 +45,7 @@ class UserAccess extends Component{
 			requestFailed = false;
 		}
 		//Update the request status
-		this.setState({requestFailed: true});
+		this.setState({requestFailed: requestFailed});
 	}
 
 	/**

@@ -36,27 +36,7 @@ class App extends Component {
   }
 
   /**
-   * If the user is logged in, shows Home page, otherwise directs user to gain access
-   * @stateUsed {this.state.user, this.state.isAuth, this.state.userData}
-   * @return {JSX}
-   */
-  controlAccess(){
-	//TEST DESIGN (DO NOT LEAVE FOR PROD)
-	//const content = <Home userToken={1} user={this.state.user}/>;
-
-
-	//REAL
-	let content = null;
-	if(this.state.isAuth){
-    console.log("Authenticated");
-		content = <Home userToken={this.state.userData.token} user={this.state.userData.name}/>;
-	}
-	return content;
-
-  }
-
-  /**
-   * Shows the Header and an appropriate view based on user access
+   * Shows the Header and
    * @stateUsed {this.state.userData, this.state.isAuth}
    * @calls {this.controlAccess}
    * @return {JSX}

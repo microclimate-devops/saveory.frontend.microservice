@@ -36,10 +36,10 @@ class SignupForm extends Component{
 	 * @stateUsed {this.state.signupData, this.state.validate, this.state.signupData}
 	 * @calls {target.getAttribute, this.setState}
 	 */
-	handleInputChange(target){
+	handleInputChange(inputId, target){
 		//validate
 		const data = target.value;
-		const selector = target.getAttribute('id');
+		const selector = inputId;
 		let signupData = this.state.signupData;
 		let validate = this.state.validate;
 

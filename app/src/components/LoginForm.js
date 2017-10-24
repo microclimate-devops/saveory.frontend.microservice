@@ -31,9 +31,9 @@ class LoginForm extends Component{
 	 * @stateUsed {this.state.loginData}
 	 * @calls {target.getAttribute, this.setState}
 	 */
-	handleInputChange(target){
+	handleInputChange(inputId, target){
 		const data = target.value;
-		const selector = target.getAttribute('id');
+		const selector = inputId;
 		let loginData = this.state.loginData;
 
 		//update state to reflect new input text

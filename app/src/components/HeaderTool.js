@@ -17,7 +17,8 @@ class HeaderTool extends Component{
 
 	static PropTypes = {
 		onLogoutClick: PropTypes.func.isRequired,
-		user: PropTypes.string.isRequired
+		onUserUpdate: PropTypes.func.isRequired,
+		userData: PropTypes.object.isRequired
 	};
 
 	handleLogoutClick(){
@@ -39,7 +40,7 @@ class HeaderTool extends Component{
 	}
 
 	/**
-	 * @propsUsed {this.props.user}
+	 * @propsUsed {this.props.userData}
 	 * @return {JSX} - The user actions list in the header
 	 */
 render(){
@@ -48,14 +49,14 @@ render(){
 			<ul className="header-tool-list">
 				<li id="profile-bar" onClick={this.handleProfileClick}>
 						<Icon name="user" height="24" width="24"/>
-						<p>{this.props.user}</p>
+						<p>{this.props.userData.name}</p>
 				</li>
 				<li id="logout-bar" onClick={this.handleLogoutClick}>
 						<Icon name="close--outline" height="24" width="24"/>
 						<p>Logout</p>
 				</li>
 			</ul>
-			<AccountSettingsModal open={this.state.showSettings} onClose={this.toggleShowSettings}/>
+			<AccountSettingsModal userData={this.props.userData} open={this.state.showSettings} onClose={this.toggleShowSettings} onUserUpdate={this.props.onUserUpdate}/>
 		</div>
 		);
 	}

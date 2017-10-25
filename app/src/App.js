@@ -16,6 +16,7 @@ class App extends Component {
 	}
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
+  this.handleUserUpdate = this.handleUserUpdate.bind(this);
   }
 
   /**
@@ -33,6 +34,15 @@ class App extends Component {
    */
   logout(){
 	this.setState({isAuth: false});
+  }
+
+  /**
+   * Updates stored data on the user with new information
+   * @param {object} newUserData-
+   * @calls {this.setState}
+   */
+  handleUserUpdate(newUserData){
+    this.setState({userData: newUserData})
   }
 
   /**
@@ -64,7 +74,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-		    <Header user={this.state.userData.name} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
+		    <Header userData={this.state.userData} isAuth={this.state.isAuth} logoutHandler={this.logout} onUserUpdate={this.handleUserUpdate}/>
         <UserAccess isAuth={this.state.isAuth} loginHandler={this.login}/>
         <Home isAuth={this.state.isAuth} userToken={this.state.userData.token} user={this.state.userData.name}/>
       </div>

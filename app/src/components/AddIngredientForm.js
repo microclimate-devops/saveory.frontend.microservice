@@ -35,7 +35,12 @@ class AddIngredientForm extends Component{
      * A dictionary to lookup a fields validity based on it's field name
 		 * Each value is an object with valid and msg fields
      */
-		validateData: PropTypes.object.isRequired
+		validateData: PropTypes.object.isRequired,
+		/**
+		 * If a field does not have an entry in validateData
+		 * Use this as a default
+		 */
+		defaultValidateData: PropTypes.object.isRequired
 	};
 
 	/**
@@ -64,6 +69,7 @@ class AddIngredientForm extends Component{
 		const ingredientFields = this.props.ingredientFields;
 		const ingredientFieldTypes = this.props.ingredientFieldTypes;
 		const validateData = this.props.validateData;
+		const defaultValidateData = this.props.defaultValidateData;
 
 		let inputs = [];
 		let currInput = undefined;
@@ -75,9 +81,9 @@ class AddIngredientForm extends Component{
 		for(var i = 0; i < ingredientFields.length; i++){
 			//Gather data about the field
 			currSelector = ingredientFields[i];
-			currValue = ingredient[currSelector];
+			currValue = ingredient[currSelector] || "";
 			//try to get validate data, default if not there
-			currValidateData = validateData[currSelector] || {};
+			currValidateData = validateData[currSelector] || defaultValidateData;
 
 			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={i} inputLabel={currSelector} onChange={this.inputChange} invalidText={currValidateData.msg} isInvalid={!currValidateData.valid} className="add-ingredient-form-item"/>
 

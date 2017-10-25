@@ -53,6 +53,10 @@ button {
 	margin-left: 0.1em;
 }
 
+.carbon-form-input-container{
+    margin-right: 1rem;
+}
+
 .carbon-form-input-container-input{
 	background-color: #DFE6EB;
 }
@@ -129,6 +133,11 @@ button {
 	float: left;
 	margin-left: 10px;
 }
+
+.account-settings-form-item:last-of-type{
+  padding-right: 1rem;
+}
+
 /*Home Stuff*/
 
 * {
@@ -167,6 +176,10 @@ button {
 /*Pantry stuff*/
 .add-ingredient-container{
 	margin-top: 15px;
+}
+
+.add-ingredient-form-item label{
+  text-transform: capitalize;
 }
 
 /*.add-ingredient-button{

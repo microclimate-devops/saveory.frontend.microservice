@@ -15,15 +15,17 @@ class CarbonFormInput extends Component{
 		onChange: PropTypes.func.isRequired,
 		invalidText: PropTypes.string.isRequired,
 		isInvalid: PropTypes.bool.isRequired,
+		inputPlaceholder: PropTypes.string,
 		className: PropTypes.string
 	};
 
 	static defaultProps = {
+		inputPlaceholder: "",
 		className: ""
-	};	
+	};
 
 	handleChange(e){
-		this.props.onChange(e.target);
+		this.props.onChange(this.props.inputID, e.target);
 	}
 
 	showIfInvalid(){
@@ -35,22 +37,22 @@ class CarbonFormInput extends Component{
 		if(this.props.isInvalid){
 			this.refs.carboninput.setAttribute('data-invalid', 'true');
 		}else{
-			this.refs.carboninput.removeAttribute('data-invalid');	
+			this.refs.carboninput.removeAttribute('data-invalid');
 		}
 	}
-	
+
 	componentDidUpdate(){
 		//Show if the component is invalid after update
 		this.showIfInvalid();
 	}
-	
+
 
 	render(){
-		//{this.props.isInvalid && "data-invalid"} 
 		return (
 			<div className={"bx--form-item carbon-form-input-container "+this.props.className}>
-			  <label htmlFor={this.props.inputID} className="bx--label">{this.props.inputLabel}</label>
-			  <input ref="carboninput" id={this.props.inputID} type={this.props.inputType} className="bx--text-input carbon-form-input-container-input" onChange={this.handleChange} value={this.props.inputData} />
+			  <label className="bx--label">{this.props.inputLabel}</label>
+			  <input ref="carboninput" type={this.props.inputType} className="bx--text-input carbon-form-input-container-input" onChange={this.handleChange}
+					value={this.props.inputData} placeholder={this.props.inputPlaceholder}/>
 			  <div className="bx--form-requirement carbon-form-input-container-invalid">
 			    {this.props.invalidText}
 			  </div>

@@ -111,6 +111,10 @@ class Recipes extends Component{
 		this.setState({recipes: recipeMatches, recipeSelected: {}});
 	}
 
+	handleSearchSubmit__new(query){
+
+	}
+
 	/**
 	 * Updates the currently selected recipe to whichever search result the user clicked
 	 * @param {int} i - the index of the selected recipe

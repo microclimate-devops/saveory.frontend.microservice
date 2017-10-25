@@ -74,8 +74,6 @@ class Pantry extends Component {
 	 * @calls {switch, this.retrievePantry, this.setNotification}
 	 */
 	processRespCode(resp, needPantryUpdate){
-		console.log("Response");
-		console.log(resp);
 		switch(resp.code) {
 			case 200:
 				//Success!!
@@ -110,8 +108,6 @@ class Pantry extends Component {
 		if(resp.code !== undefined){
 			this.processRespCode(resp, needPantryUpdate);
 		}else if(resp.pantry !== undefined){ //The response is the pantry itself
-			console.log("GET to "+this.state.pantryServiceURL + this.props.userToken);
-			console.log(resp);
 			this.setState({pantry: resp.pantry});
 		}else{ //Unknown Condition
 			this.setNotification({title: "Error", subtitle:"Unable to access user's pantry", isGood:false});
@@ -172,7 +168,7 @@ class Pantry extends Component {
 	/**
 	 * Gets the type of each field in an ingredient
 	 * @stateUsed {this.state.pantryServiceURL}
-	 * @calls {Client.request, console.log, JSON.stringify, this.retrieveIngredientFieldValidation, this.setState, this.handlePantryError}
+	 * @calls {Client.request, JSON.stringify, this.retrieveIngredientFieldValidation, this.setState, this.handlePantryError}
 	 */
 	retrieveIngredientFieldTypes(){
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/types";
@@ -180,7 +176,6 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {
 				//Check to see if additional validate info is needed for a field
-				console.log("Response for field types: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.retrieveIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});
 			},
@@ -193,14 +188,13 @@ class Pantry extends Component {
 	/**
 	 * Gets the editable field array which specifies for each field if it is editable or not
 	 * @stateUsed {this.state.pantryServiceURL}
-	 * @calls {Client.request, console.log, JSON.stringify, this.setState, this.handlePantryError}
+	 * @calls {Client.request, JSON.stringify, this.setState, this.handlePantryError}
 	 */
 	retrieveIngredientEditableFields(){
 		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/edits";
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {
-				console.log("Response for editable fields: "+JSON.stringify(resp)+", type: "+typeof resp);
 				this.setState({ingredientFieldEditable: resp});
 			},
 			(e) => {

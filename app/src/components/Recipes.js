@@ -15,7 +15,6 @@ class Recipes extends Component{
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.state = {
 			recipeServiceURL: "api/recipes/",
-			recipeQuery: "",
 			recipesDB:[],
 			recipes: [],
 			recipeSelected: {}
@@ -109,7 +108,7 @@ class Recipes extends Component{
 			}
 		}
 		//Update state to represent new search
-		this.setState({recipeQuery: query, recipes: recipeMatches, recipeSelected: {}});
+		this.setState({recipes: recipeMatches, recipeSelected: {}});
 	}
 
 	/**

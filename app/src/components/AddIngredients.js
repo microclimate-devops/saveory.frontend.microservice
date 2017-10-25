@@ -125,7 +125,7 @@ class AddIngredients extends Component{
 	 */
 	handleKeyDown(e){
 		//toggle modal if esc was pressed
-		if (e.which === 27) {
+		if (e.which === 27 && this.state.showModal) {
 			this.closeModal();
 		}
 	}

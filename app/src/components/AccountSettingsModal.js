@@ -12,9 +12,11 @@ class AccountSettingsModal extends Component{
       inputsData: {},
       validateInputs: {},
       updateIsValid: false,
-      error: {
+      notification: {
         show: false,
-        msg: "Could not update your account",
+        type: "",
+        title: "",
+        subtitle: ""
       }
     };
     this.errorHandler = this.errorHandler.bind(this);
@@ -35,42 +37,46 @@ class AccountSettingsModal extends Component{
     open: false
   }
 
-  setError(show, msg){
-    let error = this.state.error;
-
-    //Update data if present
-    error.show = show || false;
-    if(msg){
-      error.msg = msg;
-    }
-    this.setState({error: error});
+  setNotification(show, type, title, subtitle){
+    let notification = this.state.notification;
+    notification.show = show;
+    notification.type = type;
+    notification.title = title;
+    notification.subtitle = subtitle;
+    this.setState({notification: notification});
   }
 
-  showError(){
-    const error = this.state.error;
-    if(error.show){
-      return <InlineNotification kind="error" title="Error" subtitle={error.msg} role="alert"/>;
-    }
+  notifyError(title, subtitle){
+    this.setNotification(true, 'error', title, subtitle);
+  }
+
+  notifySuccess(title, subtitle){
+    this.setNotification(true, 'success', title, subtitle);
   }
 
   errorHandler(e){
-      this.setError(true);
+      this.notifyError("Error", "Request could not complete.\n"+e.name+": "+e.message);
+  }
+
+  clearInputs(){
+    let inputsData = this.state.inputsData;
+    for(var key in inputsData){
+      inputsData[key] = "";
+    }
+    console.log("inputs after clear");
+    console.log(inputsData);
+    this.setState({inputsData: inputsData});
   }
 
   updateCallback(resp){
-      let showError = false;
-      let msg = undefined;
       if(resp.token){
         //Request new user data
         this.requestUserData();
-
-        //close the modal
-        this.props.onClose();
+        this.clearInputs();
+        this.notifySuccess("Success", "Account updated");
       }else{
-        showError = true;
-        msg = "The update response did not contain a token";
+        this.notifyError("error", "The update response did not contain a token");
       }
-      this.setError(showError, msg);
   }
 
   stripUpdateData(data){
@@ -96,7 +102,7 @@ class AccountSettingsModal extends Component{
       //request update with data
       Client.request(this.state.userResource+this.props.userData.token, "PUT", this.updateCallback, this.errorHandler, sendData);
     }else{
-      this.setError(true, "Nothing to update");
+      this.notifyError("Error", "Nothing to update");
     }
   }
 
@@ -123,8 +129,6 @@ class AccountSettingsModal extends Component{
   }
 
   inputsAreValid(validateInputs){
-    console.log("validate inputs");
-    console.log(validateInputs);
     for(var valid in validateInputs){
       if(validateInputs[valid] === false){
         return false;
@@ -144,16 +148,22 @@ class AccountSettingsModal extends Component{
     //Check validity
     const validateInputs = this.validateInputChange(inputsData, field, fieldData);
     const updateIsValid = this.inputsAreValid(validateInputs);
-    console.log("updateIsValid: "+updateIsValid);
     this.setState({inputsData: inputsData, validateInputs: validateInputs, updateIsValid: updateIsValid});
   }
 
+  showNotification(){
+    const notification = this.state.notification;
+    if(notification !== undefined && notification.show){
+      return <InlineNotification kind={notification.type} title={notification.title} subtitle={notification.subtitle} role="alert"/>;
+    }
+  }
 
   render(){
     return (
       <Modal className="account-settings-modal" onRequestClose={this.props.onClose} modalLabel="Change Account Settings" modalHeading="Enter Updates"  secondaryButtonText="Close" primaryButtonText="Save"
         open={this.props.open} onRequestSubmit={this.handleAccountUpdate} onKeyDown={this.handleKeyDown} primaryButtonDisabled={!this.state.updateIsValid} onSecondarySubmit={this.props.onClose}>
         <AccountSettingsForm userData={this.props.userData} inputsData={this.state.inputsData} onChange={this.handleInputChange} validateInputs={this.state.validateInputs}/>
+        {this.showNotification()}
       </Modal>
     );
   }

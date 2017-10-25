@@ -23,7 +23,7 @@ class RecipeSearch extends Component{
 	 * @param {DOM event.target} target - the search input
 	 * @calls {this.setState}
 	 */
-	handleChange(target){
+	handleChange(inputId, target){
 		this.setState({search: target.value});
 	}
 

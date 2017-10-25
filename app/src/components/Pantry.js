@@ -58,7 +58,12 @@ class Pantry extends Component {
 	setNotification(opts){
 		//Set values from passed options, apply defaults if necessary
 		let {title, subtitle, isGood} = {title: (opts.title || "No Title"), subtitle:(opts.subtitle || "No Message"), isGood:(opts.isGood || false)};
-		this.setState({actionMsgType: isGood ? "success" : "error", actionMsgTitle: title, actionMsgSubtitle: subtitle, showActionMsg: true});
+		let notification = this.state.notification;
+		notification.type = isGood ? "success" : "error";
+		notification.title = title;
+		notification.subtitle = subtitle;
+		notification.show = true;
+		this.setState({notification: notification});
 
 	}
 
@@ -69,6 +74,8 @@ class Pantry extends Component {
 	 * @calls {switch, this.retrievePantry, this.setNotification}
 	 */
 	processRespCode(resp, needPantryUpdate){
+		console.log("Response");
+		console.log(resp);
 		switch(resp.code) {
 			case 200:
 				//Success!!
@@ -281,17 +288,17 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
 	}
 
+
 	/**
 	 * Sets up a notification to be displayed for the user
-	 * @stateUsed {this.state.showActionMsg, this.state.actionMsgType, this.state.actionMsgTitle, this.state.actionMsgSubtitle}
-	 * @return {JSX} - The InlineNotification to be rendered
+	 * @stateUsed {this.state.notification}
+	 * @return {InlineNotification}
 	 */
 	showNotification(){
-		let notification = null;
-		if(this.state.showActionMsg){
-				notification = <InlineNotification kind={this.state.actionMsgType} title={this.state.actionMsgTitle} subtitle={this.state.actionMsgSubtitle} role="alert"/>;
+		const notification = this.state.notification
+		if(notification !== undefined && notification.show){
+				return <InlineNotification kind={notification.type} title={notification.title} subtitle={notification.subtitle} role="alert"/>;
 		}
-		return notification;
 	}
 
 	/**

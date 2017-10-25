@@ -7,13 +7,10 @@ import HeaderTool from './HeaderTool.js';
  */
 class Header extends Component{
 	static propTypes = {
-		user: PropTypes.string,
+		userData: PropTypes.object,
 		isAuth: PropTypes.bool.isRequired,
-		logoutHandler: PropTypes.func.isRequired
-	};
-
-	static defaultProps = {
-		user: ""
+		logoutHandler: PropTypes.func.isRequired,
+		onUserUpdate: PropTypes.func.isRequired
 	};
 
 	/**
@@ -26,7 +23,7 @@ render(){
 			  <div className="header-app-name-container">
 				<h1>Saveory</h1>
 			  </div>
-			  {this.props.isAuth && <HeaderTool user={this.props.user} onLogoutClick={this.props.logoutHandler}/>}
+			  {this.props.isAuth && <HeaderTool userData={this.props.userData} onLogoutClick={this.props.logoutHandler} onUserUpdate={this.props.onUserUpdate}/>}
 			</div>
 		);
 	}

@@ -55,6 +55,8 @@ class UserAccess extends Component{
 	 */
 	requestErrorHandler(e){
 		//Show error message
+		console.log("Error on login:");
+		console.log(e);
 		this.setState({requestFailed: true});
 	}
 

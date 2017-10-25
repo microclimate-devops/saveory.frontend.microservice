@@ -16,6 +16,7 @@ class App extends Component {
 	}
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
+  this.handleUserUpdate = this.handleUserUpdate.bind(this);
   }
 
   /**
@@ -36,7 +37,36 @@ class App extends Component {
   }
 
   /**
-   * Shows the Header and
+   * Updates stored data on the user with new information
+   * @param {object} newUserData-
+   * @calls {this.setState}
+   */
+  handleUserUpdate(newUserData){
+    this.setState({userData: newUserData})
+  }
+
+  /**
+   * If the user is logged in, shows Home page, otherwise directs user to gain access
+   * @stateUsed {this.state.user, this.state.isAuth, this.state.userData}
+   * @return {JSX}
+   */
+  controlAccess(){
+	//TEST DESIGN (DO NOT LEAVE FOR PROD)
+	//const content = <Home userToken={1} user={this.state.user}/>;
+
+
+	//REAL
+	let content = null;
+	if(this.state.isAuth){
+    console.log("Authenticated");
+		content = <Home userToken={this.state.userData.token} user={this.state.userData.name}/>;
+	}
+	return content;
+
+  }
+
+  /**
+   * Shows the Header and an appropriate view based on user access
    * @stateUsed {this.state.userData, this.state.isAuth}
    * @calls {this.controlAccess}
    * @return {JSX}
@@ -44,7 +74,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-		    <Header user={this.state.userData.name} isAuth={this.state.isAuth} logoutHandler={this.logout}/>
+		    <Header userData={this.state.userData} isAuth={this.state.isAuth} logoutHandler={this.logout} onUserUpdate={this.handleUserUpdate}/>
         <UserAccess isAuth={this.state.isAuth} loginHandler={this.login}/>
         <Home isAuth={this.state.isAuth} userToken={this.state.userData.token} user={this.state.userData.name}/>
       </div>

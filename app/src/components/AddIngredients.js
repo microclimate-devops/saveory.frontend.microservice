@@ -83,6 +83,19 @@ class AddIngredients extends Component{
 		this.setState({enteredIngredient: ingredient, validateData: validateData});
 	}
 
+	/**
+	 * Clears all the inputs of the add ingredient form
+	 * @stateUsed {this.state.enteredIngredient}
+	 * @calls {this.setState}
+	 */
+	clearInputs(){
+		let enteredIngredient = this.state.enteredIngredient;
+		for(var key in enteredIngredient){
+			enteredIngredient[key] = "";
+		}
+		this.setState({enteredIngredient:enteredIngredient});
+	}
+
 	//*********************************************//
 	// ACTION HANDLERS
 	//**********************************************//
@@ -126,6 +139,9 @@ class AddIngredients extends Component{
 	 */
 	handleAddSubmit(e){
 		this.props.onAddIngredient(this.state.enteredIngredient);
+		//clear input data
+		this.clearInputs();
+
 		//Hide modal
 		this.closeModal();
 	}

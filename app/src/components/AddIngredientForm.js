@@ -49,9 +49,9 @@ class AddIngredientForm extends Component{
 	 * @propsUsed {ingredientFields, ingredientFieldTypes, onChange}
 	 * @calls {this.props.onChange, Number}
 	 */
-	inputChange(target){
+	inputChange(inputId, target){
 		//get selector
-		const targetIndex = Number(target.getAttribute('id'));
+		const targetIndex = Number(inputId);
 		const selector = this.props.ingredientFields[targetIndex];
 		//convert to number if the field specifies it should be
 		let value = this.props.ingredientFieldTypes[targetIndex] === "number" ? Number(target.value) : target.value;

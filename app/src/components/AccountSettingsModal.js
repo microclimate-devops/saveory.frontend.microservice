@@ -4,6 +4,9 @@ import { Modal, InlineNotification} from 'carbon-components-react';
 import Client from './Client.js';
 import AccountSettingsForm from './AccountSettingsForm';
 
+/**
+ * Manages Showing and updating account settings in a popup modal
+ */
 class AccountSettingsModal extends Component{
   constructor(props){
     super(props);
@@ -26,6 +29,10 @@ class AccountSettingsModal extends Component{
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  //*********************************************//
+  // STATIC DATA & METHODS
+  //**********************************************//
+
   static PropTypes = {
     userData: PropTypes.object,
     open: PropTypes.bool,
@@ -37,6 +44,19 @@ class AccountSettingsModal extends Component{
     open: false
   }
 
+  //*********************************************//
+	// STATE CHANGERS
+	//**********************************************//
+
+  /**
+   * Update the notification data held in the state
+   * @param {boolean} show-determines whether or not to show the notification
+   * @param {string} type-the type of notification
+   * @param {string} title
+   * @param {string} subtitle
+   * @stateUsed {this.state.notification}
+   * @calls {this.setState}
+   */
   setNotification(show, type, title, subtitle){
     let notification = this.state.notification;
     notification.show = show;
@@ -46,28 +66,57 @@ class AccountSettingsModal extends Component{
     this.setState({notification: notification});
   }
 
+  /**
+   * Sets the notification to be an error message
+   * @param {string} title
+   * @param {string} subtitle
+   * @calls {this.setNotification}
+   */
   notifyError(title, subtitle){
     this.setNotification(true, 'error', title, subtitle);
   }
 
+  /**
+   * Sets the notification to be a success message
+   * @param {string} title
+   * @param {string} subtitle
+   * @calls {this.setNotification}
+   */
   notifySuccess(title, subtitle){
     this.setNotification(true, 'success', title, subtitle);
   }
 
-  errorHandler(e){
-      this.notifyError("Error", "Request could not complete.\n"+e.name+": "+e.message);
-  }
-
+  /**
+   * Wipes the inputs for account settings form
+   * @stateUsed {this.state.inputsData}
+   * @calls {this.setState}
+   */
   clearInputs(){
     let inputsData = this.state.inputsData;
     for(var key in inputsData){
       inputsData[key] = "";
     }
-    console.log("inputs after clear");
-    console.log(inputsData);
     this.setState({inputsData: inputsData});
   }
 
+  //*********************************************//
+  // NETWORKING
+  //**********************************************//
+
+  /**
+   * Setup error notification if request fails
+   * @param {Error} e
+   * @calls {this.notifyError}
+   */
+  errorHandler(e){
+      this.notifyError("Error", "Request could not complete.\n"+e.name+": "+e.message);
+  }
+
+  /**
+   * Handle response from update request
+   * @param {Object} resp
+   * @calls {this.requestUserData, this.clearInputs, this.notifySuccess, this.notifyError}
+   */
   updateCallback(resp){
       if(resp.token){
         //Request new user data
@@ -79,6 +128,11 @@ class AccountSettingsModal extends Component{
       }
   }
 
+  /**
+   * Prepares to send updated data by removing empty or unecessary fields
+   * @param {Object} data-entered input data
+   * @calls {deleteKeys.push}
+   */
   stripUpdateData(data){
     //Figure out the keys of the data to remove
     let deleteKeys = [];
@@ -94,6 +148,13 @@ class AccountSettingsModal extends Component{
     return data;
   }
 
+  /**
+   * Sends request to update user's data
+   * @param {DOM event} e
+   * @propsUsed {this.props.userData}
+   * @stateUsed {this.state.inputsData, this.state.userResource}
+   * @calls {this.stripUpdateData, JSON.parse, JSON.stringify, Object.keys, Client.request, this.notifyError}
+   */
   handleAccountUpdate(e){
     //send all entered data except verifyPassword and empty fields
     let sendData = this.stripUpdateData(JSON.parse(JSON.stringify(this.state.inputsData)));
@@ -106,17 +167,41 @@ class AccountSettingsModal extends Component{
     }
   }
 
+  /**
+   * Sends request to get the user's data
+   * @propsUsed {this.props.userData, this.props.onUserUpdate}
+   * @stateUsed {this.state.userResource}
+   * @calls {Client.request}
+   */
   requestUserData(){
     Client.request(this.state.userResource+this.props.userData.token, "GET", this.props.onUserUpdate, this.errorHandler);
   }
 
+  //*********************************************//
+	// ACTION HANDLERS
+	//**********************************************//
+
+  /**
+   * Is called when the keyboard is pressed, exits modal if ESC key is pressed
+   * @param {param_type} e-
+   * @propsUsed {this.props.onClose}
+   * @calls {this.props.onClose}
+   */
   handleKeyDown(e){
     //Call onClose if esc was pressed
-    if (e.which === 27) {
+    if (e.which === 27 && this.props.open) {
       this.props.onClose();
     }
   }
 
+  /**
+   * Makes sure input is valid, makes sure the new password fields have the same data
+   * @param {object} inputsData-All the data the user has inputed
+   * @param {string} field-The input field
+   * @param {string} fieldData-the inputed data
+   * @stateUsed {this.state.validateInputs}
+   * @return {object} - input validation data
+   */
   validateInputChange(inputsData, field, fieldData){
     let validateInputs = this.state.validateInputs;
     if(field === "password"){
@@ -128,6 +213,11 @@ class AccountSettingsModal extends Component{
     return validateInputs;
   }
 
+  /**
+   * Checks to make sure all entries in validate data are true
+   * @param {object} validateInputs
+   * @return {boolean} -
+   */
   inputsAreValid(validateInputs){
     for(var valid in validateInputs){
       if(validateInputs[valid] === false){
@@ -137,6 +227,13 @@ class AccountSettingsModal extends Component{
     return true;
   }
 
+  /**
+   * Updates state to match new input and validates data
+   * @param {string} inputId-The ID of the input that changed
+   * @param {DOM event.target} target-The target input
+   * @stateUsed {this.state.inputsData}
+   * @calls {this.validateInputChange, this.inputsAreValid, this.setState}
+   */
   handleInputChange(inputId, target){
     const field = inputId;
     const fieldData = target.value;
@@ -151,6 +248,11 @@ class AccountSettingsModal extends Component{
     this.setState({inputsData: inputsData, validateInputs: validateInputs, updateIsValid: updateIsValid});
   }
 
+  /**
+   * Displays the notification if necessary
+   * @stateUsed {this.state.notification}
+   * @return {JSX(InlineNotification)} - or null
+   */
   showNotification(){
     const notification = this.state.notification;
     if(notification !== undefined && notification.show){
@@ -158,6 +260,13 @@ class AccountSettingsModal extends Component{
     }
   }
 
+    /**
+     * Sets up the account settings modal
+     * @propsUsed {this.props.onClose, this.props.open, this.props.onClose, this.props.userData}
+     * @stateUsed {this.state.updateIsValid, this.state.inputsData, this.state.validateInputs}
+     * @calls {this.showNotification}
+     * @return {JSX} -
+     */
   render(){
     return (
       <Modal className="account-settings-modal" onRequestClose={this.props.onClose} modalLabel="Change Account Settings" modalHeading="Enter Updates"  secondaryButtonText="Close" primaryButtonText="Save"
@@ -167,7 +276,6 @@ class AccountSettingsModal extends Component{
       </Modal>
     );
   }
-
 }
 
 export default AccountSettingsModal;

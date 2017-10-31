@@ -47,7 +47,8 @@ class Pantry extends Component {
 	static propTypes = {
 		userToken: PropTypes.string.isRequired,
 		user: PropTypes.string.isRequired,
-		onRecipeFilterUpdate: PropTypes.func.isRequired
+		onRecipeFilterUpdate: PropTypes.func.isRequired,
+		onRecipeFiltersReset: PropTypes.func.isRequired
 	};
 
 	/**

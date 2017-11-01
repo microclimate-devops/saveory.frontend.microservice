@@ -14,7 +14,7 @@ class RecipeSearch extends Component{
 		this.onSearch = this.onSearch.bind(this);
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		handleSearch: PropTypes.func.isRequired
 	};
 

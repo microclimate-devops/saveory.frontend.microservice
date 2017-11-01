@@ -6,7 +6,7 @@ import CarbonFormInput from './carbon/CarbonFormInput.js';
  * Manages an account settings form
  */
 class AccountSettingsForm extends Component{
-  static PropTypes = {
+  static propTypes = {
     inputsData: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     validateInputs: PropTypes.object.isRequired,

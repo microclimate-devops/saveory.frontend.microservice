@@ -24,7 +24,7 @@ class UserAccess extends Component{
 		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		loginHandler: PropTypes.func.isRequired,
 		isAuth: PropTypes.bool.isRequired
 	};

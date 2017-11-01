@@ -10,16 +10,23 @@ class PantryTable extends Component{
 	constructor(props){
 		super(props);
 		this.handleSortAction = this.handleSortAction.bind(this);
-		this.state = {areRowsExpanded: {}, currSort: undefined, isSortedDesc: undefined};
+		this.state = {
+			areRowsExpanded: {},
+			currSort: undefined,
+			isSortedDesc: undefined
+		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		header: PropTypes.array.isRequired,
 		data: PropTypes.array.isRequired,
 		fieldEditable: PropTypes.array.isRequired,
+		recipeFilters: PropTypes.object.isRequired,
+		includeIngredientFilterType: PropTypes.string.isRequired,
 		onRowDelete: PropTypes.func.isRequired,
 		onRowEdit: PropTypes.func.isRequired,
-		tableDataIdSelector: PropTypes.func.isRequired
+		onRecipeFilterUpdate: PropTypes.func.isRequired,
+		ingredientIdField: PropTypes.string.isRequired
 	};
 
 	/**
@@ -119,6 +126,7 @@ class PantryTable extends Component{
 					<TableHeader/>
 					{this.showIngredientHeader()}
 					<TableHeader>Actions</TableHeader>
+					<TableHeader>Recipe Filter</TableHeader>
 				</TableRow>
 			);
 		}
@@ -136,7 +144,7 @@ class PantryTable extends Component{
 			//sort the ingredients according to current settings
 			let ingredients = this.sortIngredients();
 			//Create a list of JSX ingredient rows
-			return ingredients.map((ingredient, i) => {return <PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} fieldEditable={this.props.fieldEditable} onDelete={this.props.onRowDelete} onEdit={this.props.onRowEdit} isEven={false}/>});
+			return ingredients.map((ingredient, i) => {return <PantryTableIngredient key={"ingredient-"+i} dataAccessors={this.props.header} data={ingredient} ingredientIdField={this.props.ingredientIdField} fieldEditable={this.props.fieldEditable} onDelete={this.props.onRowDelete} onEdit={this.props.onRowEdit} onFilterUpdate={this.props.onRecipeFilterUpdate} filters={this.props.recipeFilters} includeIngredientFilterType={this.props.includeIngredientFilterType} isEven={false}/>});
 		}
 	}
 

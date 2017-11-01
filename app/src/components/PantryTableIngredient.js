@@ -13,15 +13,24 @@ class PantryTableIngredient extends Component{
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.fieldChanged = this.fieldChanged.bind(this);
-		this.state = {isEditing: false, data: undefined};
+		this.handleFilterToggle = this.handleFilterToggle.bind(this);
+		this.state = {
+			isEditing: false,
+			data: undefined,
+			filterType: "includedIngredients"
+		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		dataAccessors: PropTypes.array.isRequired,
 		data: PropTypes.object.isRequired,
+		ingredientIdField: PropTypes.string.isRequired,
 		fieldEditable: PropTypes.array.isRequired,
 		onDelete: PropTypes.func.isRequired,
 		onEdit: PropTypes.func.isRequired,
+		onFilterUpdate: PropTypes.func.isRequired,
+		filters: PropTypes.object.isRequired,
+		includeIngredientFilterType: PropTypes.string.isRequired,
 		isEven: PropTypes.bool.isRequired
 	};
 
@@ -90,6 +99,32 @@ class PantryTableIngredient extends Component{
 	}
 
 	/**
+	 * Get the current state of the filter to see if it's in use
+	 * @propsUsed {this.props.filters, this.props.includeIngredientFilterType, this.props.data, this.props.ingredientIdField}
+	 * @return {boolean} - determines if the filter is in use
+	 */
+	getFilterStatus(){
+		const filters = this.props.filters;
+		const filterType = this.props.includeIngredientFilterType
+		const filter = this.props.data[this.props.ingredientIdField];
+		let val = false;
+		if(typeof filters[filterType] === 'object'){
+			val = filters[filterType][filter] === true
+		}
+		return val;
+	}
+
+	/**
+	 * Gather the filter data and send new toggle value through prop handler
+	 * @param {DOM event} e
+	 * @propsUsed {this.props.onFilterUpdate, this.props.includeIngredientFilterType, this.props.data, this.props.ingredientIdField}
+	 * @calls {this.props.onFilterUpdate, this.getFilterStatus}
+	 */
+	handleFilterToggle(e){
+		this.props.onFilterUpdate(this.props.includeIngredientFilterType, this.props.data[this.props.ingredientIdField], !this.getFilterStatus());
+	}
+
+	/**
 	 * Updates internal state when field changes
 	 * @param {event.target} target
 	 * @propsUsed {this.props.data}
@@ -143,13 +178,20 @@ class PantryTableIngredient extends Component{
 	 * @calls {row.push}
 	 */
 	addRowActions(row){
+		const rowIdentifier = this.props.data[this.props.ingredientIdField];
+
 		//Add edit and delete
-		row.push(<TableData key="actions" className="pantry-table-row-actions">
+		row.push(<TableData key="modify-actions" className="pantry-table-row-actions">
 				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "checkmark--outline" : "edit"} height="24" width="24" onClick={this.handleEdit}/>
 				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
 			</TableData>);
 
 		//Add 'filter recipe search' toggle
+		row.push(
+			<TableData key="filter-action" className="pantry-table-row-actions">
+				<Toggle className="ingredient-filter-toggle" id={rowIdentifier+"-toggle"} onToggle={this.handleFilterToggle} toggled={this.getFilterStatus()} labelA="Exclude" labelB="Include" />
+			</TableData>
+		);
 	}
 
 	/**

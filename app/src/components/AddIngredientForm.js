@@ -12,7 +12,7 @@ class AddIngredientForm extends Component{
 		this.inputChange = this.inputChange.bind(this);
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		/**
      * Called when an input changes.
 		 * @param {string} dataID - the identifier for a given input field
@@ -84,8 +84,7 @@ class AddIngredientForm extends Component{
 			currValue = ingredient[currSelector] || "";
 			//try to get validate data, default if not there
 			currValidateData = validateData[currSelector] || defaultValidateData;
-
-			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={i} inputLabel={currSelector} onChange={this.inputChange} invalidText={currValidateData.msg} isInvalid={!currValidateData.valid} className="add-ingredient-form-item"/>
+			currInput = <CarbonFormInput key={currSelector} inputData={currValue} inputType={ingredientFieldTypes[i]} inputID={i.toString()} inputLabel={currSelector} onChange={this.inputChange} invalidText={currValidateData.msg} isInvalid={!currValidateData.valid} className="add-ingredient-form-item"/>
 
 			//Add the input to list
 			inputs.push(currInput);

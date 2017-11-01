@@ -27,7 +27,7 @@ class RecipeSearchResults extends Component{
 		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		recipes: PropTypes.array.isRequired,
 		onResultSelected: PropTypes.func.isRequired
 	};

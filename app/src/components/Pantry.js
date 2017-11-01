@@ -27,6 +27,7 @@ class Pantry extends Component {
 			],
 			pantryServiceURL: "/api/pantry/",
 			pantry: [],
+			ingredientIdField: "",
 			ingredientFields: [],
 			ingredientFieldTypes: [],
 			ingredientFieldEditable: [],
@@ -47,6 +48,8 @@ class Pantry extends Component {
 	static propTypes = {
 		userToken: PropTypes.string.isRequired,
 		user: PropTypes.string.isRequired,
+		recipeFilters: PropTypes.object.isRequired,
+		includeIngredientFilterType: PropTypes.string.isRequired,
 		onRecipeFilterUpdate: PropTypes.func.isRequired,
 		onRecipeFiltersReset: PropTypes.func.isRequired
 	};
@@ -65,7 +68,6 @@ class Pantry extends Component {
 		notification.subtitle = subtitle;
 		notification.show = true;
 		this.setState({notification: notification});
-
 	}
 
 	/**
@@ -225,6 +227,27 @@ class Pantry extends Component {
 	}
 
 	/**
+	 * Get the field name that identifies each ingredient
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, console.log, this.setState, this.handlePantryError}
+	 */
+	retrieveIngredientIdField(){
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/id";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET",
+			(resp) => {
+				//Now save the returned id
+				console.log("Got id");
+				console.log(resp);
+				this.setState({ingredientIdField: resp.id});
+			},
+			(e) => {
+				this.handlePantryError(e, "Could not get ingredient ID field");
+			}
+		);
+	}
+
+	/**
 	 * Get the user's pantry
 	 * @propsUsed {this.props.userToken}
 	 * @stateUsed {this.state.pantryServiceURL}
@@ -302,6 +325,7 @@ class Pantry extends Component {
 	 */
 	componentDidMount(){
 		this.retrievePantry();
+		this.retrieveIngredientIdField();
 		this.retrieveIngredientFields();
 		this.retrieveIngredientEditableFields();
 	}
@@ -319,9 +343,9 @@ class Pantry extends Component {
 			<div id="pantry">
 
 				<div className="pantry-table-description-container">
-					<h3>{this.props.user}'s Pantry</h3>
+					<h3>{this.props.user+"'s Pantry"}</h3>
 				</div>
-				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} fieldEditable={this.state.ingredientFieldEditable} onRowDelete={this.deleteIngredient} onRowEdit={this.updateIngredient} tableDataIdSelector="item"/>
+				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} fieldEditable={this.state.ingredientFieldEditable} recipeFilters={this.props.recipeFilters} includeIngredientFilterType={this.props.includeIngredientFilterType} onRowDelete={this.deleteIngredient} onRowEdit={this.updateIngredient} onRecipeFilterUpdate={this.props.onRecipeFilterUpdate} ingredientIdField={this.state.ingredientIdField}/>
 				<AddIngredients ingredientFields={this.state.ingredientFields} ingredientFieldTypes={this.state.ingredientFieldTypes} ingredientFieldOptions={this.state.ingredientFieldOptions} onAddIngredient={this.addIngredient} />
 				{this.showNotification()}
 			</div>

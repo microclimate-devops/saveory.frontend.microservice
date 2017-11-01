@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class CarbonNotification extends Component{
-	static PropTypes = {
+	static propTypes = {
 		type: PropTypes.string.isRequired, //e.g. "error" "info" "success" "warning"
 		title: PropTypes.string.isRequired,
 		subtitle: PropTypes.string.isRequired,

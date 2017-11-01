@@ -32,7 +32,7 @@ class AddIngredients extends Component{
 	//*********************************************//
 	// STATIC DATA & METHODS
 	//**********************************************//
-	static PropTypes = {
+	static propTypes = {
 		/**
      * Called when the user submits a new ingredient entry
 		 * @param {object} ingredient - the ingredient object formed from user input

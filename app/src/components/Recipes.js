@@ -23,7 +23,8 @@ class Recipes extends Component{
 
 	static propTypes = {
 		userToken: PropTypes.string.isRequired,
-		filters: PropTypes.obj.isRequired
+		recipeFilters: PropTypes.object.isRequired,
+		includeIngredientFilterType: PropTypes.string.isRequired
 	};
 
 	/**

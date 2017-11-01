@@ -17,10 +17,10 @@ class CarbonDataTable extends Component{
 		this.state = {dataTable: undefined, emptyHeader: {title: "Empty", selector: "empty"}, emptyBody: {empty: "No Data"}};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		headerData: PropTypes.array.isRequired,
 		tableData: PropTypes.array.isRequired,
-		tableDataIdSelector: PropTypes.string.isRequired,
+		ingredientIdField: PropTypes.string.isRequired,
 		tableBindMethod: PropTypes.func.isRequired,
 		tableRefreshMethod: PropTypes.func.isRequired,
 		onRowDelete: PropTypes.func,
@@ -94,7 +94,7 @@ class CarbonDataTable extends Component{
 		//Add special rows if needed
 		for(var rowIndex in tableData){
 			currRow = tableData[rowIndex];
-			currRowId = currRow[this.props.tableDataIdSelector];
+			currRowId = currRow[this.props.ingredientIdField];
 			tableRows.push(this.showTableRow(currRow, currRowId));
 			if(this.props.enableExpandedRow){
 				tableRows.push(this.showExpansionRow(currRow, currRowId));

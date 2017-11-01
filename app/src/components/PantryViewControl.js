@@ -8,7 +8,7 @@ class PantryViewControl extends Component{
     this.handleOptionClick = this.handleOptionClick.bind(this);
   }
 
-  static PropTypes = {
+  static propTypes = {
     viewIndex: PropTypes.number.isRequired,
     viewMetadata: PropTypes.object.isRequired,
     onSwitch: PropTypes.func.isRequired

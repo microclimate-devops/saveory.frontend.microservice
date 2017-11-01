@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class CarbonDataTableHeaderCell extends Component{
-	static PropTypes = {
+	static propTypes = {
 		title: PropTypes.string.isRequired
 	};
 

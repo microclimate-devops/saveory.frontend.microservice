@@ -13,10 +13,18 @@ class Home extends Component{
 		super(props);
 		this.updateRecipeFilter = this.updateRecipeFilter.bind(this);
 		this.resetRecipeFilters = this.resetRecipeFilters.bind(this);
-		this.state = {recipeFilters: {}};
+		this.state = {
+			recipeFilters: {},
+			filterTypes: {
+				ingredient: {
+					include: "includedIngredients",
+					exclude: "excludedIngredients"
+				}
+			}
+		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		userToken: PropTypes.string,
 		user: PropTypes.string,
 		isAuth: PropTypes.bool.isRequired
@@ -71,8 +79,8 @@ class Home extends Component{
 			content = (
 				<div className="content-wrap">
 					<Tabs selected={0}>
-						<Pane label="Pantry"><Pantry userToken={this.props.userToken} user={this.props.user} onRecipeFilterUpdate={this.updateRecipeFilter} onRecipeFiltersReset={this.resetRecipeFilters}/></Pane>
-						<Pane label="Recipes"><Recipes userToken={this.props.userToken} filters={this.state.recipeFilters}/></Pane>
+						<Pane label="Pantry"><Pantry userToken={this.props.userToken} user={this.props.user} recipeFilters={this.state.recipeFilters} includeIngredientFilterType={this.state.filterTypes.ingredient.include} onRecipeFilterUpdate={this.updateRecipeFilter} onRecipeFiltersReset={this.resetRecipeFilters}/></Pane>
+						<Pane label="Recipes"><Recipes userToken={this.props.userToken} recipeFilters={this.state.recipeFilters} includeIngredientFilterType={this.state.filterTypes.ingredient.include}/></Pane>
 					</Tabs>
 				</div>
 			);

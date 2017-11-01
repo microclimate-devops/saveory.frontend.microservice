@@ -37,9 +37,7 @@ var DEV_RESP = {
 		    "number",
 		    "text",
 		    "date",
-		    {
-		        "dropdown": "text"
-		    }
+		    "text"
 		],
 		specIngredientEdits: [
 		    false,
@@ -52,6 +50,9 @@ var DEV_RESP = {
 		    "Pantry",
 		    "Refrigerator"
 		],
+		specIngredientId: {
+			id: "ingredient"
+		},
 		ingredientOp: {
 			code: 200,
 			msg: "Ingredient Operation Worked"
@@ -66,6 +67,9 @@ function simPantryResource(url){
 	var dataKey = "";
 	if(url.endsWith("/spec/ingredient")){
 		dataKey = "specIngredient";
+	}
+	else if (url.endsWith("/spec/ingredient/id")) {
+		dataKey = "specIngredientId";
 	}
 	else if(url.endsWith("/spec/ingredient/types")){
 		dataKey = "specIngredientTypes";

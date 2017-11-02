@@ -14,25 +14,35 @@ class Recipes extends Component{
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.state = {
+			pantryServiceURL: "api/pantry/",
 			recipeServiceURL: "api/recipes/",
 			recipesDB:[],
 			recipes: [],
-			recipeSelected: {}
+			recipeSelected: {},
+			pantryIngredients: [],
+			searchFilters: {
+				includedIngredients: [],
+				excludedIngredients: []
+			},
+			searchFilterTypes: {
+				ingredient: {
+					include: "includedIngredients",
+					exclude: "excludedIngredients"
+				}
+			}
 		};
 	}
 
 	static propTypes = {
-		userToken: PropTypes.string.isRequired,
-		recipeFilters: PropTypes.object.isRequired,
-		includeIngredientFilterType: PropTypes.string.isRequired
+		userToken: PropTypes.string.isRequired
 	};
 
-	/**
-	 * Requests recipes in the database when the component mounts
-	 * @calls {this.retrieveRecipes}
-	 */
-	componentDidMount(){
-		this.retrieveRecipes();
+	updateSearchFilter(filterType, filterData){
+		let recipeFilters = this.state.recipeFilters;
+		if(recipeFilters[filterType] !== undefined){
+			recipeFilters[filterType] = filterData;
+			this.setState({recipeFilters:recipeFilters})
+		}
 	}
 
 	/**
@@ -63,6 +73,10 @@ class Recipes extends Component{
 	retrieveRecipes(){
 		//retrieve the user's pantry from the backend
 		Client.request(this.state.recipeServiceURL, "GET", (response) => {this.handleRecipeResponse(response)}, (e) => {this.handleRecipeResponse(e)});
+	}
+
+	retrievePantryIngredients(){
+		Client.request(this.state.pantryServiceURL+"spec/ingredients/")
 	}
 
 	/**
@@ -125,6 +139,14 @@ class Recipes extends Component{
 	 */
 	handleRecipeSelected(i){
 		this.setState({recipeSelected: this.state.recipes[i]});
+	}
+
+	/**
+	 * Requests recipes in the database when the component mounts
+	 * @calls {this.retrieveRecipes}
+	 */
+	componentDidMount(){
+		this.retrieveRecipes();
 	}
 
 	/**

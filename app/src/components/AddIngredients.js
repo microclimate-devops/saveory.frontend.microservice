@@ -175,6 +175,7 @@ class AddIngredients extends Component{
 		}
 		//If valid options were defined for this field, make sure the data matches an option
 		else if(Array.isArray(fieldOptions) && !fieldOptions.includes(data)){
+			console.log("Got array option");
 			isValid=false;
 			invalidMsg = this.createInvalidMsg(fieldOptions);
 		}

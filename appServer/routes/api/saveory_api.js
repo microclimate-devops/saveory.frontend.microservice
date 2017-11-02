@@ -37,7 +37,7 @@ var DEV_RESP = {
 		    "number",
 		    "text",
 		    "date",
-		    "text"
+		    "{\"location\":\"text\"}"
 		],
 		specIngredientEdits: [
 		    false,

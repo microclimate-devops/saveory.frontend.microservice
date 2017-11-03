@@ -12,6 +12,7 @@
     "carbon-icons": "^6.1.0",
     "moment": "^2.18.1",
     "react": "^15.6.1",
+    "react-chips": "^0.6.4",
     "react-dom": "^15.6.1"
   },
   "devDependencies": {

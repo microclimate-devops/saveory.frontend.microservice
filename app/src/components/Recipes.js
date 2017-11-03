@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Client from './Client.js';
 import RecipeSearch from './RecipeSearch.js';
+import RecipeSearchFilter from './RecipeSearchFilter.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
 import RecipeDisplay from './RecipeDisplay.js';
 
@@ -13,6 +14,7 @@ class Recipes extends Component{
 		super(props)
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
+		this.setSearchFilter = this.setSearchFilter.bind(this);
 		this.state = {
 			pantryServiceURL: "api/pantry/",
 			recipeServiceURL: "api/recipes/",
@@ -37,11 +39,19 @@ class Recipes extends Component{
 		userToken: PropTypes.string.isRequired
 	};
 
-	updateSearchFilter(filterType, filterData){
-		let recipeFilters = this.state.recipeFilters;
-		if(recipeFilters[filterType] !== undefined){
-			recipeFilters[filterType] = filterData;
-			this.setState({recipeFilters:recipeFilters})
+	/**
+	 * Sets data for specified filter
+	 * @param {string} filterType-The filter named used as a key
+	 * @param {array} filterData-The new filter data
+	 * @stateUsed {this.state.searchFilters}
+	 * @calls {this.setState}
+	 */
+	setSearchFilter(filterType, filterData){
+		let searchFilters = this.state.searchFilters;
+		if(searchFilters[filterType] !== undefined){
+			searchFilters[filterType] = filterData;
+			this.setState({searchFilters:searchFilters});
+			console.log(searchFilters);
 		}
 	}
 
@@ -75,8 +85,18 @@ class Recipes extends Component{
 		Client.request(this.state.recipeServiceURL, "GET", (response) => {this.handleRecipeResponse(response)}, (e) => {this.handleRecipeResponse(e)});
 	}
 
+	/**
+	 * Gets the list of ingredient names from user's pantry
+	 * @propsUsed {this.props.userToken, this.props.userToken}
+	 * @stateUsed {this.state.pantryServiceURL, this.state.pantryServiceURL}
+	 * @calls {console.log, Client.request, this.setState}
+	 */
 	retrievePantryIngredients(){
-		Client.request(this.state.pantryServiceURL+"spec/ingredients/")
+		console.log(this.state.pantryServiceURL+this.props.userToken+"/ingredients");
+		Client.request(this.state.pantryServiceURL+this.props.userToken+"/ingredients", "GET",
+			(response) => {
+				this.setState({pantryIngredients: response});
+			});
 	}
 
 	/**
@@ -147,6 +167,7 @@ class Recipes extends Component{
 	 */
 	componentDidMount(){
 		this.retrieveRecipes();
+		this.retrievePantryIngredients();
 	}
 
 	/**
@@ -159,6 +180,7 @@ class Recipes extends Component{
 			<div className="recipes-wrap">
 				<div className="recipes-container">
 					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
+					<RecipeSearchFilter pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
 					<RecipeDisplay recipe={this.state.recipeSelected} />
 				</div>

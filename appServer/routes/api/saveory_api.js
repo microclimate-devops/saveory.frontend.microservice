@@ -25,6 +25,7 @@ var DEV_RESP = {
 				_id: "59baf1685b7aa700019b9c58"
 			}
 		),
+		ingredientNames: ["chicken", "light brown sugar", "vegetable oil", "masala", "cayenne pepper", "Butter", "steak", "Orange", "Apple"],
 		specIngredient: [
 		    "ingredient",
 		    "quantity",
@@ -65,7 +66,10 @@ var DEV_RESP = {
 //Return the correct dummy data
 function simPantryResource(url){
 	var dataKey = "";
-	if(url.endsWith("/spec/ingredient")){
+	if(url.endsWith("/ingredients")){
+		dataKey = "ingredientNames";
+	}
+	else if(url.endsWith("/spec/ingredient")){
 		dataKey = "specIngredient";
 	}
 	else if (url.endsWith("/spec/ingredient/id")) {

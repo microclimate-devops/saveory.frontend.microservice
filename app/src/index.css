@@ -347,6 +347,11 @@ button {
   margin-top:20px;
 }
 
+.make-recipe-matching-ingredient{
+  padding: 15px;
+  border: 1px solid #1D364D;
+}
+
 .search-filter-button{
   margin-top: 29px;
   border-left: 1px solid #F0F4F4;

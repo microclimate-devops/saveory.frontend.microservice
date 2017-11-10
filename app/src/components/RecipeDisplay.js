@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MakeRecipe from './MakeRecipe.js';
 
 /**
  * Manages displaying the recipe details of a selected recipe search result
@@ -90,6 +91,7 @@ class RecipeDisplay extends Component{
 		const recipe = this.props.recipe;
 		return (
 			<div className="recipe-display-container">
+				<MakeRecipe recipeIngredients={[{ "name" : "Steak" , "tag" : [ "beef"] , "description" : "2-inch-thick bone-in porterhouse steak" , "quantity" : "3" , "unit" : "pound" , "has" : "0"} , { "name" : "Salt" , "tag" : [ ] , "description" : "Kosher" , "quantity" : "1" , "unit" : "tbsp" , "has" : "0"} , { "name" : "Sugar" , "tag" : [ ] , "description" : "Light Brown" , "quantity" : "1" , "unit" : "tbsp" , "has" : "0"} , { "name" : "Pepper" , "tag" : [ ] , "description" : "Cayenne" , "quantity" : "0.5" , "unit" : "tsp" , "has" : "0"} , { "name" : "Oil" , "tag" : [ ] , "description" : "Rice bran or vegetable" , "quantity" : "0.5" , "unit" : "tsp" , "has" : "0"} , { "name" : "Butter" , "tag" : [ ] , "description" : "Unsalted" , "quantity" : "4" , "unit" : "tbsp" , "has" : "0"} , { "name" : "Masala" , "tag" : [ ] , "description" : "or any spice mix of choice" , "quantity" : "1" , "unit" : "tsp" , "has" : "0"}]} matchingPantryIngredients={["sugar", "cayenne"]}/>
 				<div className="recipe-display-header">
 					<p className="recipe-display-title">{recipe.name}</p>
 					<p className="recipe-display-description">{recipe.description}</p>

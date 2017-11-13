@@ -44,7 +44,7 @@ class MakeRecipeFirstStep extends Component{
 
   render(){
       return (
-        <ul className="make-recipe-first-step-container">
+        <ul className="make-recipe-step-container first-step-container">
           {this.showMatchingIngredients()}
         </ul>
       );

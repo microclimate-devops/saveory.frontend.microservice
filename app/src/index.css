@@ -347,9 +347,24 @@ button {
   margin-top:20px;
 }
 
+.make-recipe-step-container{
+  overflow: auto;
+  max-height: 575px;
+}
+
 .make-recipe-matching-ingredient{
   padding: 15px;
-  border: 1px solid #1D364D;
+  border: 0.1rem solid #1D364D;
+  border-radius: 2px;
+  margin-top: 2px;
+}
+
+.selected-matching-ingredient{
+  border: 0.1rem solid #95D13C;
+}
+
+.matching-ingredient-title{
+  font-size: 20px;
 }
 
 .search-filter-button{

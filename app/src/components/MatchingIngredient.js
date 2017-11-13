@@ -8,14 +8,28 @@ class MatchingIngredient extends Component{
     this.handleChange = this.handleChange.bind(this);
   }
 
+  static propTypes = {
+    isChecked: PropTypes.bool.isRequired,
+    ingredientId: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
+
   handleChange(e){
     this.props.onChange(this.props.ingredientId);
+  }
+
+  generateClasses(){
+    let itemClass = "make-recipe-matching-ingredient";
+    if(this.props.isChecked){
+      itemClass += " selected-matching-ingredient";
+    }
+    return itemClass;
   }
 
   render(){
     const ingredientId = this.props.ingredientId;
     return (
-      <li className="make-recipe-matching-ingredient">
+      <li className={this.generateClasses()}>
         <div className="matching-ingredient-title">
           {ingredientId}
         </div>

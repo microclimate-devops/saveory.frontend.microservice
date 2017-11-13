@@ -40,6 +40,13 @@ var DEV_RESP = {
 		    "date",
 		    "{\"location\":\"text\"}"
 		],
+		specIngredientUnits: [
+			"cup",
+			"tbsp",
+			"tsp",
+			"oz",
+			"lbs"
+		],
 		specIngredientEdits: [
 		    false,
 		    true,
@@ -77,6 +84,9 @@ function simPantryResource(url){
 	}
 	else if(url.endsWith("/spec/ingredient/types")){
 		dataKey = "specIngredientTypes";
+	}
+	else if(url.endsWith("/spec/ingredient/units")){
+		dataKey = "specIngredientUnits";
 	}
 	else if(url.endsWith("/spec/ingredient/edits")){
 		dataKey = "specIngredientEdits";

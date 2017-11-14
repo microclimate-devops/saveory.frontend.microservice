@@ -350,13 +350,15 @@ button {
 .make-recipe-step-container{
   overflow: auto;
   max-height: 575px;
+  max-width: 404px;
+  margin: 0 auto;
 }
 
 .make-recipe-matching-ingredient{
   padding: 15px;
   border: 0.1rem solid #1D364D;
   border-radius: 2px;
-  margin-top: 2px;
+  margin-top: 5px;
 }
 
 .selected-matching-ingredient{
@@ -393,6 +395,44 @@ button {
 .recipe-display-container h3{
 	text-align: center;
 	margin-top: 0px;
+}
+
+.updating-ingredient-list-item{
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.updating-ingredient-list-header{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.updating-ingredient-list-header-item{
+  float:left;
+}
+
+.updating-ingredient-list-header-qty{
+  float: left;
+  margin-left: 58px;
+}
+
+.updating-ingredient-list-header-unit{
+  text-align: right;
+  margin-right: 21px;
+}
+
+.updating-ingredient-name{
+  float: left;
+  font-size: 24px;
+}
+
+.updating-ingredient-selections{
+  text-align: right;
+  padding: 4px;
+}
+
+.updating-ingredient-selections input, .updating-ingredient-selections select{
+  padding: 3px;
 }
 
 /*InfoMessage Stuff */

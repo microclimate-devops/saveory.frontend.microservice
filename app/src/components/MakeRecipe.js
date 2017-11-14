@@ -32,7 +32,8 @@ class MakeRecipe extends Component{
 
   static propTypes = {
     recipeIngredients: PropTypes.array.isRequired,
-    matchingPantryIngredients: PropTypes.array.isRequired
+    matchingPantryIngredients: PropTypes.array.isRequired,
+    pantryServiceURL: PropTypes.string.isRequired
   };
 
   addSelectedIngredient(id){
@@ -53,6 +54,7 @@ class MakeRecipe extends Component{
 
     //check if both quantity and unit are present
     if(selectedIngredients[id].quantity && selectedIngredients[id].unit){
+      console.log(id +" is valid");
       selectedIngredients[id].valid = true;
     }
 
@@ -114,7 +116,7 @@ class MakeRecipe extends Component{
   validateSecondStep(){
     const selectedIngredients = this.state.selectedIngredients;
     for(var key in selectedIngredients){
-      if(selectedIngredients[key].valid === false){
+      if(selectedIngredients[key].valid === undefined || selectedIngredients[key].valid === false){
         return false;
       }
     }
@@ -138,7 +140,7 @@ class MakeRecipe extends Component{
         stepIsValid = this.validateFirstStep(selectedIngredients);
         break;
       case 2:
-        stepView = <MakeRecipeSecondStep selectedIngredients={this.state.selectedIngredients} onQuantityUpdate={this.updateSelectedIngredientQuantity}/>
+        stepView = <MakeRecipeSecondStep selectedIngredients={this.state.selectedIngredients} onQuantityUpdate={this.updateSelectedIngredientQuantity} pantryServiceURL={this.props.pantryServiceURL}/>
         stepDesc = "Step 2";
         prevButtonDesc = "Back";
         nextButtonDesc = "Complete";

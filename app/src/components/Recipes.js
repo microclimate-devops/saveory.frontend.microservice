@@ -61,8 +61,6 @@ class Recipes extends Component{
 	 * @calls {this.setState}
 	 */
 	handleRecipeResponse(response){
-		console.log("GET to "+this.state.recipeServiceURL);
-		console.log(response);
 		this.setState({recipesDB: response});
 	}
 
@@ -182,7 +180,7 @@ class Recipes extends Component{
 					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
 					<RecipeSearchFilter pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
-					<RecipeDisplay recipe={this.state.recipeSelected} />
+					<RecipeDisplay recipe={this.state.recipeSelected} pantryServiceURL={this.state.pantryServiceURL}/>
 				</div>
 				<div className="spacer"></div>
 			</div>

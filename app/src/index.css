@@ -1,4 +1,4 @@
-/* Fonts */
+F/* Fonts */
 @font-face {
     font-family: "Francois One";
     src: url("./fonts/FrancoisOne-Regular.ttf");
@@ -433,6 +433,13 @@ button {
 
 .updating-ingredient-selections input, .updating-ingredient-selections select{
   padding: 3px;
+}
+
+.ingredient-update-descriptor{
+  margin-left: 121px;
+  margin-top: 5px;
+  margin-bottom: -10px;
+  color: #E62325;
 }
 
 /*InfoMessage Stuff */

@@ -7,6 +7,7 @@ import MakeRecipe from './MakeRecipe.js';
  */
 class RecipeDisplay extends Component{
 	static propTypes = {
+		userToken: PropTypes.string.isRequired,
 		recipe: PropTypes.object.isRequired,
 		pantryServiceURL: PropTypes.string.isRequired
 	};
@@ -75,7 +76,7 @@ class RecipeDisplay extends Component{
 		if(typeof recipe === "object" && Object.keys(recipe).length > 0){
 			return (
 				<div className="recipe-display-content">
-					<MakeRecipe recipeIngredients={recipe.ingredients} matchingPantryIngredients={["sugar", "cayenne"]} pantryServiceURL={this.props.pantryServiceURL}/>
+					<MakeRecipe userToken={this.props.userToken} recipeIngredients={recipe.ingredients} matchingPantryIngredients={["sugar", "cayenne", "salt", "pepper"]} pantryServiceURL={this.props.pantryServiceURL}/>
 					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(recipe.ingredients)}</ul></div>
 					<div className="recipe-display-instructions">{this.showInstructions(recipe.instructions)}</div>
 				</div>

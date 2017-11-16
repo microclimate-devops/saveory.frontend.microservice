@@ -90,10 +90,13 @@ class Recipes extends Component{
 	 * @calls {console.log, Client.request, this.setState}
 	 */
 	retrievePantryIngredients(){
-		console.log(this.state.pantryServiceURL+this.props.userToken+"/ingredients");
-		Client.request(this.state.pantryServiceURL+this.props.userToken+"/ingredients", "GET",
+		const reqURL = this.state.pantryServiceURL+this.props.userToken+"/ingredients";
+		Client.request(reqURL, "GET",
 			(response) => {
 				this.setState({pantryIngredients: response});
+			},
+			(e) => {
+				console.log("Error getting ingredient names from user's pantry. Message: "+e.message+". "+e.trace);
 			});
 	}
 

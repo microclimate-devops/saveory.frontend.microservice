@@ -10,10 +10,6 @@ class ManualIngredientUpdateDescriptor extends Component{
   render(){
     const ingredient = this.props.ingredient;
     const updates = this.props.updates;
-    console.log("current ingredient");
-    console.log(ingredient);
-    console.log("current updates");
-    console.log(updates)
     return (
       <li className="ingredient-update-descriptor">
         <div>

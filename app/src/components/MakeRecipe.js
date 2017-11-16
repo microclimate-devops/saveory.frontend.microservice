@@ -203,8 +203,6 @@ class MakeRecipe extends Component{
 
   //check completeness
   validateSecondStep(){
-    console.log("before validating second step");
-    console.log(this.state.selectedIngredients);
     return this.validateIngredientData("selectedIngredients");
   }
 

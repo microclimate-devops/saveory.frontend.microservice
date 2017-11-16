@@ -27,6 +27,7 @@ class Pantry extends Component {
 			],
 			pantryServiceURL: "/api/pantry/",
 			pantry: [],
+			ingredientIdField: "",
 			ingredientFields: [],
 			ingredientFieldTypes: [],
 			ingredientFieldEditable: [],
@@ -46,8 +47,7 @@ class Pantry extends Component {
 
 	static propTypes = {
 		userToken: PropTypes.string.isRequired,
-		user: PropTypes.string.isRequired,
-		onRecipeFilterUpdate: PropTypes.func.isRequired
+		user: PropTypes.string.isRequired
 	};
 
 	/**
@@ -64,7 +64,6 @@ class Pantry extends Component {
 		notification.subtitle = subtitle;
 		notification.show = true;
 		this.setState({notification: notification});
-
 	}
 
 	/**
@@ -143,17 +142,24 @@ class Pantry extends Component {
 	 */
 	retrieveIngredientFieldValidation(fieldTypes){
 		const ingredientFields = this.state.ingredientFields;
-		let pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/";
+		console.log(fieldTypes);
+		let pantryRequestURL = this.state.pantryServiceURL;
+		let ingredientFieldRequest;
 		let fieldOptions = this.state.ingredientFieldOptions;
 		let currField = undefined;
+		console.log(JSON.parse(fieldTypes[fieldTypes.length-1]));
 		for(var i = 0; i < fieldTypes.length; i++){
 			//If the field type is a more complicated object, go ahead and request validation data for it
-			if(typeof fieldTypes[i] === "object"){
+			if(fieldTypes[i].endsWith("}")){
 				currField = ingredientFields[i];
-				pantryRequestURL += currField;
+				console.log(currField);
+				ingredientFieldRequest = pantryRequestURL + "spec/ingredient/" + currField;
+				console.log("send to request: "+ingredientFieldRequest);
 				//Request validation data and update state
-				Client.request(pantryRequestURL, "GET",
+				Client.request(ingredientFieldRequest, "GET",
 					(resp) => {
+						console.log("response to request: "+ingredientFieldRequest);
+						console.log(resp);
 						fieldOptions[currField] = resp;
 						this.setState({ingredientFieldOptions: fieldOptions});
 					},
@@ -175,6 +181,7 @@ class Pantry extends Component {
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {
+				console.log("Got response for types");
 				//Check to see if additional validate info is needed for a field
 				this.retrieveIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});
@@ -219,6 +226,27 @@ class Pantry extends Component {
 			},
 			(e) => {
 				this.handlePantryError(e, "Could not get ingredient fields");
+			}
+		);
+	}
+
+	/**
+	 * Get the field name that identifies each ingredient
+	 * @stateUsed {this.state.pantryServiceURL}
+	 * @calls {Client.request, console.log, this.setState, this.handlePantryError}
+	 */
+	retrieveIngredientIdField(){
+		const pantryRequestURL = this.state.pantryServiceURL + "spec/ingredient/id";
+		// eslint-disable-next-line
+		Client.request(pantryRequestURL, "GET",
+			(resp) => {
+				//Now save the returned id
+				console.log("Got id");
+				console.log(resp);
+				this.setState({ingredientIdField: resp.id});
+			},
+			(e) => {
+				this.handlePantryError(e, "Could not get ingredient ID field");
 			}
 		);
 	}
@@ -301,6 +329,7 @@ class Pantry extends Component {
 	 */
 	componentDidMount(){
 		this.retrievePantry();
+		this.retrieveIngredientIdField();
 		this.retrieveIngredientFields();
 		this.retrieveIngredientEditableFields();
 	}
@@ -318,9 +347,9 @@ class Pantry extends Component {
 			<div id="pantry">
 
 				<div className="pantry-table-description-container">
-					<h3>{this.props.user}'s Pantry</h3>
+					<h3>{this.props.user+"'s Pantry"}</h3>
 				</div>
-				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} fieldEditable={this.state.ingredientFieldEditable} onRowDelete={this.deleteIngredient} onRowEdit={this.updateIngredient} tableDataIdSelector="item"/>
+				<PantryTable header={this.state.ingredientFields} data={this.state.pantry} fieldEditable={this.state.ingredientFieldEditable} onRowDelete={this.deleteIngredient} onRowEdit={this.updateIngredient}/>
 				<AddIngredients ingredientFields={this.state.ingredientFields} ingredientFieldTypes={this.state.ingredientFieldTypes} ingredientFieldOptions={this.state.ingredientFieldOptions} onAddIngredient={this.addIngredient} />
 				{this.showNotification()}
 			</div>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
  * Manages displaying the recipe details of a selected recipe search result
  */
 class RecipeDisplay extends Component{
-	static PropTypes = {
+	static propTypes = {
 		recipe: PropTypes.object.isRequired
 	};
 

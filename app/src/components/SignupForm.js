@@ -24,10 +24,10 @@ class SignupForm extends Component{
 		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		processSignup: PropTypes.func.isRequired,
 		onAccessToggle: PropTypes.func.isRequired,
-		requestFailed: PropTypes.object.isRequired
+		requestFailed: PropTypes.bool.isRequired
 	};
 
 	/**
@@ -105,11 +105,11 @@ class SignupForm extends Component{
 	render(){
 		return(
 			<div className="user-access-container signup-form-container">
-				<CarbonFormInput inputText={this.state.signupData.name} inputType="text" inputID="name" inputLabel="Name" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.name}/>
-				<CarbonFormInput inputText={this.state.signupData.email} inputType="text" inputID="email" inputLabel="Email" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.email}/>
-				<CarbonFormInput inputText={this.state.signupData.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.username}/>
-				<CarbonFormInput inputText={this.state.signupData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.password}/>
-				<CarbonFormInput inputText={this.state.signupData.verifyPassword} inputType="password" inputID="verifyPassword" inputLabel="Verify Password" onChange={this.handleInputChange} invalidText="Passwords Must Match" isInvalid={!this.state.validate.verifyPassword}/>
+				<CarbonFormInput inputData={this.state.signupData.name} inputType="text" inputID="name" inputLabel="Name" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.name}/>
+				<CarbonFormInput inputData={this.state.signupData.email} inputType="text" inputID="email" inputLabel="Email" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.email}/>
+				<CarbonFormInput inputData={this.state.signupData.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.username}/>
+				<CarbonFormInput inputData={this.state.signupData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange} invalidText="Required" isInvalid={!this.state.validate.password}/>
+				<CarbonFormInput inputData={this.state.signupData.verifyPassword} inputType="password" inputID="verifyPassword" inputLabel="Verify Password" onChange={this.handleInputChange} invalidText="Passwords Must Match" isInvalid={!this.state.validate.verifyPassword}/>
 				<CarbonButton text="Submit" onClick={this.sendSignupAttempt} isInForm={true} isDisabled={!this.isValid()}/>
 				<CarbonButton text="Login Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 				{this.showError()}

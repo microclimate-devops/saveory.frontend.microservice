@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import {Modal} from 'carbon-components';
 import { Modal } from 'carbon-components-react';
-//import CarbonModal from './carbon/CarbonModal.js';
 import CarbonButton from './carbon/CarbonButton.js';
 import AddIngredientForm from './AddIngredientForm.js';
 
@@ -32,7 +30,7 @@ class AddIngredients extends Component{
 	//*********************************************//
 	// STATIC DATA & METHODS
 	//**********************************************//
-	static PropTypes = {
+	static propTypes = {
 		/**
      * Called when the user submits a new ingredient entry
 		 * @param {object} ingredient - the ingredient object formed from user input
@@ -175,6 +173,7 @@ class AddIngredients extends Component{
 		}
 		//If valid options were defined for this field, make sure the data matches an option
 		else if(Array.isArray(fieldOptions) && !fieldOptions.includes(data)){
+			console.log("Got array option");
 			isValid=false;
 			invalidMsg = this.createInvalidMsg(fieldOptions);
 		}

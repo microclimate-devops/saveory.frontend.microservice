@@ -7,19 +7,23 @@ class CarbonFormInput extends Component{
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	static PropTypes = {
-		inputData: PropTypes.string.isRequired,
-		inputType: PropTypes.string.isRequired,
+	static propTypes = {
+		inputData: PropTypes.string,
+		inputType: PropTypes.string,
 		inputID: PropTypes.string.isRequired,
 		inputLabel: PropTypes.string.isRequired,
 		onChange: PropTypes.func.isRequired,
-		invalidText: PropTypes.string.isRequired,
-		isInvalid: PropTypes.bool.isRequired,
+		invalidText: PropTypes.string,
+		isInvalid: PropTypes.bool,
 		inputPlaceholder: PropTypes.string,
 		className: PropTypes.string
 	};
 
 	static defaultProps = {
+		inputData: "",
+		inputType: "text",
+		invalidText: "",
+		isInvalid: false,
 		inputPlaceholder: "",
 		className: ""
 	};

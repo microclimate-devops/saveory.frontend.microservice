@@ -15,7 +15,7 @@ class HeaderTool extends Component{
 		this.state = {showSettings: false};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		onLogoutClick: PropTypes.func.isRequired,
 		onUserUpdate: PropTypes.func.isRequired,
 		userData: PropTypes.object.isRequired

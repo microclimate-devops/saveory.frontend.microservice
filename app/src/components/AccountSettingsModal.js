@@ -33,7 +33,7 @@ class AccountSettingsModal extends Component{
   // STATIC DATA & METHODS
   //**********************************************//
 
-  static PropTypes = {
+  static propTypes = {
     userData: PropTypes.object,
     open: PropTypes.bool,
     onClose: PropTypes.func,

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 //Expects three children: header, content, and footer
 /********************************************/
 class CarbonModal extends Component{
-	static PropTypes = {
+	static propTypes = {
 		id: PropTypes.string.isRequired,
 		bindModal: PropTypes.func.isRequired
 	};

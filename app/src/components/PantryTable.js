@@ -10,16 +10,19 @@ class PantryTable extends Component{
 	constructor(props){
 		super(props);
 		this.handleSortAction = this.handleSortAction.bind(this);
-		this.state = {areRowsExpanded: {}, currSort: undefined, isSortedDesc: undefined};
+		this.state = {
+			areRowsExpanded: {},
+			currSort: undefined,
+			isSortedDesc: undefined
+		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		header: PropTypes.array.isRequired,
 		data: PropTypes.array.isRequired,
 		fieldEditable: PropTypes.array.isRequired,
 		onRowDelete: PropTypes.func.isRequired,
-		onRowEdit: PropTypes.func.isRequired,
-		tableDataIdSelector: PropTypes.func.isRequired
+		onRowEdit: PropTypes.func.isRequired
 	};
 
 	/**

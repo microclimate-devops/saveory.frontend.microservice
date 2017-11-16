@@ -121,7 +121,7 @@ class Pantry extends Component {
 	 */
 	handlePantryError(e, msg){
 		console.log("caught pantry error");
-		console.log(e);
+		console.log(e.trace);
 		this.setNotification({title: "Error", subtitle: msg, isGood:false});
 	}
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import RecipeSearchItem from './RecipeSearchItem';
 
 /**
  * Manages displaying a list of recipes in a search results container
@@ -66,7 +67,7 @@ class RecipeSearchResults extends Component{
 	 * @return {Array(JSX)}
 	 */
 	showResultItems(){
-		return this.props.recipes.map((item, i) => {return this.showResultItem(item, i)});
+		return this.props.recipes.map((recipe, i) => {return <RecipeSearchItem key={i} recipe={recipe} recipeIndex={i}  onClick={this.props.onResultSelected} />});
 	}
 
 	/**
@@ -77,9 +78,7 @@ class RecipeSearchResults extends Component{
 	render(){
 		return (
 			<div className="recipe-search-results-container">
-				<ul className="recipe-search-results-list">
 					{this.showResultItems()}
-				</ul>
 			</div>
 		);
 	}

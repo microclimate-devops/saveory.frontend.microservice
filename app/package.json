@@ -8,7 +8,9 @@
     "carbon-components-react": "^4.1.3",
     "moment": "^2.18.1",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-slick": "https://registry.npmjs.org/react-slick/-/react-slick-0.14.11.tgz",
+    "slick-carousel": "https://registry.npmjs.org/slick-carousel/-/slick-carousel-1.7.1.tgz"
   },
   "devDependencies": {
     "antd": "^2.12.6",

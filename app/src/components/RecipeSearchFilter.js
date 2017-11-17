@@ -18,6 +18,7 @@ class RecipeSearchFilter extends Component{
 
   static propTypes = {
     pantryIngredients: PropTypes.array.isRequired,
+    filters: PropTypes.object.isRequired,
     filterTypes: PropTypes.object.isRequired,
     onFilterChange: PropTypes.func.isRequired
   }

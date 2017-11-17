@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {TableRow, Icon, Toggle} from 'carbon-components-react';
+import {TableRow, Icon} from 'carbon-components-react';
 import TableData from './carbon/TableData.js';
 var moment = require('moment');
 

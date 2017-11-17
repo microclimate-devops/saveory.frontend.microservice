@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Checkbox} from 'carbon-components-react';
 import MatchingIngredient from './MatchingIngredient';
 
 class MakeRecipeFirstStep extends Component{
@@ -34,7 +33,6 @@ class MakeRecipeFirstStep extends Component{
 
   showMatchingIngredients(){
     const selectedIngredients = this.props.selectedIngredients;
-    const idPrefix = this.state.matchingIngredientPrefix;
     return this.props.matchingIngredients.map((ingredientName, i) => {
       return (
         <MatchingIngredient key={i} ingredientId={ingredientName} isChecked={this.ingredientIsChecked(ingredientName, selectedIngredients)} onChange={this.handleIngredientSelectionUpdate} />

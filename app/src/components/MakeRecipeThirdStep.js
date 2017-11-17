@@ -4,10 +4,6 @@ import UpdatingIngredient from './UpdatingIngredient';
 import ManualIngredientUpdateDescriptor from './ManualIngredientUpdateDescriptor';
 
 class MakeRecipeThirdStep extends Component{
-  constructor(props){
-    super(props);
-  }
-
   static PropTypes = {
     currentIngredients: PropTypes.object.isRequired,
     selectedIngredients: PropTypes.object.isRequired,

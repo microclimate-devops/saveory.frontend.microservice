@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {InlineNotification} from 'carbon-components-react';
 import Client from './Client.js';
-import PantryViewControl from './PantryViewControl.js';
 import PantryTable from './PantryTable.js';
 import AddIngredients from "./AddIngredients.js";
 
@@ -342,10 +341,8 @@ class Pantry extends Component {
 	 * @return {JSX}
 	 */
 	render(){
-		//<PantryViewControl viewIndex={this.state.viewIndex} viewMetadata={this.state.viewMetadata} onSwitch={this.handleViewSwitch}/>
 		return (
 			<div id="pantry">
-
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user+"'s Pantry"}</h3>
 				</div>

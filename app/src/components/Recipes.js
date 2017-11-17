@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Client from './Client.js';
 import RecipeSearch from './RecipeSearch.js';
-import RecipeSearchFilter from './RecipeSearchFilter.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
-import RecipeDisplay from './RecipeDisplay.js';
+import RecipeSelection from './RecipeSelection.js';
 
 /**
  * Manages the components necessary to search for recipes, select a search results, and show the details of the selected recipe
@@ -20,7 +19,7 @@ class Recipes extends Component{
 			recipeServiceURL: "api/recipes/",
 			recipesDB:[],
 			recipes: [],
-			recipeSelected: {},
+			recipeIndex: 0,
 			pantryIngredients: [],
 			searchFilters: {
 				includedIngredients: [],
@@ -61,7 +60,7 @@ class Recipes extends Component{
 	 * @calls {this.setState}
 	 */
 	handleRecipeResponse(response){
-		this.setState({recipesDB: response});
+		this.setState({recipes: response});
 	}
 
 	/**
@@ -131,7 +130,8 @@ class Recipes extends Component{
 	 * @stateUsed {this.state.recipesDB}
 	 * @calls {this.isQueryMatch, recipeMatches.push, this.setState}
 	 */
-	handleSearchSubmit(query){
+	handleSearchSubmit__old(query){
+		this.handleSearchSubmit__new(query);
 		const recipesDB = this.state.recipesDB;
 		let recipeMatches = [];
 		//find recipes in db that match
@@ -145,12 +145,45 @@ class Recipes extends Component{
 			}
 		}
 		//Update state to represent new search
-		this.setState({recipes: recipeMatches, recipeSelected: {}});
+		this.setState({recipes: recipeMatches, recipeIndex: 0});
 	}
 
-	handleSearchSubmit__new(query){
+	addSearchFilters(targetStr){
+		const filterTypes = this.state.searchFilterTypes.ingredient;
+		const searchFilters = this.state.searchFilters;
+		console.log("Filter types: ");
+		console.log(filterTypes);
+		console.log(searchFilters);
+		let currentFilter = undefined;
+		let filterType = undefined;
+		//go through each filter and add it's data
+		for(var key in filterTypes){
+			filterType = filterTypes[key]
+			currentFilter = searchFilters[filterType];
+			//reduce the filter array into a single query string
+			targetStr += currentFilter.reduce(
+				(filterString, currData) => {
+					return filterString+ "&"+filterType+"="+currData;
+				}, "");
+		}
+		return targetStr;
+	}
 
+	handleSearchSubmit(query){
+			//Put together request URL with all necessary data
+			let reqURL = this.state.recipeServiceURL;
 
+			//Add user token
+			reqURL += "?user_token="+this.props.userToken;
+
+			//Add query
+			reqURL += "&search=" + query.replace(" ", "+");
+
+			//Add search filters
+			reqURL = this.addSearchFilters(reqURL);
+
+			//Make request
+			Client.request(reqURL, "GET", (response) => {this.handleRecipeResponse(response)}, (e) => {this.handleRecipeResponse(e)});
 	}
 
 	/**
@@ -160,7 +193,7 @@ class Recipes extends Component{
 	 * @calls {this.setState}
 	 */
 	handleRecipeSelected(i){
-		this.setState({recipeSelected: this.state.recipes[i]});
+		this.setState({recipeIndex: i});
 	}
 
 	/**
@@ -168,23 +201,23 @@ class Recipes extends Component{
 	 * @calls {this.retrieveRecipes}
 	 */
 	componentDidMount(){
-		this.retrieveRecipes();
+		//this.retrieveRecipes();
 		this.retrievePantryIngredients();
 	}
 
 	/**
 	 * Handles rendering the components for searching, showing results, and displaying selected recipes
-	 * @stateUsed {this.state.recipes, this.state.recipeSelected}
+	 * @stateUsed {this.state.recipes, this.state.recipeIndex}
 	 * @return {JSX}
 	 */
 	render(){
+		//<RecipeDisplay userToken={this.props.userToken} recipe={this.state.recipeSelected} pantryServiceURL={this.state.pantryServiceURL}/>
 		return (
 			<div className="recipes-wrap">
 				<div className="recipes-container">
-					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
-					<RecipeSearchFilter pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
+					<RecipeSearch handleSearch={this.handleSearchSubmit} pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
-					<RecipeDisplay userToken={this.props.userToken} recipe={this.state.recipeSelected} pantryServiceURL={this.state.pantryServiceURL}/>
+					<RecipeSelection recipes={this.state.recipes} recipeIndex={this.state.recipeIndex} onChange={this.handleRecipeSelected}/>
 				</div>
 				<div className="spacer"></div>
 			</div>

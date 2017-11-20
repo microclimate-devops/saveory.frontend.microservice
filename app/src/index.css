@@ -239,6 +239,11 @@ button {
 	font-size: .975rem;
 }
 
+.pantry-table-ingredient input{
+  max-width: 120px;
+  padding: 2px;
+}
+
 .date-indicator{
 	margin-right: 5px;
 	float: left;
@@ -274,10 +279,16 @@ button {
 /* Search 1 - bg change*/
 .recipes-wrap{
 	margin-top: 50px;
-	margin-left: 50px;
+}
+
+.recipes-container{
+  margin: 0 auto;
+  width: 80%;
 }
 
 .recipe-search-container{
+  width: 650px;
+  margin: 0 auto;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;

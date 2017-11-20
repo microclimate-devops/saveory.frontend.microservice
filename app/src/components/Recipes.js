@@ -212,12 +212,12 @@ class Recipes extends Component{
 	 */
 	render(){
 		//<RecipeDisplay userToken={this.props.userToken} recipe={this.state.recipeSelected} pantryServiceURL={this.state.pantryServiceURL}/>
+		//<RecipeSelection recipes={this.state.recipes} recipeIndex={this.state.recipeIndex} onChange={this.handleRecipeSelected}/>
 		return (
 			<div className="recipes-wrap">
 				<div className="recipes-container">
 					<RecipeSearch handleSearch={this.handleSearchSubmit} pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
 					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
-					<RecipeSelection recipes={this.state.recipes} recipeIndex={this.state.recipeIndex} onChange={this.handleRecipeSelected}/>
 				</div>
 				<div className="spacer"></div>
 			</div>

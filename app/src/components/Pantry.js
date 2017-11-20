@@ -181,6 +181,7 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {
 				console.log("Got response for types");
+				console.log(resp);
 				//Check to see if additional validate info is needed for a field
 				this.retrieveIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});

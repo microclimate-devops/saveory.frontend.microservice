@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Modal } from 'carbon-components-react';
 import RecipeSearchItem from './RecipeSearchItem';
+import RecipeDisplay from './RecipeDisplay';
 
 /**
  * Manages displaying a list of recipes in a search results container
@@ -9,29 +11,29 @@ class RecipeSearchResults extends Component{
 	constructor(props){
 		super(props);
 		this.handleResultSelect = this.handleResultSelect.bind(this);
+		this.closeRecipeDisplay = this.closeRecipeDisplay.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.state = {
-			resultTableOptions: {
-				//sort
-				defaultSortName: 'item',
-				defaultSortOrder: 'desc',
-
-				//select
-				mode: 'radio',
-				bgColor: 'green',
-				hideSelectColumn: true,
-				clickToSelect: true,
-
-				//row click
-				onRowSelect: this.handleResultSelect
-			},
-			resultItemTitleSelector: "name"
+			resultItemTitleSelector: "name",
+			recipeIndex: 0,
+			recipeDisplayOpen: false
 		};
 	}
 
 	static propTypes = {
-		recipes: PropTypes.array.isRequired,
-		onResultSelected: PropTypes.func.isRequired
+		recipes: PropTypes.array.isRequired
 	};
+
+	closeRecipeDisplay(e){
+		this.setState({recipeDisplayOpen: false});
+	}
+
+	handleKeyDown(e){
+    //Call onClose if esc was pressed
+    if (e.which === 27 && this.state.open) {
+      this.closeRecipeDisplay(e);
+    }
+  }
 
 	/**
 	 * When the user clicks a result, send that info through prop handler
@@ -39,9 +41,8 @@ class RecipeSearchResults extends Component{
 	 * @propsUsed {this.props.onResultSelected}
 	 * @calls {Number, e.target.getAttribute, this.props.onResultSelected}
 	 */
-	handleResultSelect(e){
-		const elementIndex = Number(e.target.getAttribute('id'));
-		this.props.onResultSelected(elementIndex);
+	handleResultSelect(index){
+		this.setState({recipeIndex:index, recipeDisplayOpen:true});
 	}
 
 	/**
@@ -67,7 +68,7 @@ class RecipeSearchResults extends Component{
 	 * @return {Array(JSX)}
 	 */
 	showResultItems(){
-		return this.props.recipes.map((recipe, i) => {return <RecipeSearchItem key={i} recipe={recipe} recipeIndex={i}  onClick={this.props.onResultSelected} />});
+		return this.props.recipes.map((recipe, i) => {return <RecipeSearchItem key={i} recipe={recipe} recipeIndex={i}  onClick={this.handleResultSelect} />});
 	}
 
 	/**
@@ -79,6 +80,10 @@ class RecipeSearchResults extends Component{
 		return (
 			<div className="recipe-search-results-container">
 					{this.showResultItems()}
+					<Modal className="recipe-display-modal" onRequestClose={this.closeRecipeDisplay} modalLabel="" modalHeading=""
+						open={this.state.recipeDisplayOpen} onKeyDown={this.handleKeyDown} passiveModal={true}>
+						<RecipeDisplay recipe={this.props.recipes[this.state.recipeIndex]}/>
+					</Modal>
 			</div>
 		);
 	}

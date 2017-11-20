@@ -12,14 +12,12 @@ class Recipes extends Component{
 	constructor(props){
 		super(props)
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.setSearchFilter = this.setSearchFilter.bind(this);
 		this.state = {
 			pantryServiceURL: "api/pantry/",
 			recipeServiceURL: "api/recipes/",
 			recipesDB:[],
 			recipes: [],
-			recipeIndex: 0,
 			pantryIngredients: [],
 			searchFilters: {
 				includedIngredients: [],
@@ -145,7 +143,7 @@ class Recipes extends Component{
 			}
 		}
 		//Update state to represent new search
-		this.setState({recipes: recipeMatches, recipeIndex: 0});
+		this.setState({recipes: recipeMatches});
 	}
 
 	addSearchFilters(targetStr){
@@ -184,16 +182,6 @@ class Recipes extends Component{
 
 			//Make request
 			Client.request(reqURL, "GET", (response) => {this.handleRecipeResponse(response)}, (e) => {this.handleRecipeResponse(e)});
-	}
-
-	/**
-	 * Updates the currently selected recipe to whichever search result the user clicked
-	 * @param {int} i - the index of the selected recipe
-	 * @stateUsed {this.state.recipes}
-	 * @calls {this.setState}
-	 */
-	handleRecipeSelected(i){
-		this.setState({recipeIndex: i});
 	}
 
 	/**

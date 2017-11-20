@@ -287,7 +287,8 @@ button {
 }
 
 .recipe-search-container{
-  width: 650px;
+  max-width: 650px;
+  min-width: 520px;
   margin: 0 auto;
   vertical-align: middle;
   white-space: nowrap;
@@ -397,6 +398,7 @@ button {
   flex-wrap: wrap;
   width: 100%;
   max-width: 1150px;
+  min-width:520px;
   margin: 0 auto;
 }
 

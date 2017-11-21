@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {Icon} from 'carbon-components-react';
 
 /**
  * Manages displaying the recipe details of a selected recipe search result
@@ -14,9 +15,21 @@ class RecipeDisplay extends Component{
 	 * @param {object} ingr - A recipe ingredient object
 	 * @return {JSX} - The ingredient list entry
 	 */
-	showIngredientElement(ingr){
+	showIngredientElement(ingr, has){
+		let hasIcon = (<div className="recipe-display-ingredient-has"></div>);
 		let ingredientText = "";
-		let ingredientKey = ""
+		let ingredientKey = "";
+
+		//Show a checkmark if the user has the ingredient
+		if(has){
+			hasIcon = (
+				<div className="recipe-display-ingredient-has">
+					<Icon name="checkmark--glyph" height="16" width="16"/>
+				</div>
+			);
+		}
+
+		//Show correct ingredient data
 		if(typeof ingr === 'object'){
 			ingredientText = ingr.quantity + " " + ingr.unit + " " + ingr.name;
 			ingredientKey = ingr.name;
@@ -24,8 +37,14 @@ class RecipeDisplay extends Component{
 			ingredientText = ingr;
 			ingredientKey = ingr;
 		}
+
 		return (
-			<li key={ingredientKey}>{ingredientText}</li>
+			<li key={ingredientKey}>
+				{hasIcon}
+				<div className="recipe-display-ingredient-data">
+					<p>{ingredientText}</p>
+				</div>
+			</li>
 		);
 	}
 
@@ -35,10 +54,19 @@ class RecipeDisplay extends Component{
 	 * @calls {Array.isArray, ingredients.map}
 	 * @return {Array(JSX)}
 	 */
-	createIngredientList(ingredients){
+	createIngredientList(ingredients, hasList){
+		console.log("hasList: ");
+		console.log(hasList);
 		let ingredList = [];
+		let currHas = undefined;
 		if(Array.isArray(ingredients)){
-			ingredList = ingredients.map(this.showIngredientElement);
+			for(var i in ingredients){
+				currHas = false;
+				if(Array.isArray(hasList)){
+					currHas = hasList[i] === '1';
+				}
+				ingredList.push(this.showIngredientElement(ingredients[i], currHas));
+			}
 		}
 		return ingredList;
 	}
@@ -93,7 +121,7 @@ class RecipeDisplay extends Component{
 					<div className="recipe-display-ingredients-title">
 						<p>Ingredients</p>
 					</div>
-					<ul>{this.createIngredientList(recipe.ingredients)}</ul>
+					<ul>{this.createIngredientList(recipe.ingredients, recipe.hasList)}</ul>
 				</div>
 			);
 

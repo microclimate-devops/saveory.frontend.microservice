@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal } from 'carbon-components-react';
 import CarbonButton from './carbon/CarbonButton.js';
 import Client from './Client.js';
+import RecipeDisplay from './RecipeDisplay';
 import MakeRecipeFirstStep from './MakeRecipeFirstStep';
 import MakeRecipeSecondStep from './MakeRecipeSecondStep';
 import MakeRecipeThirdStep from './MakeRecipeThirdStep';
@@ -15,12 +16,12 @@ class MakeRecipe extends Component{
   constructor(props){
     super(props);
     this.state = {
+      pantryServiceURL: "/api/pantry/",
       modal: {
-        open: false,
         primaryButtonDisabled: true
       },
       currentStep: 1,
-      lastStep: 3,
+      lastStep: 4,
       unitOptions: [],
       selectedIngredients: {},
       currentIngredients: {},
@@ -32,17 +33,16 @@ class MakeRecipe extends Component{
     this.setIngredients = this.setIngredients.bind(this);
     this.updateManuallyUpdatedIngredient = this.updateManuallyUpdatedIngredient.bind(this);
     this.sendIngredientUpdate = this.sendIngredientUpdate.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.handleStepAction = this.handleStepAction.bind(this);
     this.handleSecondaryStepAction = this.handleSecondaryStepAction.bind(this);
   }
 
   static propTypes = {
     userToken: PropTypes.string.isRequired,
-    recipeIngredients: PropTypes.array.isRequired,
-    matchingPantryIngredients: PropTypes.array.isRequired,
-    pantryServiceURL: PropTypes.string.isRequired
+    recipe: PropTypes.object,
+    open: PropTypes.bool.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    handleKeyDown: PropTypes.func.isRequired
   };
 
   componentDidMount(){
@@ -50,7 +50,7 @@ class MakeRecipe extends Component{
   }
 
   getUnitOptions(){
-    const reqURL = this.props.pantryServiceURL + "spec/ingredient/units";
+    const reqURL = this.state.pantryServiceURL + "spec/ingredient/units";
     Client.request(reqURL, "GET",
       (resp) => {
         this.setState({unitOptions: resp});
@@ -118,7 +118,7 @@ class MakeRecipe extends Component{
   }
 
   sendIngredientUpdate(updateType, ingredientData){
-    const resourceURL = this.props.pantryServiceURL + this.props.userToken + "/ingredients/" + updateType;
+    const resourceURL = this.state.pantryServiceURL + this.props.userToken + "/ingredients/" + updateType;
     Client.request(resourceURL, "PUT",
       (resp) => {
         console.log("update resp");
@@ -130,20 +130,6 @@ class MakeRecipe extends Component{
         console.log(e.stack);
       },
       this.prepareUpdateBody(ingredientData));
-  }
-
-  setModalProp(key, val){
-    let modal = this.state.modal;
-    modal[key] = val;
-    this.setState({modal: modal});
-  }
-
-  openModal(e){
-    this.setModalProp("open", true);
-  }
-
-  closeModal(e){
-    this.setModalProp("open", false);
   }
 
   completeSteps(){
@@ -214,27 +200,37 @@ class MakeRecipe extends Component{
     const selectedIngredients = this.state.selectedIngredients;
     let stepInfo = {}
     let stepView = null;
+    let stepLabel = ""
     let stepDesc = "";
     let nextButtonDesc = "";
     let prevButtonDesc = "";
     let stepIsValid = false;
     switch(this.state.currentStep){
       case 1:
-        stepView = <MakeRecipeFirstStep  matchingIngredients={this.props.matchingPantryIngredients} selectedIngredients={selectedIngredients} addIngredient={this.addSelectedIngredient} removeIngredient={this.removeDeselectedIngredient}/>
-        stepDesc = "Which ingredients did you use making the recipe?";
+        stepView = <RecipeDisplay recipe={this.props.recipe}/>
         prevButtonDesc = "Close";
+        nextButtonDesc = "Mark as Complete";
+        stepIsValid = true;
+        break;
+      case 2:
+        stepView = <MakeRecipeFirstStep  matchingIngredients={this.props.recipe.matchingIngredients} selectedIngredients={selectedIngredients} addIngredient={this.addSelectedIngredient} removeIngredient={this.removeDeselectedIngredient}/>
+        stepLabel = "Update Your Pantry";
+        stepDesc = "Which ingredients did you use making the recipe?";
+        prevButtonDesc = "Back";
         nextButtonDesc = "Next Step";
         stepIsValid = this.validateFirstStep(selectedIngredients);
         break;
-      case 2:
+      case 3:
         stepView = <MakeRecipeSecondStep selectedIngredients={this.state.selectedIngredients} onIngredientUpdate={this.updateSelectedIngredient} unitOptions={this.state.unitOptions}/>
+        stepLabel = "Update Your Pantry";
         stepDesc = "How much of each ingredient did you use?";
         prevButtonDesc = "Back";
         nextButtonDesc = "Next Step";
         stepIsValid = this.validateSecondStep();
         break;
-      case 3:
+      case 4:
         stepView = <MakeRecipeThirdStep currentIngredients={this.state.currentIngredients} selectedIngredients={this.state.selectedIngredients} manuallyUpdatedIngredients={this.state.manuallyUpdatedIngredients} onIngredientUpdate={this.updateManuallyUpdatedIngredient} unitOptions={this.state.unitOptions}/>
+        stepLabel = "Update Your Pantry";
         stepDesc = "Please specify the amount that is left for the remaining ingredients.";
         prevButtonDesc = "Back";
         nextButtonDesc = "Complete";
@@ -244,6 +240,7 @@ class MakeRecipe extends Component{
         break;
     }
     stepInfo.view = stepView;
+    stepInfo.label = stepLabel;
     stepInfo.description = stepDesc;
     stepInfo.prevButtonDesc = prevButtonDesc;
     stepInfo.nextButtonDesc = nextButtonDesc;
@@ -252,35 +249,41 @@ class MakeRecipe extends Component{
   }
 
   showModal(){
-    const currStepInfo = this.getCurrentStepInfo();
-    const modalSettings = this.state.modal;
-    let modalProps = {
-      className: "make-recipe-modal",
-      onRequestClose: this.closeModal,
-      modalLabel: "Update Your Pantry",
-      modalHeading: currStepInfo.description,
-      open: modalSettings.open,
-      onKeyDown: this.handleKeyDown,
-      primaryButtonDisabled: !currStepInfo.valid,
-      primaryButtonText: currStepInfo.nextButtonDesc,
-      secondaryButtonText: currStepInfo.prevButtonDesc,
-      onRequestSubmit: this.handleStepAction,
-      onSecondarySubmit: this.handleSecondaryStepAction
-    };
+    try{
+    if(this.props.recipe){
+      const currStepInfo = this.getCurrentStepInfo();
+      const modalSettings = this.state.modal;
+      let modalProps = {
+        className: "make-recipe-modal",
+        onRequestClose: this.props.closeModal,
+        modalLabel: currStepInfo.label,
+        modalHeading: currStepInfo.description,
+        open: this.props.open,
+        onKeyDown: this.props.handleKeyDown,
+        primaryButtonDisabled: !currStepInfo.valid,
+        primaryButtonText: currStepInfo.nextButtonDesc,
+        secondaryButtonText: currStepInfo.prevButtonDesc,
+        onRequestSubmit: this.handleStepAction,
+        onSecondarySubmit: this.handleSecondaryStepAction
+      };
 
-    return (
-      <Modal {...modalProps}>
-        {currStepInfo.view}
-      </Modal>
-    );
-
+      return (
+        <Modal {...modalProps}>
+          {currStepInfo.view}
+        </Modal>
+      );
+    }
+  } catch(e){
+    console.log("caught error: "+e.message+". Trace: "+e.trace);
+  }
+    return null;
   }
 
   render(){
+    //{this.showModal()}
     return (
         <div className="make-recipe-modal-container">
-          <CarbonButton text="Update My Pantry" addedClass="make-recipe-modal-trigger" onClick={this.openModal} />
-          {this.showModal()}
+          <p>test</p>
         </div>
     );
   }

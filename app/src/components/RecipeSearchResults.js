@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'carbon-components-react';
 import RecipeSearchItem from './RecipeSearchItem';
 import RecipeDisplay from './RecipeDisplay';
+import MakeRecipe from './MakeRecipe';
 
 /**
  * Manages displaying a list of recipes in a search results container
@@ -21,6 +21,7 @@ class RecipeSearchResults extends Component{
 	}
 
 	static propTypes = {
+		userToken: PropTypes.string.isRequired,
 		recipes: PropTypes.array.isRequired
 	};
 
@@ -80,10 +81,8 @@ class RecipeSearchResults extends Component{
 		return (
 			<div className="recipe-search-results-container">
 					{this.showResultItems()}
-					<Modal className="recipe-display-modal" onRequestClose={this.closeRecipeDisplay} modalLabel="" modalHeading=""
-						open={this.state.recipeDisplayOpen} onKeyDown={this.handleKeyDown} passiveModal={true}>
-						<RecipeDisplay recipe={this.props.recipes[this.state.recipeIndex]}/>
-					</Modal>
+					<MakeRecipe userToken={this.props.userToken} recipe={this.props.recipes[this.state.recipeIndex]}
+			    open={this.state.recipeDisplayOpen} closeModal={this.closeRecipeDisplay} handleKeyDown={this.handleKeyDown} />
 			</div>
 		);
 	}

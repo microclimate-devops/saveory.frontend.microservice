@@ -1,4 +1,4 @@
-F/* Fonts */
+/* Fonts */
 @font-face {
     font-family: "Francois One";
     src: url("./fonts/FrancoisOne-Regular.ttf");
@@ -54,7 +54,7 @@ button {
 }
 
 .bx--modal-content{
-  overflow-y: inherit;
+  overflow-x: hidden;
 }
 
 .carbon-form-input-container{
@@ -322,10 +322,24 @@ button {
 	background-color: #DFE6EB;
 }
 
-.recipe-display-header{
-	text-align:center;
-	margin-bottom: 20px;
+.recipe-search-attribution{
+  margin-top: 8px;
 }
+
+.recipe-search-yummly-logo{
+  width: 66px;
+  height: 15px;
+  margin-left: -4px;
+}
+
+/*.recipe-display-modal div:first-child{
+  max-width: 75%;
+  width: 800px;
+  min-width: 800px;
+}*/
+
+/*.recipe-display-header{
+}*/
 
 .recipe-display-title{
 	font-size: 2.1rem;
@@ -348,6 +362,12 @@ button {
 	border-bottom: 0.1rem solid #1D364D;
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.recipe-display-ingredient-has{
+  width: 20px;
+  height: 20px;
+  float: left;
 }
 
 .recipe-display-instructions p{
@@ -448,15 +468,10 @@ button {
   height: 150px;
 }
 
-
-
-.recipe-display-container{
-	width: 45%;
-	float: left;
-	margin-top: 30px;
-	margin-left: 5%;
-	text-align: left;
-}
+/*.recipe-display-container{
+  max-height: 850px;
+  overflow-y: scroll;
+}*/
 
 .recipe-display-container h3{
 	text-align: center;

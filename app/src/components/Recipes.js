@@ -58,7 +58,10 @@ class Recipes extends Component{
 	 * @calls {this.setState}
 	 */
 	handleRecipeResponse(response){
-		this.setState({recipes: response});
+		if(Array.isArray(response)){
+			console.log(response[0]);
+			this.setState({recipes: response});
+		}
 	}
 
 	/**
@@ -205,7 +208,7 @@ class Recipes extends Component{
 			<div className="recipes-wrap">
 				<div className="recipes-container">
 					<RecipeSearch handleSearch={this.handleSearchSubmit} pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
-					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
+					<RecipeSearchResults userToken={this.props.userToken} recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
 				</div>
 				<div className="spacer"></div>
 			</div>

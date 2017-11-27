@@ -1,3 +1,17 @@
+/* Media Queries */
+
+@media only screen and (max-width: 1455px) {
+  .recipe-search-results-paginator{
+    max-width: 722px;
+  }
+}
+
+@media only screen and (min-width: 1456px) {
+  .recipe-search-results-paginator{
+    max-width: 1093px;
+  }
+}
+
 /* Fonts */
 @font-face {
     font-family: "Francois One";
@@ -284,6 +298,7 @@ button {
 .recipes-container{
   margin: 0 auto;
   width: 80%;
+  max-width: 1130px;
 }
 
 .recipe-search-container{
@@ -382,7 +397,7 @@ button {
 .make-recipe-step-container{
   overflow: auto;
   max-height: 575px;
-  max-width: 404px;
+  max-width: 480px;
   margin: 0 auto;
 }
 
@@ -411,6 +426,20 @@ button {
 }
 
 .recipe-search-results-container{
+  max-width: 1150px;
+  min-width: 520px;
+}
+
+.recipe-search-results-pagination{
+    margin-top: 40px;
+}
+
+.recipe-search-results-paginator{
+  margin: 0 auto;
+}
+
+
+.recipe-search-result-items{
   margin-top: 30px;
   box-sizing: border-box;
   justify-content: center;
@@ -494,7 +523,7 @@ button {
 
 .updating-ingredient-list-header-qty{
   float: left;
-  margin-left: 58px;
+  margin-left: 98px;
 }
 
 .updating-ingredient-list-header-unit{

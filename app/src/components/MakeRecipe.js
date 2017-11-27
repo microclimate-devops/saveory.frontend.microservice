@@ -121,9 +121,12 @@ class MakeRecipe extends Component{
     const resourceURL = this.state.pantryServiceURL + this.props.userToken + "/ingredients/" + updateType;
     Client.request(resourceURL, "PUT",
       (resp) => {
-        console.log("update resp");
-        console.log(resp);
-        this.setIngredients(resp.failed);
+        const failed = resp.failed;
+        if(failed.length > 0){
+          this.setIngredients(failed);
+        }else{
+          this.completeSteps();
+        }
       },
       (e) => {
         console.log("failed to "+updateType+" update ingredients. Error Message: "+e.message);
@@ -134,8 +137,8 @@ class MakeRecipe extends Component{
 
   completeSteps(){
     //Close modal and reset selections
-    this.closeModal();
-    this.setState({selectedIngredients: {}});
+    this.props.closeModal();
+    this.setState({currentStep: 1, selectedIngredients: {}});
   }
 
   handleStepAction(e){
@@ -149,14 +152,15 @@ class MakeRecipe extends Component{
         if(Object.keys(manuallyUpdatedIngredients).length > 0){
           this.sendIngredientUpdate("manual", manuallyUpdatedIngredients);
           this.completeSteps();
-          nextStep = 1;
         }
     }
-    else if(nextStep === lastStep){
-      //attempt to auto update the ingredients
-      this.sendIngredientUpdate("auto", this.state.selectedIngredients);
+    else{
+       if(nextStep === lastStep){
+          //attempt to auto update the ingredients
+          this.sendIngredientUpdate("auto", this.state.selectedIngredients);
+        }
+        this.setState({currentStep: nextStep});
     }
-    this.setState({currentStep: nextStep});
   }
 
   handleSecondaryStepAction(e){
@@ -165,7 +169,7 @@ class MakeRecipe extends Component{
 
     //close modal if previous step is before the first step
     if(prevStep < 1){
-      this.closeModal();
+      this.props.closeModal();
       prevStep = 1;
     }
 
@@ -198,6 +202,7 @@ class MakeRecipe extends Component{
 
   getCurrentStepInfo(){
     const selectedIngredients = this.state.selectedIngredients;
+    const matchingIngredients = this.props.recipe.matchingIngredients;
     let stepInfo = {}
     let stepView = null;
     let stepLabel = ""
@@ -210,10 +215,11 @@ class MakeRecipe extends Component{
         stepView = <RecipeDisplay recipe={this.props.recipe}/>
         prevButtonDesc = "Close";
         nextButtonDesc = "Mark as Complete";
-        stepIsValid = true;
+        //Only allow next step if there are matching ingredients
+        stepIsValid = matchingIngredients.length > 0;
         break;
       case 2:
-        stepView = <MakeRecipeFirstStep  matchingIngredients={this.props.recipe.matchingIngredients} selectedIngredients={selectedIngredients} addIngredient={this.addSelectedIngredient} removeIngredient={this.removeDeselectedIngredient}/>
+        stepView = <MakeRecipeFirstStep  matchingIngredients={matchingIngredients} selectedIngredients={selectedIngredients} addIngredient={this.addSelectedIngredient} removeIngredient={this.removeDeselectedIngredient}/>
         stepLabel = "Update Your Pantry";
         stepDesc = "Which ingredients did you use making the recipe?";
         prevButtonDesc = "Back";
@@ -283,7 +289,7 @@ class MakeRecipe extends Component{
     //{this.showModal()}
     return (
         <div className="make-recipe-modal-container">
-          <p>test</p>
+          {this.showModal()}
         </div>
     );
   }

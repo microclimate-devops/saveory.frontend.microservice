@@ -121,7 +121,7 @@ class RecipeDisplay extends Component{
 					<div className="recipe-display-ingredients-title">
 						<p>Ingredients</p>
 					</div>
-					<ul>{this.createIngredientList(recipe.ingredients, recipe.hasList)}</ul>
+					<ul>{this.createIngredientList(recipe.ingredients, recipe.has)}</ul>
 				</div>
 			);
 

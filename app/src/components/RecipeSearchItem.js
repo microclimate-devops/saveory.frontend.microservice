@@ -76,6 +76,11 @@ class RecipeSearchItem extends Component{
         recipeItems.push(<div key="recipe-title" className="recipe-search-item-title"><p>{recipe.name}</p></div>);
       }
 
+      if(recipe && recipe.author === "MyRecipes"){
+        console.log("test");
+        console.log(recipeItems);
+      }
+
       return (
         <div className="recipe-search-item-container" onClick={this.handleClick}>
           {recipeItems}

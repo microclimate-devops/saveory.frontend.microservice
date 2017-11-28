@@ -6,7 +6,7 @@ var router = express.Router();
 var apiRoutes = {
 	pantry: "http://pantry-service:9080/Pantry",
 	recipes: "http://recipeservice:9080/RecipeService",
-	user: "http://usermanagement-service:9080/UserManagement"
+	user: "http://saveoryusers-service:9080/saveoryusers"
 };
 var DEV_RESP = {
 	pantry: {

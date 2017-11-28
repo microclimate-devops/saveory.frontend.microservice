@@ -1,3 +1,17 @@
+/* Media Queries */
+
+@media only screen and (max-width: 1455px) {
+  .recipe-search-results-paginator{
+    max-width: 722px;
+  }
+}
+
+@media only screen and (min-width: 1456px) {
+  .recipe-search-results-paginator{
+    max-width: 1093px;
+  }
+}
+
 /* Fonts */
 @font-face {
     font-family: "Francois One";
@@ -54,7 +68,7 @@ button {
 }
 
 .bx--modal-content{
-  overflow-y: inherit;
+  overflow-x: hidden;
 }
 
 .carbon-form-input-container{
@@ -239,6 +253,11 @@ button {
 	font-size: .975rem;
 }
 
+.pantry-table-ingredient input{
+  max-width: 120px;
+  padding: 2px;
+}
+
 .date-indicator{
 	margin-right: 5px;
 	float: left;
@@ -274,10 +293,18 @@ button {
 /* Search 1 - bg change*/
 .recipes-wrap{
 	margin-top: 50px;
-	margin-left: 50px;
+}
+
+.recipes-container{
+  margin: 0 auto;
+  width: 80%;
+  max-width: 1130px;
 }
 
 .recipe-search-container{
+  max-width: 650px;
+  min-width: 520px;
+  margin: 0 auto;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
@@ -310,10 +337,24 @@ button {
 	background-color: #DFE6EB;
 }
 
-.recipe-display-header{
-	text-align:center;
-	margin-bottom: 20px;
+.recipe-search-attribution{
+  margin-top: 8px;
 }
+
+.recipe-search-yummly-logo{
+  width: 66px;
+  height: 15px;
+  margin-left: -4px;
+}
+
+/*.recipe-display-modal div:first-child{
+  max-width: 75%;
+  width: 800px;
+  min-width: 800px;
+}*/
+
+/*.recipe-display-header{
+}*/
 
 .recipe-display-title{
 	font-size: 2.1rem;
@@ -338,6 +379,12 @@ button {
 	padding-bottom: 5px;
 }
 
+.recipe-display-ingredient-has{
+  width: 20px;
+  height: 20px;
+  float: left;
+}
+
 .recipe-display-instructions p{
 	margin-bottom:5px;
 	font-size: 1.1rem;
@@ -345,6 +392,28 @@ button {
 
 .recipe-search-filter-exclude-ingredients{
   margin-top:20px;
+}
+
+.make-recipe-step-container{
+  overflow: auto;
+  max-height: 575px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.make-recipe-matching-ingredient{
+  padding: 15px;
+  border: 0.1rem solid #1D364D;
+  border-radius: 2px;
+  margin-top: 5px;
+}
+
+.selected-matching-ingredient{
+  border: 0.1rem solid #95D13C;
+}
+
+.matching-ingredient-title{
+  font-size: 20px;
 }
 
 .search-filter-button{
@@ -357,22 +426,134 @@ button {
 }
 
 .recipe-search-results-container{
-	width: 45%;
-	float: left;
-	margin-top: 30px;
+  max-width: 1150px;
+  min-width: 520px;
 }
 
-.recipe-display-container{
-	width: 45%;
-	float: left;
-	margin-top: 30px;
-	margin-left: 5%;
-	text-align: left;
+.recipe-search-results-pagination{
+    margin-top: 40px;
 }
+
+.recipe-search-results-paginator{
+  margin: 0 auto;
+}
+
+
+.recipe-search-result-items{
+  margin-top: 30px;
+  box-sizing: border-box;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1150px;
+  min-width:520px;
+  margin: 0 auto;
+}
+
+.recipe-search-item-container{
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+  min-width: 350px;
+  height: 150px;
+  margin: 0.65rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.recipe-search-item-container:hover {
+  box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  cursor: pointer;
+}
+
+.recipe-search-item-mini-container{
+  width: 200px;
+}
+
+.recipe-search-item-image{
+  width: 150px;
+  float:left;
+}
+
+.recipe-search-item-image img{
+  width: 150px;
+  height: 150px;
+}
+
+.recipe-search-item-mini-image{
+  width:200px;
+}
+
+.recipe-search-item-mini-image img{
+  height: 200px;
+  width: 200px;
+}
+
+.recipe-search-item-text-data{
+  float:left;
+  padding: 10px;
+  width: 200px;
+  height: 150px;
+}
+
+/*.recipe-display-container{
+  max-height: 850px;
+  overflow-y: scroll;
+}*/
 
 .recipe-display-container h3{
 	text-align: center;
 	margin-top: 0px;
+}
+
+.updating-ingredient-list-item{
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.updating-ingredient-list-header{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.updating-ingredient-list-header-item{
+  float:left;
+}
+
+.updating-ingredient-list-header-qty{
+  float: left;
+  margin-left: 98px;
+}
+
+.updating-ingredient-list-header-unit{
+  text-align: right;
+  margin-right: 21px;
+}
+
+.manual-update-ingredient-name p{
+  font-size: 1.5rem;
+}
+
+.updating-ingredient-desc{
+  float: left;
+  font-size: 1.25rem;
+}
+
+.updating-ingredient-selections{
+  text-align: right;
+  padding: 4px;
+}
+
+.updating-ingredient-selections input, .updating-ingredient-selections select{
+  padding: 3px;
+}
+
+.ingredient-update-descriptor{
+  margin-left: 121px;
+  margin-top: 5px;
+  margin-bottom: -10px;
+  color: #E62325;
 }
 
 /*InfoMessage Stuff */

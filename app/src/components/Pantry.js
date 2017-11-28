@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {InlineNotification} from 'carbon-components-react';
 import Client from './Client.js';
-import PantryViewControl from './PantryViewControl.js';
 import PantryTable from './PantryTable.js';
 import AddIngredients from "./AddIngredients.js";
 
@@ -121,7 +120,7 @@ class Pantry extends Component {
 	 */
 	handlePantryError(e, msg){
 		console.log("caught pantry error");
-		console.log(e);
+		console.log(e.trace);
 		this.setNotification({title: "Error", subtitle: msg, isGood:false});
 	}
 
@@ -182,6 +181,7 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {
 				console.log("Got response for types");
+				console.log(resp);
 				//Check to see if additional validate info is needed for a field
 				this.retrieveIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});
@@ -342,10 +342,8 @@ class Pantry extends Component {
 	 * @return {JSX}
 	 */
 	render(){
-		//<PantryViewControl viewIndex={this.state.viewIndex} viewMetadata={this.state.viewMetadata} onSwitch={this.handleViewSwitch}/>
 		return (
 			<div id="pantry">
-
 				<div className="pantry-table-description-container">
 					<h3>{this.props.user+"'s Pantry"}</h3>
 				</div>

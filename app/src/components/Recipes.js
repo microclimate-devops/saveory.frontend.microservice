@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Client from './Client.js';
 import RecipeSearch from './RecipeSearch.js';
-import RecipeSearchFilter from './RecipeSearchFilter.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
-import RecipeDisplay from './RecipeDisplay.js';
 
 /**
  * Manages the components necessary to search for recipes, select a search results, and show the details of the selected recipe
@@ -13,14 +11,12 @@ class Recipes extends Component{
 	constructor(props){
 		super(props)
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-		this.handleRecipeSelected = this.handleRecipeSelected.bind(this);
 		this.setSearchFilter = this.setSearchFilter.bind(this);
 		this.state = {
 			pantryServiceURL: "api/pantry/",
 			recipeServiceURL: "api/recipes/",
 			recipesDB:[],
 			recipes: [],
-			recipeSelected: {},
 			pantryIngredients: [],
 			searchFilters: {
 				includedIngredients: [],
@@ -51,7 +47,6 @@ class Recipes extends Component{
 		if(searchFilters[filterType] !== undefined){
 			searchFilters[filterType] = filterData;
 			this.setState({searchFilters:searchFilters});
-			console.log(searchFilters);
 		}
 	}
 
@@ -61,9 +56,9 @@ class Recipes extends Component{
 	 * @calls {this.setState}
 	 */
 	handleRecipeResponse(response){
-		console.log("GET to "+this.state.recipeServiceURL);
-		console.log(response);
-		this.setState({recipesDB: response});
+		if(Array.isArray(response)){
+			this.setState({recipes: response});
+		}
 	}
 
 	/**
@@ -92,10 +87,13 @@ class Recipes extends Component{
 	 * @calls {console.log, Client.request, this.setState}
 	 */
 	retrievePantryIngredients(){
-		console.log(this.state.pantryServiceURL+this.props.userToken+"/ingredients");
-		Client.request(this.state.pantryServiceURL+this.props.userToken+"/ingredients", "GET",
+		const reqURL = this.state.pantryServiceURL+this.props.userToken+"/ingredients";
+		Client.request(reqURL, "GET",
 			(response) => {
 				this.setState({pantryIngredients: response});
+			},
+			(e) => {
+				console.log("Error getting ingredient names from user's pantry. Message: "+e.message+". "+e.trace);
 			});
 	}
 
@@ -130,7 +128,8 @@ class Recipes extends Component{
 	 * @stateUsed {this.state.recipesDB}
 	 * @calls {this.isQueryMatch, recipeMatches.push, this.setState}
 	 */
-	handleSearchSubmit(query){
+	handleSearchSubmit__old(query){
+		this.handleSearchSubmit__new(query);
 		const recipesDB = this.state.recipesDB;
 		let recipeMatches = [];
 		//find recipes in db that match
@@ -141,24 +140,46 @@ class Recipes extends Component{
 				//add index to recipe
 				recipe.index = recipeMatches.length;
 				recipeMatches.push(recipe);
+
 			}
 		}
 		//Update state to represent new search
-		this.setState({recipes: recipeMatches, recipeSelected: {}});
+		this.setState({recipes: recipeMatches});
 	}
 
-	handleSearchSubmit__new(query){
-
+	addSearchFilters(targetStr){
+		const filterTypes = this.state.searchFilterTypes.ingredient;
+		const searchFilters = this.state.searchFilters;
+		let currentFilter = undefined;
+		let filterType = undefined;
+		//go through each filter and add it's data
+		for(var key in filterTypes){
+			filterType = filterTypes[key]
+			currentFilter = searchFilters[filterType];
+			//reduce the filter array into a single query string
+			targetStr += currentFilter.reduce(
+				(filterString, currData) => {
+					return filterString+ "&"+filterType+"="+currData;
+				}, "");
+		}
+		return targetStr;
 	}
 
-	/**
-	 * Updates the currently selected recipe to whichever search result the user clicked
-	 * @param {int} i - the index of the selected recipe
-	 * @stateUsed {this.state.recipes}
-	 * @calls {this.setState}
-	 */
-	handleRecipeSelected(i){
-		this.setState({recipeSelected: this.state.recipes[i]});
+	handleSearchSubmit(query){
+			//Put together request URL with all necessary data
+			let reqURL = this.state.recipeServiceURL;
+
+			//Add user token
+			reqURL += "?user_token="+this.props.userToken;
+
+			//Add query
+			reqURL += "&search=" + query.replace(" ", "+");
+
+			//Add search filters
+			reqURL = this.addSearchFilters(reqURL);
+
+			//Make request
+			Client.request(reqURL, "GET", (response) => {this.handleRecipeResponse(response)}, (e) => {this.handleRecipeResponse(e)});
 	}
 
 	/**
@@ -166,23 +187,21 @@ class Recipes extends Component{
 	 * @calls {this.retrieveRecipes}
 	 */
 	componentDidMount(){
-		this.retrieveRecipes();
+		//this.retrieveRecipes();
 		this.retrievePantryIngredients();
 	}
 
 	/**
 	 * Handles rendering the components for searching, showing results, and displaying selected recipes
-	 * @stateUsed {this.state.recipes, this.state.recipeSelected}
+	 * @stateUsed {this.state.recipes, this.state.recipeIndex}
 	 * @return {JSX}
 	 */
 	render(){
 		return (
 			<div className="recipes-wrap">
 				<div className="recipes-container">
-					<RecipeSearch handleSearch={this.handleSearchSubmit}/>
-					<RecipeSearchFilter pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
-					<RecipeSearchResults recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
-					<RecipeDisplay recipe={this.state.recipeSelected} />
+					<RecipeSearch handleSearch={this.handleSearchSubmit} pantryIngredients={this.state.pantryIngredients} filters={this.state.searchFilters} filterTypes={this.state.searchFilterTypes} onFilterChange={this.setSearchFilter}/>
+					<RecipeSearchResults userToken={this.props.userToken} recipes={this.state.recipes} onResultSelected={this.handleRecipeSelected}/>
 				</div>
 				<div className="spacer"></div>
 			</div>

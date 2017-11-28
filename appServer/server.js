@@ -6,8 +6,10 @@ var api = require('./routes/api/saveory_api.js')
 //Serve static build from webpack at root
 app.use("/", express.static('build'));
 
-//parse json bodies
-app.use(bodyParser.json());
+//parse json bodies if in development
+if(process.env.NODE_ENV === "development"){
+	app.use(bodyParser.json());
+}
 
 //proxy api requests to router
 app.use('/api', api);

@@ -48,7 +48,6 @@ class Recipes extends Component{
 		if(searchFilters[filterType] !== undefined){
 			searchFilters[filterType] = filterData;
 			this.setState({searchFilters:searchFilters});
-			console.log(searchFilters);
 		}
 	}
 
@@ -59,7 +58,6 @@ class Recipes extends Component{
 	 */
 	handleRecipeResponse(response){
 		if(Array.isArray(response)){
-			console.log(response[0]);
 			this.setState({recipes: response});
 		}
 	}
@@ -143,6 +141,7 @@ class Recipes extends Component{
 				//add index to recipe
 				recipe.index = recipeMatches.length;
 				recipeMatches.push(recipe);
+
 			}
 		}
 		//Update state to represent new search
@@ -152,9 +151,6 @@ class Recipes extends Component{
 	addSearchFilters(targetStr){
 		const filterTypes = this.state.searchFilterTypes.ingredient;
 		const searchFilters = this.state.searchFilters;
-		console.log("Filter types: ");
-		console.log(filterTypes);
-		console.log(searchFilters);
 		let currentFilter = undefined;
 		let filterType = undefined;
 		//go through each filter and add it's data

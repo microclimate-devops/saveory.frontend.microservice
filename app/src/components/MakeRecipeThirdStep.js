@@ -16,8 +16,6 @@ class MakeRecipeThirdStep extends Component{
     const currentIngredients = this.props.currentIngredients;
     const manuallyUpdatedIngredients = this.props.manuallyUpdatedIngredients;
     const selectedIngredients = this.props.selectedIngredients;
-    console.log("selectedIngredients");
-    console.log(selectedIngredients);
     let ingredientList = [];
     let counter = 0;
     for(var field in manuallyUpdatedIngredients){

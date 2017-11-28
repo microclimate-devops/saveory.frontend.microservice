@@ -55,8 +55,6 @@ class RecipeDisplay extends Component{
 	 * @return {Array(JSX)}
 	 */
 	createIngredientList(ingredients, hasList){
-		console.log("hasList: ");
-		console.log(hasList);
 		let ingredList = [];
 		let currHas = undefined;
 		if(Array.isArray(ingredients)){
@@ -169,8 +167,6 @@ class RecipeDisplay extends Component{
 	 */
 	render(){
 		const recipe = this.props.recipe;
-		console.log("recipe for display");
-		console.log(recipe);
 		return (
 			<div className="recipe-display-container">
 				<div className="recipe-display-header">

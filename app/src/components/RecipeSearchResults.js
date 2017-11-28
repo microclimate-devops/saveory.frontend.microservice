@@ -120,7 +120,6 @@ class RecipeSearchResults extends Component{
 			if(endIndex > totalItems){
 				endIndex = totalItems;
 			}
-			console.log("start: "+startIndex+". end: "+endIndex);
 			pagesEle = (
 				<div className="recipe-search-results-pagination">
 					{this.showPaginator(endIndex, totalItems, paginationData)}

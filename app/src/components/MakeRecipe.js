@@ -35,6 +35,7 @@ class MakeRecipe extends Component{
     this.sendIngredientUpdate = this.sendIngredientUpdate.bind(this);
     this.handleStepAction = this.handleStepAction.bind(this);
     this.handleSecondaryStepAction = this.handleSecondaryStepAction.bind(this);
+    this.resetSteps = this.resetSteps.bind(this);
   }
 
   static propTypes = {
@@ -125,7 +126,7 @@ class MakeRecipe extends Component{
         if(failed.length > 0){
           this.setIngredients(failed);
         }else{
-          this.completeSteps();
+          this.resetSteps();
         }
       },
       (e) => {
@@ -135,10 +136,10 @@ class MakeRecipe extends Component{
       this.prepareUpdateBody(ingredientData));
   }
 
-  completeSteps(){
+  resetSteps(){
     //Close modal and reset selections
     this.props.closeModal();
-    this.setState({currentStep: 1, selectedIngredients: {}});
+    this.setState({currentStep: 1, selectedIngredients: {}, currentIngredients: {}, manuallyUpdatedIngredients: undefined});
   }
 
   handleStepAction(e){
@@ -151,7 +152,7 @@ class MakeRecipe extends Component{
     if(nextStep > lastStep){
         if(Object.keys(manuallyUpdatedIngredients).length > 0){
           this.sendIngredientUpdate("manual", manuallyUpdatedIngredients);
-          this.completeSteps();
+          this.resetSteps();
         }
     }
     else{
@@ -169,7 +170,7 @@ class MakeRecipe extends Component{
 
     //close modal if previous step is before the first step
     if(prevStep < 1){
-      this.props.closeModal();
+      this.resetSteps();
       prevStep = 1;
     }
 
@@ -261,7 +262,7 @@ class MakeRecipe extends Component{
       const modalSettings = this.state.modal;
       let modalProps = {
         className: "make-recipe-modal",
-        onRequestClose: this.props.closeModal,
+        onRequestClose: this.resetSteps,
         modalLabel: currStepInfo.label,
         modalHeading: currStepInfo.description,
         open: this.props.open,
@@ -286,7 +287,6 @@ class MakeRecipe extends Component{
   }
 
   render(){
-    //{this.showModal()}
     return (
         <div className="make-recipe-modal-container">
           {this.showModal()}

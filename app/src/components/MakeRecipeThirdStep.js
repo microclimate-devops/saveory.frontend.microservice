@@ -12,6 +12,10 @@ class MakeRecipeThirdStep extends Component{
     unitOptions: PropTypes.array.isRequired
   };
 
+  getUpdateEquationText(ingredient, updates){
+    return ingredient.quantity+" "+ingredient.unit + " - "+updates.quantity+" "+updates.unit + " =";
+  }
+
   showIngredientUpdateList(){
     const currentIngredients = this.props.currentIngredients;
     const manuallyUpdatedIngredients = this.props.manuallyUpdatedIngredients;
@@ -19,8 +23,8 @@ class MakeRecipeThirdStep extends Component{
     let ingredientList = [];
     let counter = 0;
     for(var field in manuallyUpdatedIngredients){
-      ingredientList.push(<ManualIngredientUpdateDescriptor key={counter+"-descriptor"} ingredient={currentIngredients[field]} updates={selectedIngredients[field]}/>);
-      ingredientList.push(<UpdatingIngredient key={counter} dataKey={field} data={manuallyUpdatedIngredients[field]} onChange={this.props.onIngredientUpdate} unitOptions={this.props.unitOptions}/>);
+      ingredientList.push(<div key={counter+"-ingredient"} className="manual-update-ingredient-name"><p>{field}</p></div>);
+      ingredientList.push(<UpdatingIngredient key={counter} dataKey={field} data={manuallyUpdatedIngredients[field]} updateDesc={this.getUpdateEquationText(currentIngredients[field], selectedIngredients[field])} onChange={this.props.onIngredientUpdate} unitOptions={this.props.unitOptions}/>);
       counter++;
     }
     return ingredientList;

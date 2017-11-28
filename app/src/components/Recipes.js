@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Client from './Client.js';
 import RecipeSearch from './RecipeSearch.js';
 import RecipeSearchResults from './RecipeSearchResults.js';
-import RecipeSelection from './RecipeSelection.js';
 
 /**
  * Manages the components necessary to search for recipes, select a search results, and show the details of the selected recipe
@@ -198,8 +197,6 @@ class Recipes extends Component{
 	 * @return {JSX}
 	 */
 	render(){
-		//<RecipeDisplay userToken={this.props.userToken} recipe={this.state.recipeSelected} pantryServiceURL={this.state.pantryServiceURL}/>
-		//<RecipeSelection recipes={this.state.recipes} recipeIndex={this.state.recipeIndex} onChange={this.handleRecipeSelected}/>
 		return (
 			<div className="recipes-wrap">
 				<div className="recipes-container">

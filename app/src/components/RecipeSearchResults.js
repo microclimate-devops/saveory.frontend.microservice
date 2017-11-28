@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Pagination } from 'carbon-components-react';
 import RecipeSearchItem from './RecipeSearchItem';
 import RecipeDisplay from './RecipeDisplay';
-import MakeRecipe from './MakeRecipe';
+import RecipeSelection from './RecipeSelection';
 
 /**
  * Manages displaying a list of recipes in a search results container
@@ -141,7 +141,7 @@ class RecipeSearchResults extends Component{
 		return (
 			<div className="recipe-search-results-container">
 					{this.showResultPages()}
-					<MakeRecipe userToken={this.props.userToken} recipe={this.props.recipes[this.state.recipeIndex]}
+					<RecipeSelection userToken={this.props.userToken} recipe={this.props.recipes[this.state.recipeIndex]}
 			    open={this.state.recipeDisplayOpen} closeModal={this.closeRecipeDisplay} handleKeyDown={this.handleKeyDown} />
 			</div>
 		);

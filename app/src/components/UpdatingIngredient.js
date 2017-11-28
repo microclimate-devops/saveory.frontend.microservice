@@ -11,8 +11,14 @@ class UpdatingIngredient extends Component{
   static propTypes = {
     dataKey: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
+    updateDesc: PropTypes.string.isRequired,
+    labelText: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     unitOptions: PropTypes.array.isRequired
+  };
+
+  static defaultProps = {
+    labelText: ""
   };
 
   handleQtyChange(e){
@@ -38,11 +44,12 @@ class UpdatingIngredient extends Component{
   render(){
     return (
       <li className="updating-ingredient-list-item">
-        <div className="updating-ingredient-name">{this.props.dataKey}</div>
+        <div className="updating-ingredient-desc">{this.props.updateDesc}</div>
         <div className="updating-ingredient-selections">
+          <label>{this.props.labelText}</label>
           <input type="number" value={this.props.data.quantity || ""} onChange={this.handleQtyChange} />
           <select className="updating-ingredient-unit-options" onChange={this.handleUnitChange} value={this.props.data.unit}>
-            <option>Select one</option>
+            <option>Select Unit</option>
             {this.showUnitOptions()}
           </select>
         </div>

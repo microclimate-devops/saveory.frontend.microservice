@@ -531,9 +531,13 @@ button {
   margin-right: 21px;
 }
 
-.updating-ingredient-name{
+.manual-update-ingredient-name p{
+  font-size: 1.5rem;
+}
+
+.updating-ingredient-desc{
   float: left;
-  font-size: 24px;
+  font-size: 1.25rem;
 }
 
 .updating-ingredient-selections{

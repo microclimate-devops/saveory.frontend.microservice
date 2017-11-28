@@ -20,7 +20,7 @@ class MakeRecipeSecondStep extends Component{
     const selectedIngredients = this.props.selectedIngredients;
     return Object.keys(selectedIngredients).map((field, i) => {
       return (
-        <UpdatingIngredient key={i} dataKey={field} data={selectedIngredients[field]} onChange={this.props.onIngredientUpdate} unitOptions={this.props.unitOptions}/>
+        <UpdatingIngredient key={i} dataKey={field} updateDesc={field} data={selectedIngredients[field]} onChange={this.props.onIngredientUpdate} unitOptions={this.props.unitOptions}/>
       );
     });
   }

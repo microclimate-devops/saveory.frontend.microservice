@@ -167,6 +167,8 @@ router.all(['/users', '/users*'], function(req, res){
 		res.send(DEV_RESP.user);
 	}else{
 		var reqUrl = apiRoutes.user + req.url;
+		console.log(reqUrl);
+		console.log(req.body);
 		//res.send("{\"url\": \""+reqUrl+"\"}");
 		req.pipe(request(reqUrl)).pipe(res);
 	}

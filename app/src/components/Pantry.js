@@ -118,10 +118,10 @@ class Pantry extends Component {
 	 * @param {string} msg - message to show user
 	 * @calls {console.log, this.setNotification}
 	 */
-	handlePantryError(e, msg){
+	handlePantryError(resource, e, msg){
 		console.log("caught pantry error");
 		console.log(e.trace);
-		this.setNotification({title: "Error", subtitle: msg, isGood:false});
+		this.setNotification({title: "Error at "+resource, subtitle: msg, isGood:false});
 	}
 
 	/**
@@ -163,7 +163,7 @@ class Pantry extends Component {
 						this.setState({ingredientFieldOptions: fieldOptions});
 					},
 					(e) => {
-						this.handlePantryError(e, "Could not get option info for ingredient field");
+						this.handlePantryError(ingredientFieldRequest, e, "Could not get option info for ingredient field");
 					}
 				);
 			}
@@ -187,7 +187,7 @@ class Pantry extends Component {
 				this.setState({ingredientFieldTypes: resp});
 			},
 			(e) => {
-				this.handlePantryError(e, "Could not get ingredient field types");
+				this.handlePantryError(pantryRequestURL, e, "Could not get ingredient field types");
 			}
 		);
 	}
@@ -205,7 +205,7 @@ class Pantry extends Component {
 				this.setState({ingredientFieldEditable: resp});
 			},
 			(e) => {
-				this.handlePantryError(e, "Could not get ingredient field editable info");
+				this.handlePantryError(pantryRequestURL, e, "Could not get ingredient field editable info");
 			}
 		);
 	}
@@ -225,7 +225,7 @@ class Pantry extends Component {
 				this.setState({ingredientFields: resp});
 			},
 			(e) => {
-				this.handlePantryError(e, "Could not get ingredient fields");
+				this.handlePantryError(pantryRequestURL, e, "Could not get ingredient fields");
 			}
 		);
 	}
@@ -246,7 +246,7 @@ class Pantry extends Component {
 				this.setState({ingredientIdField: resp.id});
 			},
 			(e) => {
-				this.handlePantryError(e, "Could not get ingredient ID field");
+				this.handlePantryError(pantryRequestURL, e, "Could not get ingredient ID field");
 			}
 		);
 	}
@@ -262,7 +262,7 @@ class Pantry extends Component {
 		// eslint-disable-next-line
 		Client.request(pantryRequestURL, "GET",
 			(resp) => {this.handlePantryResponse(resp)},
-			(e) => {this.handlePantryError(e, "Could not access your pantry")}
+			(e) => {this.handlePantryError(pantryRequestURL, e, "Could not access your pantry")}
 		);
 	}
 
@@ -279,7 +279,7 @@ class Pantry extends Component {
 		Client.request(pantryRequestURL + "/ingredient", "POST",
 			(resp) => {this.handlePantryResponse(resp)},
 			(e) => {
-				this.handlePantryError(e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.")
+				this.handlePantryError(pantryRequestURL, e, "Could not add the ingredient. Please make sure the ingredient is not already in your pantry and try again.")
 			},
 			ingredient);
 	}
@@ -294,7 +294,7 @@ class Pantry extends Component {
 	updateIngredient(ingredient){
 		//send a request to add the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "PUT", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Could not update the ingredient. Please make sure all fields are properly formatted.")}, ingredient);
+		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "PUT", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(pantryRequestURL, e, "Could not update the ingredient. Please make sure all fields are properly formatted.")}, ingredient);
 	}
 
 	/**
@@ -307,7 +307,7 @@ class Pantry extends Component {
 	deleteIngredient(ingredient){
 		//send request to delete the ingredient
 		const pantryRequestURL = this.state.pantryServiceURL + this.props.userToken;
-		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(e, "Problem deleting the ingredient")});
+		Client.request(pantryRequestURL + "/ingredient/" + encodeURIComponent(ingredient[this.state.ingredientFields[0]]), "DELETE", (resp) => {this.handlePantryResponse(resp)}, (e) => {this.handlePantryError(pantryRequestURL, e, "Problem deleting the ingredient")});
 	}
 
 

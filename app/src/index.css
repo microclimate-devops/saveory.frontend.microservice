@@ -497,6 +497,17 @@ button {
   height: 150px;
 }
 
+.recipe-search-item-title-only{
+  margin-top: 40px;
+}
+
+.recipe-search-item-title-only p{
+  font-size: 2rem;
+  text-align: center;
+  border-top: 2px solid #602797;
+  border-bottom: 2px solid #602797;
+}
+
 /*.recipe-display-container{
   max-height: 850px;
   overflow-y: scroll;

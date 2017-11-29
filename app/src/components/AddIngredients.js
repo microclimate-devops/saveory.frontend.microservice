@@ -167,7 +167,7 @@ class AddIngredients extends Component{
 		let invalidMsg = "";
 
 		//Check for empty data
-		if((typeof data === "string" && data.length === 0) || (typeof data === "number" && data < 0)){
+		if((typeof data === "string" && data.length === 0) || (typeof data === "number" && data <= 0)){
 			isValid=false;
 			invalidMsg = "Required";
 		}

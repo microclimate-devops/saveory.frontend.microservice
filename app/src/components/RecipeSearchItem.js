@@ -73,7 +73,7 @@ class RecipeSearchItem extends Component{
             </div>
         );
       }else{
-        recipeItems.push(<div key="recipe-title" className="recipe-search-item-title"><p>{recipe.name}</p></div>);
+        recipeItems.push(<div key="recipe-title" className="recipe-search-item-title-only"><p>{recipe.name}</p></div>);
       }
 
       if(recipe && recipe.author === "MyRecipes"){

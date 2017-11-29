@@ -52,7 +52,7 @@ var DEV_RESP = {
 		    "number",
 		    "text",
 		    "date",
-		    "{\"location\":\"text\"}"
+		    {"location":"text"}
 		],
 		specIngredientUnits: [
 			"cup",

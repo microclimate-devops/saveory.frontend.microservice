@@ -141,15 +141,12 @@ class Pantry extends Component {
 	 */
 	retrieveIngredientFieldValidation(fieldTypes){
 		const ingredientFields = this.state.ingredientFields;
-		console.log(fieldTypes);
 		let pantryRequestURL = this.state.pantryServiceURL;
 		let ingredientFieldRequest;
-		let fieldOptions = this.state.ingredientFieldOptions;
 		let currField = undefined;
-		console.log(JSON.parse(fieldTypes[fieldTypes.length-1]));
 		for(var i = 0; i < fieldTypes.length; i++){
 			//If the field type is a more complicated object, go ahead and request validation data for it
-			if(fieldTypes[i].endsWith("}")){
+			if(typeof fieldTypes[i] === "object"){
 				currField = ingredientFields[i];
 				console.log(currField);
 				ingredientFieldRequest = pantryRequestURL + "spec/ingredient/" + currField;
@@ -159,6 +156,7 @@ class Pantry extends Component {
 					(resp) => {
 						console.log("response to request: "+ingredientFieldRequest);
 						console.log(resp);
+						let fieldOptions = this.state.ingredientFieldOptions;
 						fieldOptions[currField] = resp;
 						this.setState({ingredientFieldOptions: fieldOptions});
 					},

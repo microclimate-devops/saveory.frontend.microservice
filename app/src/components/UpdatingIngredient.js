@@ -30,7 +30,7 @@ class UpdatingIngredient extends Component{
 
   handleUnitChange(e){
     const unitVal = e.target.value;
-    if(unitVal !== "Select one"){
+    if(unitVal !== "Select Unit"){
       this.props.onChange(this.props.dataKey, "unit", unitVal);
     }
   }

@@ -30,6 +30,11 @@ class RecipeSearchItem extends Component{
   }
 
   showTagList(tags){
+    if(tags === null){
+      console.log("tag is null");
+      return null;
+    }
+
     return tags.map((tag, i) => {
       return (
         <li key={i} className="recipe-search-item-tag">
@@ -64,6 +69,11 @@ class RecipeSearchItem extends Component{
 
       //create different versions based on the existence of an image url
       if(recipe.imageURL){
+        if(recipe === null || recipe.tag === null){
+          console.log("something messed up with recipe at "+this.props.recipeIndex);
+          console.log(recipe);
+        }
+
         recipeItems.push(<div key="recipe-image"  className="recipe-search-item-image"><img src={recipe.imageURL} alt=""/></div>);
         recipeItems.push(
             <div key="recipe-text-data"className="recipe-search-item-text-data">

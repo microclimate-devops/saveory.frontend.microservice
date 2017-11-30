@@ -23,6 +23,10 @@ class RecipeSearchItem extends Component{
   }
 
   parseCookingTime(timeStr){
+    if(timeStr === undefined || timeStr.length === 0){
+      return "";
+    }
+
     let inSeconds = Number(timeStr);
     inSeconds = inSeconds > 0 ? inSeconds : 0;
     let minStr = inSeconds/60 + " mins";

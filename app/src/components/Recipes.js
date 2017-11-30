@@ -57,6 +57,8 @@ class Recipes extends Component{
 	 */
 	handleRecipeResponse(response){
 		if(Array.isArray(response)){
+			console.log("recipe resp");
+			console.log(response);
 			this.setState({recipes: response});
 		}
 	}

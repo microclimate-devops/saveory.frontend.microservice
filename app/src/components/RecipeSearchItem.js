@@ -33,20 +33,27 @@ class RecipeSearchItem extends Component{
     return minStr;
   }
 
-  showTagList(tags){
-    if(tags === null){
-      console.log("tag is null");
-      return null;
-    }
 
-    return tags.map((tag, i) => {
-      return (
-        <li key={i} className="recipe-search-item-tag">
-          <p>{tag}</p>
-        </li>
-      );
-    });
-  }
+  /**
+   * Puts together a list of recipe tags
+   * @param {array(string)} tags- the recipes tag array
+   * @calls {console.log, tags.map}
+   * @return {JSX} - null or the recipe's tag list elements
+   */
+  showTagList(tags){
+      if(tags === null){
+        console.log("tag is null");
+        return null;
+      }
+
+      return tags.map((tag, i) => {
+        return (
+          <li key={i} className="recipe-search-item-tag">
+            <p>{tag}</p>
+          </li>
+        );
+      });
+    }
 
   showMiniRecipeData(){
     const recipe = this.props.recipe;

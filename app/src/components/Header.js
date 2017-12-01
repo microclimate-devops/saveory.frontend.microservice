@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Logo from './Logo.js';
 import HeaderTool from './HeaderTool.js';
 
 /**
@@ -18,11 +19,15 @@ class Header extends Component{
 	 * @return {JSX} - The header bar with actions displayed if the user is logged in
 	 */
 render(){
+	/*
+
+	<Logo />
+	*/
 		return (
 			<div className="App-header">
-			  <div className="header-app-name-container">
-				<h1>Saveory</h1>
-			  </div>
+				<div className="header-app-name-container">
+					<h1>Saveory</h1>
+				</div>
 			  {this.props.isAuth && <HeaderTool userData={this.props.userData} onLogoutClick={this.props.logoutHandler} onUserUpdate={this.props.onUserUpdate}/>}
 			</div>
 		);

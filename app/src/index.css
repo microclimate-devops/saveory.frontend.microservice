@@ -99,6 +99,9 @@ button {
 
 .header-app-name-container{
 	margin-left: 40px;
+  /*width: 100px;
+  height: 100px;
+  background-image: url("/saveory_logo-multi.svg");*/
 }
 
 .header-app-name-container h1{

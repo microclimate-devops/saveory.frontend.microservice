@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from 'carbon-components-react';
 import RecipeSearchItem from './RecipeSearchItem';
-import RecipeDisplay from './RecipeDisplay';
 import RecipeSelection from './RecipeSelection';
 
 /**

@@ -18,14 +18,56 @@
     src: url("./fonts/FrancoisOne-Regular.ttf");
 }
 
+/*Logo*/
+.st0{fill: #d4dcdc;}
+.st1{fill:#9753E1;}
+.st2{fill:#047CC0;}
+.st3{fill:#34BC6E;}
+.st4{fill:#FE8500;}
+.st5{fill:#FED500;}
+.st6{fill:#00884B;}
+.st7{fill:none;stroke:#00884B;stroke-miterlimit:10;}
+.st8{fill:#95D13C;}
+.st9{fill:#1C496D;}
+.st10{fill:#56ACF2;}
+.st11{fill:#008673;}
+.st12{fill:#40D5BB;}
+.st13{fill:none;stroke:#535A5A;stroke-miterlimit:10;}
+.st14{fill:#535A5A;}
+.st15{fill:none;stroke:#363A3A;stroke-miterlimit:10;}
 
-/* Bluemix Guidelines */
+.saveory-logo-multi{
+  enable-background:new 0 0 79 112.6;
+  position: absolute;
+  top: 5px;
+}
+
+/* Static Elements*/
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  position: relative;
   font: 300 14px/1.4 'IBM Helvetica', 'Helvetica Neue', 'HelveticaNeue', 'Helvetica', 'sans-serif';
   background: #FFFFFF;
   color: #1D364D;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 500px;
+  padding: 1rem;
+  background-color: #edeef3;
+  text-align: center;
 }
 
 button {
@@ -75,6 +117,10 @@ button {
     margin-right: 1rem;
 }
 
+.carbon-form-input-container label{
+  font-size: 1.075rem;
+}
+
 .carbon-form-input-container-input{
 	background-color: #DFE6EB;
 }
@@ -93,12 +139,15 @@ button {
 /*Header Stuff*/
 
 .App-header {
-  background-color: #F0F4F4;
-  height: 80px;
+  background-color: #313f4c;
+  height: 85px;
 }
 
 .header-app-name-container{
 	margin-left: 40px;
+  /*width: 100px;
+  height: 100px;
+  background-image: url("/saveory_logo-multi.svg");*/
 }
 
 .header-app-name-container h1{
@@ -122,21 +171,21 @@ button {
 }
 
 .header-tool-container{
-	float: right;
-	margin-top: -60px;
-  	position: relative;
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
 
 .header-tool-list li{
 	display: inline-block;
 	margin-right: 30px;
 	padding: 5px;
-  border: 1px solid #f0f4f4;
+  border: 1px solid #343d46;
 	cursor: pointer;
 }
 
 .header-tool-list li:hover{
-	border-bottom: 1px solid #1d364d;
+	border-bottom: 1px solid #d4dcdc;
 }
 
 .header-tool-list li svg{
@@ -144,12 +193,13 @@ button {
 }
 
 .header-tool-list li svg path{
-	fill: #1d364d;
+	fill: #ffffff;
 }
 
 .header-tool-list li p{
 	float: left;
 	margin-left: 10px;
+  color: #d4dcdc;
 }
 
 .account-settings-form-item:last-of-type{
@@ -185,7 +235,7 @@ button {
   border-bottom: 2px solid #f5f5f5;
 }
 .tabs__labels li a.active {
-  border-bottom-color: #c7485b;
+  border-bottom-color: #65737e;
 }
 .tabs__content {
   padding: 25px;
@@ -215,7 +265,7 @@ button {
 #pantry{
 	margin: 0 auto;
 	width: 95%;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 
 .pantry-table{
@@ -284,10 +334,6 @@ button {
 	padding-left: 30px;
 }
 
-.tabs__labels li a.active{
-  border-bottom-color: #eb6e80;
-}
-
 /*Recipes Stuff*/
 /*Recipe Search stuff*/
 /* Search 1 - bg change*/
@@ -316,9 +362,13 @@ button {
 	float: left;
 }
 
+.recipe-search-input-container label{
+  font-size: 1rem;
+}
+
 .recipe-search-button-container{
 	float: left;
-	margin-top: 29px;
+	margin-top: 32px;
 }
 
 .recipe-search-results-list{
@@ -390,10 +440,6 @@ button {
 	font-size: 1.1rem;
 }
 
-.recipe-search-filter-exclude-ingredients{
-  margin-top:20px;
-}
-
 .make-recipe-step-container{
   overflow: auto;
   max-height: 575px;
@@ -416,13 +462,17 @@ button {
   font-size: 20px;
 }
 
-.search-filter-button{
-  margin-top: 29px;
+.spacer{
+	clear:both;
+}
+
+.recipe-search-filter-button{
+  margin-top: 32px;
   border-left: 1px solid #F0F4F4;
 }
 
-.spacer{
-	clear:both;
+.recipe-search-filter-exclude-ingredients{
+  margin-top:20px;
 }
 
 .recipe-search-results-container{

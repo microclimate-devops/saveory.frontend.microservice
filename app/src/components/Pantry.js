@@ -42,6 +42,7 @@ class Pantry extends Component {
 		this.updateIngredient = this.updateIngredient.bind(this);
 		this.deleteIngredient = this.deleteIngredient.bind(this);
 		this.handleViewSwitch = this.handleViewSwitch.bind(this);
+		this.retrieveIngredientFieldValidation = this.retrieveIngredientFieldValidation.bind(this);
 	}
 
 	static propTypes = {
@@ -134,36 +135,39 @@ class Pantry extends Component {
 	}
 
 	/**
-	 * Gets the validation data for any ingredient field that requires it
-	 * @param {param_type} fieldTypes-The array of types that represent what type of data each field represents
-	 * @stateUsed {this.state.ingredientFields, this.state.pantryServiceURL, this.state.ingredientFieldOptions}
+	 * Requests field validation information for a specific field
+	 * @param {param_type} reqURL-
+	 * @param {param_type} currField-
+	 * @stateUsed {this.state.ingredientFieldOptions}
 	 * @calls {Client.request, this.setState, this.handlePantryError}
 	 */
-	retrieveIngredientFieldValidation(fieldTypes){
+	retrieveIngredientFieldValidation(currField){
+		const reqURL = this.state.pantryServiceURL + "spec/ingredient/" + currField;
+		Client.request(reqURL, "GET",
+			(resp) => {
+				let fieldOptions = this.state.ingredientFieldOptions;
+				fieldOptions[currField] = resp;
+				this.setState({ingredientFieldOptions: fieldOptions});
+			},
+			(e) => {
+				this.handlePantryError(reqURL, e, "Could not get option info for ingredient field");
+			}
+		);
+	}
+
+	/**
+	 * Gets the validation data for any ingredient field that requires it
+	 * @param {Array} fieldTypes - The list of types that represent what type of data each field represents
+	 * @stateUsed {this.state.ingredientFields}
+	 * @calls {this.retrieveIngredientFieldValidation}
+	 */
+	processIngredientFieldValidation(fieldTypes){
 		const ingredientFields = this.state.ingredientFields;
-		let pantryRequestURL = this.state.pantryServiceURL;
-		let ingredientFieldRequest;
-		let currField = undefined;
 		for(var i = 0; i < fieldTypes.length; i++){
 			//If the field type is a more complicated object, go ahead and request validation data for it
 			if(typeof fieldTypes[i] === "object"){
-				currField = ingredientFields[i];
-				console.log(currField);
-				ingredientFieldRequest = pantryRequestURL + "spec/ingredient/" + currField;
-				console.log("send to request: "+ingredientFieldRequest);
 				//Request validation data and update state
-				Client.request(ingredientFieldRequest, "GET",
-					(resp) => {
-						console.log("response to request: "+ingredientFieldRequest);
-						console.log(resp);
-						let fieldOptions = this.state.ingredientFieldOptions;
-						fieldOptions[currField] = resp;
-						this.setState({ingredientFieldOptions: fieldOptions});
-					},
-					(e) => {
-						this.handlePantryError(ingredientFieldRequest, e, "Could not get option info for ingredient field");
-					}
-				);
+				this.retrieveIngredientFieldValidation(ingredientFields[i]);
 			}
 		}
 	}
@@ -181,7 +185,7 @@ class Pantry extends Component {
 				console.log("Got response for types");
 				console.log(resp);
 				//Check to see if additional validate info is needed for a field
-				this.retrieveIngredientFieldValidation(resp);
+				this.processIngredientFieldValidation(resp);
 				this.setState({ingredientFieldTypes: resp});
 			},
 			(e) => {

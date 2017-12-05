@@ -55,7 +55,7 @@ class RecipeSearchFilter extends Component{
   render(){
     return(
       <div className="recipe-search-filter-container">
-        <CarbonButton text="Filter" addedClass="search-filter-button" onClick={this.handleModalOpen}/>
+        <CarbonButton text="Filter" addedClass="recipe-search-filter-button" onClick={this.handleModalOpen}/>
         <Modal className="recipe-search-filter-modal" onRequestClose={this.handleModalClose} modalLabel="Tune Recipe Results" modalHeading="Add Filters" open={this.state.open} onKeyDown={this.handleKeyDown} passiveModal={true}>
           <div className="recipe-search-filter-include-ingredients-container">
             <label>Include Ingredients</label>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'carbon-components-react';
-import CarbonButton from './carbon/CarbonButton.js';
 import Client from './Client.js';
 import RecipeDisplay from './RecipeDisplay';
 import MakeRecipeFirstStep from './MakeRecipeFirstStep';
@@ -255,7 +254,7 @@ class RecipeSelection extends Component{
     try{
     if(this.props.recipe){
       const currStepInfo = this.getCurrentStepInfo();
-      const modalSettings = this.state.modal;
+      //const modalSettings = this.state.modal;
       let modalProps = {
         className: "make-recipe-modal",
         onRequestClose: this.resetSteps,

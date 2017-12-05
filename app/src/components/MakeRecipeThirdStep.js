@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import UpdatingIngredient from './UpdatingIngredient';
-import ManualIngredientUpdateDescriptor from './ManualIngredientUpdateDescriptor';
 
 class MakeRecipeThirdStep extends Component{
   static PropTypes = {

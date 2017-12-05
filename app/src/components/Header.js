@@ -20,13 +20,12 @@ class Header extends Component{
 	 */
 render(){
 	/*
-
-	<Logo />
+<h1>Saveory</h1>
 	*/
 		return (
 			<div className="App-header">
 				<div className="header-app-name-container">
-					<h1>Saveory</h1>
+					<Logo />
 				</div>
 			  {this.props.isAuth && <HeaderTool userData={this.props.userData} onLogoutClick={this.props.logoutHandler} onUserUpdate={this.props.onUserUpdate}/>}
 			</div>

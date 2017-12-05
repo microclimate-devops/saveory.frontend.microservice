@@ -42,13 +42,32 @@
   top: 5px;
 }
 
-/* Bluemix Guidelines */
+/* Static Elements*/
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  position: relative;
   font: 300 14px/1.4 'IBM Helvetica', 'Helvetica Neue', 'HelveticaNeue', 'Helvetica', 'sans-serif';
   background: #FFFFFF;
   color: #1D364D;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 500px;
+  padding: 1rem;
+  background-color: #edeef3;
+  text-align: center;
 }
 
 button {
@@ -98,6 +117,10 @@ button {
     margin-right: 1rem;
 }
 
+.carbon-form-input-container label{
+  font-size: 1.075rem;
+}
+
 .carbon-form-input-container-input{
 	background-color: #DFE6EB;
 }
@@ -116,7 +139,7 @@ button {
 /*Header Stuff*/
 
 .App-header {
-  background-color: #343d46;
+  background-color: #313f4c;
   height: 85px;
 }
 
@@ -170,7 +193,7 @@ button {
 }
 
 .header-tool-list li svg path{
-	fill: #d4dcdc;
+	fill: #ffffff;
 }
 
 .header-tool-list li p{

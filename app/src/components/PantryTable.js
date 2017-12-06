@@ -10,17 +10,53 @@ class PantryTable extends Component{
 	constructor(props){
 		super(props);
 		this.handleSortAction = this.handleSortAction.bind(this);
-		this.state = {areRowsExpanded: {}, currSort: undefined, isSortedDesc: undefined};
+		this.state = {
+			areRowsExpanded: {},
+			currSort: undefined,
+			isSortedDesc: undefined
+		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		header: PropTypes.array.isRequired,
 		data: PropTypes.array.isRequired,
 		fieldEditable: PropTypes.array.isRequired,
 		onRowDelete: PropTypes.func.isRequired,
-		onRowEdit: PropTypes.func.isRequired,
-		tableDataIdSelector: PropTypes.func.isRequired
+		onRowEdit: PropTypes.func.isRequired
 	};
+
+	/**
+	 * Determines the sort order for the ingredients by performing the comparison for a sort
+	 * @param {Ingredient object} a
+	 * @param {Ingredient object} b
+	 * @param {string} sortSelector - The field to sort the ingredients by
+	 * @param {boolean} isSortedDesc - Determines if the sort is ordered descending or ascending
+	 * @calls {aTargetData.toLowerCase, bTargetData.toLowerCase}
+	 * @return {boolean} - should a be ordered ahead of b?
+	 */
+	compareIngredients(a, b, sortSelector, isSortedDesc){
+		let aTargetData = a[sortSelector];
+		let bTargetData = b[sortSelector];
+		if(aTargetData === undefined || bTargetData === undefined){
+			console.log("a or b is wrong");
+			console.log(a);
+			console.log(b);
+		}
+		if(typeof aTargetData === "number"){
+			return isSortedDesc ?
+				bTargetData - aTargetData :
+				aTargetData - bTargetData;
+		}else{
+			//ignore case if string
+			if(typeof aTargetData === "string"){
+				aTargetData = aTargetData.toLowerCase();
+				bTargetData = bTargetData.toLowerCase();
+			}
+			return isSortedDesc ?
+				bTargetData > aTargetData :
+				bTargetData < aTargetData ;
+		}
+	}
 
 	/**
 	 * Sort the selected column
@@ -32,28 +68,15 @@ class PantryTable extends Component{
 	sortIngredients(){
 		//don't alias the prop
 		let sortedIngredients = JSON.parse(JSON.stringify(this.props.data));
+		console.log("sortedIngredients");
+		console.log(sortedIngredients);
 		let sortSelector = this.state.currSort;
-		let sortIsDesc = this.state.isSortedDesc;
+		let isSortedDesc = this.state.isSortedDesc;
 
-		if(sortSelector !== undefined && sortIsDesc !== undefined){
+		if(sortSelector !== undefined && isSortedDesc !== undefined){
 			sortedIngredients.sort(
 				(a, b) => {
-					let aTargetData = a[sortSelector];
-					let bTargetData = b[sortSelector];
-					if(typeof aTargetData === "number"){
-						return sortIsDesc ?
-							bTargetData - aTargetData :
-							aTargetData - bTargetData;
-					}else{
-						//ignore case if string
-						if(typeof aTargetData === "string"){
-							aTargetData = aTargetData.toLowerCase();
-							bTargetData = bTargetData.toLowerCase();
-						}
-						return sortIsDesc ?
-							bTargetData > aTargetData :
-							aTargetData > bTargetData;
-					}
+					return this.compareIngredients(a, b, sortSelector, isSortedDesc);
 				}
 			);
 		}

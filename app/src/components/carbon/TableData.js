@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Icon} from 'carbon-components-react'; 
+import {Icon} from 'carbon-components-react';
 
 class TableData extends Component{
 	constructor(props){
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
 	}
-	
-	static PropTypes = {
-		id: PropTypes.string.isRequired,
+
+	static propTypes = {
+		id: PropTypes.string,
 		editable: PropTypes.bool,
 		onChange: PropTypes.func,
 		className: PropTypes.string,
-		iconData: PropTypes.obj
+		iconData: PropTypes.object
 	};
 
 	static defaultProps = {
+		id: "",
 		editable: false,
 		onChange: undefined,
 		className: "",
@@ -25,7 +26,7 @@ class TableData extends Component{
 
 	handleChange(e){
 		if(this.props.onChange !== undefined){
-			this.props.onChange(e.target);	
+			this.props.onChange(e.target);
 		}
 	}
 
@@ -39,7 +40,7 @@ class TableData extends Component{
 		if(this.props.editable){
 			content = <input id={this.props.id} type="text" value={data} onChange={this.handleChange} className={contentClass}/>
 		}else{
-			content = <p className={contentClass}>{data}</p>;
+			content = <div className={contentClass}>{data}</div>;
 			//Add icon if specified
 			if(typeof iconData === "object" && Object.keys(iconData).length > 0){
 				content = (
@@ -47,7 +48,7 @@ class TableData extends Component{
 						<Icon className={iconData.className} name={iconData.name} height={iconData.height} width={iconData.width}/>
 						{content}
 					</div>
-				);	
+				);
 			}
 		}
 
@@ -64,4 +65,3 @@ class TableData extends Component{
 }
 
 export default TableData;
-

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {TableRow, Icon, Toggle} from 'carbon-components-react';
+import {TableRow, Icon} from 'carbon-components-react';
 import TableData from './carbon/TableData.js';
 var moment = require('moment');
 
@@ -13,10 +13,13 @@ class PantryTableIngredient extends Component{
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.fieldChanged = this.fieldChanged.bind(this);
-		this.state = {isEditing: false, data: undefined};
+		this.state = {
+			isEditing: false,
+			data: undefined
+		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		dataAccessors: PropTypes.array.isRequired,
 		data: PropTypes.object.isRequired,
 		fieldEditable: PropTypes.array.isRequired,
@@ -144,12 +147,10 @@ class PantryTableIngredient extends Component{
 	 */
 	addRowActions(row){
 		//Add edit and delete
-		row.push(<TableData key="actions" className="pantry-table-row-actions">
+		row.push(<TableData key="modify-actions" className="pantry-table-row-actions">
 				<Icon className="delete-ingredient-icon" name={this.state.isEditing ? "checkmark--outline" : "edit"} height="24" width="24" onClick={this.handleEdit}/>
 				<Icon className="delete-ingredient-icon" name="delete" height="24" width="24" onClick={this.handleDelete}/>
 			</TableData>);
-
-		//Add 'filter recipe search' toggle
 	}
 
 	/**

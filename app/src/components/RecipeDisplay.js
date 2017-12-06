@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {Icon} from 'carbon-components-react';
 
 /**
  * Manages displaying the recipe details of a selected recipe search result
  */
 class RecipeDisplay extends Component{
-	static PropTypes = {
-		recipe: PropTypes.object.isRequired
+	static propTypes = {
+		recipe: PropTypes.object
 	};
 
 	/**
@@ -14,9 +15,36 @@ class RecipeDisplay extends Component{
 	 * @param {object} ingr - A recipe ingredient object
 	 * @return {JSX} - The ingredient list entry
 	 */
-	showIngredientElement(ingr){
+	showIngredientElement(ingr, has){
+		let hasIcon = (<div className="recipe-display-ingredient-has"></div>);
+		let ingredientText = "";
+		let ingredientKey = "";
+
+		//Show a checkmark if the user has the ingredient
+		if(has){
+			hasIcon = (
+				<div className="recipe-display-ingredient-has">
+					<Icon name="checkmark--glyph" height="16" width="16"/>
+				</div>
+			);
+		}
+
+		//Show correct ingredient data
+		if(typeof ingr === 'object'){
+			ingredientText = ingr.quantity + " " + ingr.unit + " " + ingr.name;
+			ingredientKey = ingr.name;
+		}else{
+			ingredientText = ingr;
+			ingredientKey = ingr;
+		}
+
 		return (
-			<li key={ingr.name}>{ingr.quantity} {ingr.unit} {ingr.name}</li>
+			<li key={ingredientKey}>
+				{hasIcon}
+				<div className="recipe-display-ingredient-data">
+					<p>{ingredientText}</p>
+				</div>
+			</li>
 		);
 	}
 
@@ -26,10 +54,17 @@ class RecipeDisplay extends Component{
 	 * @calls {Array.isArray, ingredients.map}
 	 * @return {Array(JSX)}
 	 */
-	createIngredientList(ingredients){
+	createIngredientList(ingredients, hasList){
 		let ingredList = [];
+		let currHas = undefined;
 		if(Array.isArray(ingredients)){
-			ingredList = ingredients.map(this.showIngredientElement);
+			for(var i in ingredients){
+				currHas = false;
+				if(Array.isArray(hasList)){
+					currHas = hasList[i] === '1';
+				}
+				ingredList.push(this.showIngredientElement(ingredients[i], currHas));
+			}
 		}
 		return ingredList;
 	}
@@ -48,18 +83,26 @@ class RecipeDisplay extends Component{
 
 	/**
 	 * Creates a list of paragraphs to represent to recipe's instructions
-	 * @param {param_type} instructions - The instruction string
+	 * @param {Object} recipe - The instruction string
 	 * @calls {instructions.split, instructionList.map, this.showInstructionPiece}
 	 * @return {Array(JSX)}
 	 */
-	showInstructions(instructions){
-		if(typeof instructions === "string"){
+	showInstructions(recipe){
+		let instructions = null;
+		if(recipe.instructions){
 			//seperate instructions on <br/> tag
-			const instructionList = instructions.split("<br/>");
+			const instructionList = recipe.instructions.split("<br/>");
 
 			//Give each element in the array it's own section
-			return instructionList.map((instPiece, i) => {return this.showInstructionPiece(instPiece, i)});
+			instructions = instructionList.map((instPiece, i) => {return this.showInstructionPiece(instPiece, i)});
+		}else{
+			instructions = (
+				<div className="recipe-display-instructions-link">
+					<a href={"http://yummly.com/recipe/"+recipe.id} target="_blank"><p>Available Here</p></a>
+				</div>
+			);
 		}
+		return instructions;
 	}
 
 	/**
@@ -69,15 +112,51 @@ class RecipeDisplay extends Component{
 	 * @return {JSX}
 	 */
 	showRecipeContents(recipe){
-		//Only render if there is a recipe selected to show
-		if(typeof recipe === "object" && Object.keys(recipe).length > 0){
-			return (
-				<div className="recipe-display-content">
-					<div className="recipe-display-ingredients"><ul>{this.createIngredientList(recipe.ingredients)}</ul></div>
-					<div className="recipe-display-instructions">{this.showInstructions(recipe.instructions)}</div>
+		let contents = [];
+		if(recipe !== undefined){
+			contents.push(
+				<div key="recipe-ingredients" className="recipe-display-ingredients">
+					<div className="recipe-display-ingredients-title">
+						<p>Ingredients</p>
+					</div>
+					<ul>{this.createIngredientList(recipe.ingredients, recipe.has)}</ul>
 				</div>
 			);
+
+			contents.push(
+				<div key="recipe-instructions" className="recipe-display-instructions">{this.showInstructions(recipe)}</div>
+			);
 		}
+
+		return contents;
+	}
+
+	parseCookingTime(timeStr){
+    let inSeconds = Number(timeStr);
+    inSeconds = inSeconds > 0 ? inSeconds : 0;
+    let minStr = inSeconds/60 + " mins";
+    return minStr;
+  }
+
+	showRecipeHeader(recipe){
+		let header = [];
+		if(recipe !== undefined){
+			//add extra information if available
+			if(recipe.imageURL){
+				header.push(
+					<div key="recipe-image"  className="recipe-display-image"><img src={recipe.imageURL} alt=""/></div>
+				);
+				header.push(
+					<div key="recipe-time" className="recipe-display-time"><p>{this.parseCookingTime(recipe.time)}</p></div>
+				);
+			}
+
+			header.push(
+				<div key="recipe-title" className="recipe-display-title"><p>{recipe.name}</p></div>
+			);
+		}
+
+		return header;
 	}
 
 	/**
@@ -91,10 +170,11 @@ class RecipeDisplay extends Component{
 		return (
 			<div className="recipe-display-container">
 				<div className="recipe-display-header">
-					<p className="recipe-display-title">{recipe.name}</p>
-					<p className="recipe-display-description">{recipe.description}</p>
+					{this.showRecipeHeader(recipe)}
 				</div>
-				{this.showRecipeContents(recipe)}
+				<div className="recipe-display-content">
+					{this.showRecipeContents(recipe)}
+				</div>
 			</div>
 		);
 	}

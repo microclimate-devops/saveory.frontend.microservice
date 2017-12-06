@@ -18,7 +18,7 @@ function request(path, method, cb, eh, body) {
 		console.log("Didn't find adequate error handler for "+method+" to "+path);
 		eh = (e) => {
 			console.log("No error handler defined. Using default");
-			console.log(e);
+			console.log(e.message);
 		};
 	}
 

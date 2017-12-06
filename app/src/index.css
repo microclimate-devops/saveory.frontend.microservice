@@ -1,17 +1,73 @@
+/* Media Queries */
+
+@media only screen and (max-width: 1455px) {
+  .recipe-search-results-paginator{
+    max-width: 722px;
+  }
+}
+
+@media only screen and (min-width: 1456px) {
+  .recipe-search-results-paginator{
+    max-width: 1093px;
+  }
+}
+
 /* Fonts */
 @font-face {
     font-family: "Francois One";
     src: url("./fonts/FrancoisOne-Regular.ttf");
 }
 
+/*Logo*/
+.st0{fill: #d4dcdc;}
+.st1{fill:#9753E1;}
+.st2{fill:#047CC0;}
+.st3{fill:#34BC6E;}
+.st4{fill:#FE8500;}
+.st5{fill:#FED500;}
+.st6{fill:#00884B;}
+.st7{fill:none;stroke:#00884B;stroke-miterlimit:10;}
+.st8{fill:#95D13C;}
+.st9{fill:#1C496D;}
+.st10{fill:#56ACF2;}
+.st11{fill:#008673;}
+.st12{fill:#40D5BB;}
+.st13{fill:none;stroke:#535A5A;stroke-miterlimit:10;}
+.st14{fill:#535A5A;}
+.st15{fill:none;stroke:#363A3A;stroke-miterlimit:10;}
 
-/* Bluemix Guidelines */
+.saveory-logo-multi{
+  enable-background:new 0 0 79 112.6;
+  position: absolute;
+  top: 5px;
+}
+
+/* Static Elements*/
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  position: relative;
   font: 300 14px/1.4 'IBM Helvetica', 'Helvetica Neue', 'HelveticaNeue', 'Helvetica', 'sans-serif';
   background: #FFFFFF;
   color: #1D364D;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 500px;
+  padding: 1rem;
+  background-color: #edeef3;
+  text-align: center;
 }
 
 button {
@@ -53,6 +109,18 @@ button {
 	margin-left: 0.1em;
 }
 
+.bx--modal-content{
+  overflow-x: hidden;
+}
+
+.carbon-form-input-container{
+    margin-right: 1rem;
+}
+
+.carbon-form-input-container label{
+  font-size: 1.075rem;
+}
+
 .carbon-form-input-container-input{
 	background-color: #DFE6EB;
 }
@@ -71,12 +139,15 @@ button {
 /*Header Stuff*/
 
 .App-header {
-  background-color: #F0F4F4;
-  height: 80px;
+  background-color: #313f4c;
+  height: 85px;
 }
 
 .header-app-name-container{
 	margin-left: 40px;
+  /*width: 100px;
+  height: 100px;
+  background-image: url("/saveory_logo-multi.svg");*/
 }
 
 .header-app-name-container h1{
@@ -100,21 +171,21 @@ button {
 }
 
 .header-tool-container{
-	float: right;
-	margin-top: -60px;
-  	position: relative;
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
 
 .header-tool-list li{
 	display: inline-block;
 	margin-right: 30px;
 	padding: 5px;
-  border: 1px solid #f0f4f4;
+  border: 1px solid #343d46;
 	cursor: pointer;
 }
 
 .header-tool-list li:hover{
-	border-bottom: 1px solid #1d364d;
+	border-bottom: 1px solid #d4dcdc;
 }
 
 .header-tool-list li svg{
@@ -122,13 +193,19 @@ button {
 }
 
 .header-tool-list li svg path{
-	fill: #1d364d;
+	fill: #ffffff;
 }
 
 .header-tool-list li p{
 	float: left;
 	margin-left: 10px;
+  color: #d4dcdc;
 }
+
+.account-settings-form-item:last-of-type{
+  padding-right: 1rem;
+}
+
 /*Home Stuff*/
 
 * {
@@ -158,7 +235,7 @@ button {
   border-bottom: 2px solid #f5f5f5;
 }
 .tabs__labels li a.active {
-  border-bottom-color: #c7485b;
+  border-bottom-color: #65737e;
 }
 .tabs__content {
   padding: 25px;
@@ -167,6 +244,10 @@ button {
 /*Pantry stuff*/
 .add-ingredient-container{
 	margin-top: 15px;
+}
+
+.add-ingredient-form-item label{
+  text-transform: capitalize;
 }
 
 /*.add-ingredient-button{
@@ -184,7 +265,7 @@ button {
 #pantry{
 	margin: 0 auto;
 	width: 95%;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 
 .pantry-table{
@@ -222,6 +303,11 @@ button {
 	font-size: .975rem;
 }
 
+.pantry-table-ingredient input{
+  max-width: 120px;
+  padding: 2px;
+}
+
 .date-indicator{
 	margin-right: 5px;
 	float: left;
@@ -248,19 +334,23 @@ button {
 	padding-left: 30px;
 }
 
-.tabs__labels li a.active{
-  border-bottom-color: #eb6e80;
-}
-
 /*Recipes Stuff*/
 /*Recipe Search stuff*/
 /* Search 1 - bg change*/
 .recipes-wrap{
 	margin-top: 50px;
-	margin-left: 50px;
+}
+
+.recipes-container{
+  margin: 0 auto;
+  width: 80%;
+  max-width: 1130px;
 }
 
 .recipe-search-container{
+  max-width: 650px;
+  min-width: 520px;
+  margin: 0 auto;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
@@ -272,9 +362,13 @@ button {
 	float: left;
 }
 
+.recipe-search-input-container label{
+  font-size: 1rem;
+}
+
 .recipe-search-button-container{
 	float: left;
-	margin-top: 29px;
+	margin-top: 32px;
 }
 
 .recipe-search-results-list{
@@ -293,10 +387,24 @@ button {
 	background-color: #DFE6EB;
 }
 
-.recipe-display-header{
-	text-align:center;
-	margin-bottom: 20px;
+.recipe-search-attribution{
+  margin-top: 8px;
 }
+
+.recipe-search-yummly-logo{
+  width: 66px;
+  height: 15px;
+  margin-left: -4px;
+}
+
+/*.recipe-display-modal div:first-child{
+  max-width: 75%;
+  width: 800px;
+  min-width: 800px;
+}*/
+
+/*.recipe-display-header{
+}*/
 
 .recipe-display-title{
 	font-size: 2.1rem;
@@ -321,67 +429,192 @@ button {
 	padding-bottom: 5px;
 }
 
+.recipe-display-ingredient-has{
+  width: 20px;
+  height: 20px;
+  float: left;
+}
+
 .recipe-display-instructions p{
 	margin-bottom:5px;
 	font-size: 1.1rem;
 }
 
-/*table {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-  border: 3px solid purple;
+.make-recipe-step-container{
+  overflow: auto;
+  max-height: 575px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-thead th:nth-child(1) {
-  width: 30%;
-}
-
-thead th:nth-child(2) {
-  width: 20%;
-}
-
-thead th:nth-child(3) {
-  width: 15%;
-}
-
-thead th:nth-child(4) {
-  width: 35%;
-}
-
-th, td {
+.make-recipe-matching-ingredient{
   padding: 15px;
+  border: 0.1rem solid #1D364D;
+  border-radius: 2px;
+  margin-top: 5px;
 }
 
-tr{
-	text-align: left;
+.selected-matching-ingredient{
+  border: 0.1rem solid #95D13C;
 }
 
-tbody tr:hover{
-	background-color: rgba(96, 216, 249, 0.84);
-}*/
+.matching-ingredient-title{
+  font-size: 20px;
+}
 
 .spacer{
 	clear:both;
 }
 
-.recipe-search-results-container{
-	width: 45%;
-	float: left;
-	margin-top: 30px;
+.recipe-search-filter-button{
+  margin-top: 32px;
+  border-left: 1px solid #F0F4F4;
 }
 
-.recipe-display-container{
-	width: 45%;
-	float: left;
-	margin-top: 30px;
-	margin-left: 5%;
-	text-align: left;
+.recipe-search-filter-exclude-ingredients{
+  margin-top:20px;
 }
+
+.recipe-search-results-container{
+  max-width: 1150px;
+  min-width: 520px;
+}
+
+.recipe-search-results-pagination{
+    margin-top: 40px;
+}
+
+.recipe-search-results-paginator{
+  margin: 0 auto;
+}
+
+
+.recipe-search-result-items{
+  margin-top: 30px;
+  box-sizing: border-box;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1150px;
+  min-width:520px;
+  margin: 0 auto;
+}
+
+.recipe-search-item-container{
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+  min-width: 350px;
+  height: 150px;
+  margin: 0.65rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.recipe-search-item-container:hover {
+  box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  cursor: pointer;
+}
+
+.recipe-search-item-mini-container{
+  width: 200px;
+}
+
+.recipe-search-item-image{
+  width: 150px;
+  float:left;
+}
+
+.recipe-search-item-image img{
+  width: 150px;
+  height: 150px;
+}
+
+.recipe-search-item-mini-image{
+  width:200px;
+}
+
+.recipe-search-item-mini-image img{
+  height: 200px;
+  width: 200px;
+}
+
+.recipe-search-item-text-data{
+  float:left;
+  padding: 10px;
+  width: 200px;
+  height: 150px;
+}
+
+.recipe-search-item-title-only{
+  margin-top: 40px;
+}
+
+.recipe-search-item-title-only p{
+  font-size: 2rem;
+  text-align: center;
+  border-top: 2px solid #602797;
+  border-bottom: 2px solid #602797;
+}
+
+/*.recipe-display-container{
+  max-height: 850px;
+  overflow-y: scroll;
+}*/
 
 .recipe-display-container h3{
 	text-align: center;
 	margin-top: 0px;
+}
+
+.updating-ingredient-list-item{
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.updating-ingredient-list-header{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.updating-ingredient-list-header-item{
+  float:left;
+}
+
+.updating-ingredient-list-header-qty{
+  float: left;
+  margin-left: 98px;
+}
+
+.updating-ingredient-list-header-unit{
+  text-align: right;
+  margin-right: 21px;
+}
+
+.manual-update-ingredient-name p{
+  font-size: 1.5rem;
+}
+
+.updating-ingredient-desc{
+  float: left;
+  font-size: 1.25rem;
+}
+
+.updating-ingredient-selections{
+  text-align: right;
+  padding: 4px;
+}
+
+.updating-ingredient-selections input, .updating-ingredient-selections select{
+  padding: 3px;
+}
+
+.ingredient-update-descriptor{
+  margin-left: 121px;
+  margin-top: 5px;
+  margin-bottom: -10px;
+  color: #E62325;
 }
 
 /*InfoMessage Stuff */

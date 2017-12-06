@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Pagination } from 'carbon-components-react';
+import RecipeSearchItem from './RecipeSearchItem';
+import RecipeSelection from './RecipeSelection';
 
 /**
  * Manages displaying a list of recipes in a search results container
@@ -8,29 +11,38 @@ class RecipeSearchResults extends Component{
 	constructor(props){
 		super(props);
 		this.handleResultSelect = this.handleResultSelect.bind(this);
+		this.closeRecipeDisplay = this.closeRecipeDisplay.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.showPaginatorRangeText = this.showPaginatorRangeText.bind(this);
+		this.handlePageChange = this.handlePageChange.bind(this);
 		this.state = {
-			resultTableOptions: {
-				//sort
-				defaultSortName: 'item',
-				defaultSortOrder: 'desc',
-
-				//select
-				mode: 'radio',
-				bgColor: 'green',
-				hideSelectColumn: true,
-				clickToSelect: true,
-
-				//row click
-				onRowSelect: this.handleResultSelect
+			pagination: {
+				sizes: [5, 10, 15],
+				size: 15,
+				page: 1,
+				lastPage: undefined
 			},
-			resultItemTitleSelector: "name"
+			resultItemTitleSelector: "name",
+			recipeIndex: 0,
+			recipeDisplayOpen: false
 		};
 	}
 
-	static PropTypes = {
-		recipes: PropTypes.array.isRequired,
-		onResultSelected: PropTypes.func.isRequired
+	static propTypes = {
+		userToken: PropTypes.string.isRequired,
+		recipes: PropTypes.array.isRequired
 	};
+
+	closeRecipeDisplay(e){
+		this.setState({recipeDisplayOpen: false});
+	}
+
+	handleKeyDown(e){
+    //Call onClose if esc was pressed
+    if (e.which === 27 && this.state.open) {
+      this.closeRecipeDisplay(e);
+    }
+  }
 
 	/**
 	 * When the user clicks a result, send that info through prop handler
@@ -38,9 +50,27 @@ class RecipeSearchResults extends Component{
 	 * @propsUsed {this.props.onResultSelected}
 	 * @calls {Number, e.target.getAttribute, this.props.onResultSelected}
 	 */
-	handleResultSelect(e){
-		const elementIndex = Number(e.target.getAttribute('id'));
-		this.props.onResultSelected(elementIndex);
+	handleResultSelect(index){
+		this.setState({recipeIndex:index, recipeDisplayOpen:true});
+	}
+
+	handlePageChange(changeObj){
+		let pagination = this.state.pagination;
+		pagination.size = changeObj.pageSize;
+		pagination.page = changeObj.page;
+		this.setState({pagination: pagination});
+	}
+
+	showPaginatorRangeText(startIndex, endIndex, totalItems){
+		return startIndex + " - " + endIndex + " of " + totalItems;
+	}
+
+	showPaginator(endIndex, totalItems, paginationData){
+		return (
+			<Pagination backwardText="" forwardText="" className="recipe-search-results-paginator" itemRangeText={this.showPaginatorRangeText}
+				onChange={this.handlePageChange} pageSizes={paginationData.sizes} totalItems={totalItems} page={paginationData.page} pageSize={paginationData.size}
+				isLastPage={endIndex === totalItems} />
+		);
 	}
 
 	/**
@@ -65,8 +95,40 @@ class RecipeSearchResults extends Component{
 	 * @calls {this.props.recipes.map, this.showResultItem}
 	 * @return {Array(JSX)}
 	 */
-	showResultItems(){
-		return this.props.recipes.map((item, i) => {return this.showResultItem(item, i)});
+	showResultItems(startIndex, endIndex){
+		let resultItems = [];
+		const recipes = this.props.recipes;
+		for(var i = startIndex; i < endIndex; i++){
+			resultItems.push(<RecipeSearchItem key={i} recipe={recipes[i]} recipeIndex={i}  onClick={this.handleResultSelect} />);
+		}
+		return resultItems;
+	}
+
+	showResultPages(){
+		let pagesEle = null;
+		const paginationData = this.state.pagination;
+		const currPage = paginationData.page - 1;
+		const totalItems = this.props.recipes.length;
+		let startIndex = undefined;
+		let endIndex = undefined;
+		if(totalItems > 0){
+			//get start and end indeces
+			startIndex = currPage * paginationData.size;
+			endIndex = startIndex + paginationData.size;
+			//make sure the endIndex doesn't go past the end
+			if(endIndex > totalItems){
+				endIndex = totalItems;
+			}
+			pagesEle = (
+				<div className="recipe-search-results-pagination">
+					{this.showPaginator(endIndex, totalItems, paginationData)}
+					<div className="recipe-search-result-items">
+						{this.showResultItems(startIndex, endIndex)}
+					</div>
+				</div>
+			);
+		}
+		return pagesEle;
 	}
 
 	/**
@@ -77,9 +139,9 @@ class RecipeSearchResults extends Component{
 	render(){
 		return (
 			<div className="recipe-search-results-container">
-				<ul className="recipe-search-results-list">
-					{this.showResultItems()}
-				</ul>
+					{this.showResultPages()}
+					<RecipeSelection userToken={this.props.userToken} recipe={this.props.recipes[this.state.recipeIndex]}
+			    open={this.state.recipeDisplayOpen} closeModal={this.closeRecipeDisplay} handleKeyDown={this.handleKeyDown} />
 			</div>
 		);
 	}

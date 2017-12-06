@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import "../node_modules/slick-carousel/slick/slick.css";
+import "../node_modules/slick-carousel/slick/slick-theme.css";
 import './index.css';
-import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import App from './App';
 //import registerServiceWorker from './registerServiceWorker';
 

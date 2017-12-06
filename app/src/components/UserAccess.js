@@ -24,7 +24,7 @@ class UserAccess extends Component{
 		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		loginHandler: PropTypes.func.isRequired,
 		isAuth: PropTypes.bool.isRequired
 	};
@@ -39,13 +39,11 @@ class UserAccess extends Component{
 		let requestFailed = true;
 		//If the token is present, send in handler defined through props
 		if(resp.token !== undefined){
-			console.log("POST to "+this.state.userMgmtResourceURL+"login");
-			console.log(resp);
 			this.props.loginHandler(resp);
 			requestFailed = false;
 		}
 		//Update the request status
-		this.setState({requestFailed: true});
+		this.setState({requestFailed: requestFailed});
 	}
 
 	/**
@@ -55,6 +53,8 @@ class UserAccess extends Component{
 	 */
 	requestErrorHandler(e){
 		//Show error message
+		console.log("Error on login:");
+		console.log(e);
 		this.setState({requestFailed: true});
 	}
 
@@ -65,7 +65,6 @@ class UserAccess extends Component{
 	 * @calls {Client.request}
 	 */
 	requestLogin(loginData){
-		console.log("Login requested")
 		Client.request(this.state.userMgmtResourceURL+"login", "POST", this.requestCallback, this.requestErrorHandler, loginData);
 	}
 

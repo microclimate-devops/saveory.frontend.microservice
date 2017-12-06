@@ -19,7 +19,7 @@ class LoginForm extends Component{
 		};
 	}
 
-	static PropTypes = {
+	static propTypes = {
 		processLogin: PropTypes.func.isRequired,
 		onAccessToggle: PropTypes.func.isRequired,
 		requestFailed: PropTypes.bool.isRequired
@@ -31,9 +31,9 @@ class LoginForm extends Component{
 	 * @stateUsed {this.state.loginData}
 	 * @calls {target.getAttribute, this.setState}
 	 */
-	handleInputChange(target){
+	handleInputChange(inputId, target){
 		const data = target.value;
-		const selector = target.getAttribute('id');
+		const selector = inputId;
 		let loginData = this.state.loginData;
 
 		//update state to reflect new input text
@@ -74,8 +74,8 @@ class LoginForm extends Component{
 	render(){
 		return(
 			<div className="user-access-container login-form-container">
-				<CarbonFormInput inputText={this.state.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange}/>
-				<CarbonFormInput inputText={this.state.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange}/>
+				<CarbonFormInput inputData={this.state.loginData.username} inputType="text" inputID="username" inputLabel="Username" onChange={this.handleInputChange}/>
+				<CarbonFormInput inputData={this.state.loginData.password} inputType="password" inputID="password" inputLabel="Password" onChange={this.handleInputChange}/>
 				<CarbonButton text="Submit" onClick={this.sendLoginAttempt} isInForm={true}/>
 				<CarbonButton text="Signup Here" onClick={this.props.onAccessToggle} className="user-access-switcher-button" isInForm={true} isSecondary={true} isGhost={true} isSmall={true}/>
 				{this.showError()}

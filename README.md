@@ -1,4 +1,20 @@
 # Frontend for the Saveory Microservice App
+- Saveory Project Website 
+
+## Quick Overview
+The frontend service is the intersection where all the backend services meet; saveory.pantry.microservice, saveory.recipes.microservice, and saveory.users.microservice. We used the [create-react-app](https://github.com/facebookincubator/create-react-app) project to start a NodeJS backed React application. 
+The service is split into two sections:
+1. **The React web UI - *located in `app/`***
+	- The components that form the Saveory interface are located in `app/src/components`
+2. **The expressJS server - *located in `appServer/`***
+	- A simple configuration to serve the web UI bundle and proxy api requests to backend services
+	- In production
+		- The proxy relies on Kubernetes DNS lookup to redirect requests to the correct service
+		- The proxy config can be found in the `appServer/routes/api/saveory_api.js` file
+			- Look for the `apiRoutes` variable
+		- You may need special configuration for deployment strategies other than Kubernetes
+	- In development mode 
+		- Requests are responded to with harcoded data to simulate backend interactions
 
 ### Run Locally for development
 1. In one terminal window startup the server (used only for proxying dummy data in development mode)
@@ -14,36 +30,13 @@
          npm install
          npm start
       ``` 
-### Run in IBM Cloud private
-1. Setup the Microservice Builder Pipeline with the GitHub organization you forked this repo to
-2. Check the Jenkins dashboard for build results
+### Run in Kubernetes
+  1. IBM Cloud private
+  	- We recommend using the IBM cloud private Kubernetes environment for it's handy integration tools
+	- Setup the Microservice Builder Pipeline with the GitHub organization you forked this repo to
+	- Check the Jenkins dashboard for build results
+  2. Manual install
+  	- Kubernetes service and deployment configuration can be found in the manifests/kube.deploy.yml file
 
-### The Saveory Project
-We want you to like your pantry. We want managing it to be fun. No more forgotten ingredients. The back of your fridge doesn't need to be a scary place. Saveory was made for that. It was made to be scalable, independent, and free. Our journey begins and ends with the platform. One that is elaborate and cutting-edge but also friendly and easy to pickup. This is a story about developing microservices in the cloud. The IBM cloud.
-
-### Technology Pit Stop
-- Saveory is developed with IBM Microservice Builder and NodeJS.
-- Saveory builds with Docker
-- Saveory deploys with the continuous integration IBM Microservice Builder Pipeline
-- Saveory runs on IBM Cloud Private. Welcome to Kubernetes
-	
-
-#### Being RESTful 4 services later
-##### A. Palatable Pantries
-- Start with a better way to keep track of ingredients. Just went to the store? There's an endpoint to add to your virtual pantry. Want to update your pantry to reflect ingredient usage in a recipe? We got you covered. Don't take my word for it, here's our RESTful HTTP API:
-```{INSERT SWAGGER HERE}```
-- Built with IBM Microservice Builder 
-
-###### B. Remixed Recipes
-- Ready to find recipes that prioritize using the stuff you already have? Look no further. Get only the best options that work with your dietary restrictions.
-```{INSERT SWAGGER HERE}```	
-- Built with IBM Microservice Builder 
-
-###### C. 'Umble Users
-- Save your preferences. Change your password. It's all here.
-```{INSERT SWAGGER HERE}```
-- Built with IBM Microservice Builder 
-
-###### D. Flexible Frontend
-- The interace that ties it all together. See ingredients that are expiring soon or search for that sweet recipe. 		
-- Built with ReactJS on NodeJS
+### Run in Docker
+ - Use the included Dockerfile to startup a container
